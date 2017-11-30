@@ -1,10 +1,9 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+
+import serialization.Student;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -24,22 +23,9 @@ public class Main {
 
     public static void handleClientRequest(Socket socket) {
         try{
-            BufferedReader socketReader = null;
-            BufferedWriter socketWriter = null;
-            socketReader = new BufferedReader(new InputStreamReader(
-                    socket.getInputStream()));
-            socketWriter = new BufferedWriter(new OutputStreamWriter(
-                    socket.getOutputStream()));
-
-            String inMsg = null;
-            while ((inMsg = socketReader.readLine()) != null) {
-                System.out.println("Received from  client: " + inMsg);
-
-                String outMsg = inMsg;
-                socketWriter.write(outMsg);
-                socketWriter.write("\n");
-                socketWriter.flush();
-            }
+            ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+            Student student = (Student) in.readObject();
+            System.out.println (student.nrIndexu);
             socket.close();
         }catch(Exception e){
             e.printStackTrace();
