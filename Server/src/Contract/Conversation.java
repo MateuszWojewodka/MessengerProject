@@ -10,4 +10,10 @@ public interface Conversation {
 
     @WebMethod
     String talkToMe();
+
+    @WebMethod
+    String logInAndGetToken(Credentials credentials);
+
+    @WebMethod
+    void logOut();
 }
