@@ -1,5 +1,9 @@
 package Contract;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Credentials {
 
     public String username;
@@ -29,5 +33,10 @@ public class Credentials {
             return false;
 
         return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return new String(username + password).hashCode();
     }
 }

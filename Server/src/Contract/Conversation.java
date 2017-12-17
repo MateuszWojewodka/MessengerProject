@@ -9,10 +9,10 @@ import javax.jws.soap.SOAPBinding;
 public interface Conversation {
 
     @WebMethod
-    String talkToMe();
+    void registerUser(Credentials credentials);
 
     @WebMethod
-    String logInAndGetToken(Credentials credentials);
+    String logInAndGetToken(Credentials credentials) throws Exception;
 
     @WebMethod
     void logOut();

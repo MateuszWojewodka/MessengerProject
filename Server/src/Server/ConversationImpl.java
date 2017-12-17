@@ -18,14 +18,16 @@ public class ConversationImpl implements Conversation {
     WebServiceContext webServiceCtx;
 
     @Override
-    public String talkToMe() {
+    public void registerUser(Credentials credentials) {
 
-        System.out.println("I've talked to someone!");
-        return "Hey! I'm talking to you!";
+        Database.INSTANCE.registerUser(credentials);
     }
 
     @Override
-    public String logInAndGetToken(Credentials credentials) {
+    public String logInAndGetToken(Credentials credentials) throws Exception {
+
+        if (!Database.INSTANCE.isUserRegistered(credentials))
+            throw new Exception("User is not registered.");
 
         String token;
 

@@ -18,7 +18,14 @@ public class ConversationClient {
         Conversation conversation = service.getPort(Conversation.class);
 
         System.out.println("Echo says:");
-        System.out.println(conversation.
-                logInAndGetToken(new Credentials("User", "Pass")));
+
+        conversation.registerUser(new Credentials("User", "Pass"));
+
+        try {
+            System.out.println(conversation.
+                    logInAndGetToken(new Credentials("User1", "Pass1")));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

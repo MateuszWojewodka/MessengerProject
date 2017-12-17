@@ -11,10 +11,22 @@ public enum Database {
     INSTANCE;
 
     private Map<String, Credentials> loggedUsers;
+    private Set<Credentials> registeredUsers;
 
     private Database() {
 
         loggedUsers = Collections.synchronizedMap(new HashMap<>());
+        registeredUsers = Collections.synchronizedSet(new HashSet<>());
+    }
+
+    public void registerUser(Credentials credentials) {
+
+        registeredUsers.add(credentials);
+    }
+
+    public boolean isUserRegistered(Credentials credentials) {
+
+        return registeredUsers.contains(credentials);
     }
 
     public void logUserIn(String token, Credentials credentials) {
