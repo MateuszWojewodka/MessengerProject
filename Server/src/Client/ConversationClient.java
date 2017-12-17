@@ -1,6 +1,7 @@
 package Client;
 
 import Contract.Conversation;
+import Contract.Credentials;
 
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
@@ -17,6 +18,7 @@ public class ConversationClient {
         Conversation conversation = service.getPort(Conversation.class);
 
         System.out.println("Echo says:");
-        System.out.println(conversation.talkToMe());
+        System.out.println(conversation.
+                logInAndGetToken(new Credentials("User", "Pass")));
     }
 }

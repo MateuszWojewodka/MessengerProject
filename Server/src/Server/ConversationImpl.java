@@ -27,8 +27,13 @@ public class ConversationImpl implements Conversation {
     @Override
     public String logInAndGetToken(Credentials credentials) {
 
-        String token = generateTokenForUser();
-        Database.INSTANCE.loggedUsers.put(token, credentials);
+        String token;
+
+        token = Database.INSTANCE.getTokenIfUserIsAlreadyLoggedOn(credentials);
+        if (token != null) return token;
+
+        token = generateTokenForUser();
+        Database.INSTANCE.logUserIn(token, credentials);
 
         return token;
     }
@@ -37,7 +42,7 @@ public class ConversationImpl implements Conversation {
     public void logOut() {
 
         String token = getTokenFromHttpRequest();
-        Database.INSTANCE.loggedUsers.remove(token);
+        Database.INSTANCE.logUserOut(token);
     }
 
     private String getTokenFromHttpRequest() {
@@ -59,7 +64,7 @@ public class ConversationImpl implements Conversation {
 
         do {
            token =  generateRandomToken();
-        } while (Database.INSTANCE.loggedUsers.containsKey(token));
+        } while (Database.INSTANCE.isTokenAlreadyInDatabase(token));
 
         return token;
     }
