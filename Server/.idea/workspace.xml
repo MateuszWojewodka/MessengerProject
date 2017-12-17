@@ -15,7 +15,7 @@
       <file leaf-file-name="ServerMain.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Server/ServerMain.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="104">
+            <state relative-caret-position="68">
               <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
               <folding />
             </state>
@@ -37,8 +37,8 @@
       <file leaf-file-name="Conversation.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Contract/Conversation.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="367">
-              <caret line="17" column="18" lean-forward="true" selection-start-line="17" selection-start-column="18" selection-end-line="17" selection-end-column="18" />
+            <state relative-caret-position="289">
+              <caret line="17" column="18" lean-forward="false" selection-start-line="17" selection-start-column="18" selection-end-line="17" selection-end-column="18" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -49,8 +49,18 @@
       <file leaf-file-name="Credentials.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Contract/Credentials.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="27">
-              <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+            <state relative-caret-position="630">
+              <caret line="30" column="20" lean-forward="false" selection-start-line="30" selection-start-column="20" selection-end-line="30" selection-end-column="20" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Object.java" pinned="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files/Java/jdk1.8.0_151/src.zip!/java/lang/Object.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="202">
+              <caret line="99" column="22" lean-forward="false" selection-start-line="99" selection-start-column="22" selection-end-line="99" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -59,8 +69,30 @@
       <file leaf-file-name="ConversationImpl.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Server/ConversationImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="775">
-              <caret line="31" column="5" lean-forward="true" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
+            <state relative-caret-position="312">
+              <caret line="42" column="46" lean-forward="true" selection-start-line="42" selection-start-column="46" selection-end-line="42" selection-end-column="46" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Configuration.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Server/Configuration.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="132">
+              <caret line="6" column="1" lean-forward="true" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Database.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Server/Database.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="450">
+              <caret line="18" column="67" lean-forward="false" selection-start-line="18" selection-start-column="67" selection-end-line="18" selection-end-column="67" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -93,9 +125,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
         <option value="Singleton" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -112,11 +144,12 @@
         <option value="$PROJECT_DIR$/src/Server/Main.java" />
         <option value="$PROJECT_DIR$/src/Server/ServerMain.java" />
         <option value="$PROJECT_DIR$/src/Client/ConversationClient.java" />
-        <option value="$PROJECT_DIR$/src/Server/Database.java" />
         <option value="$PROJECT_DIR$/src/Contract/DTO.java" />
         <option value="$PROJECT_DIR$/src/Contract/Conversation.java" />
-        <option value="$PROJECT_DIR$/src/Server/ConversationImpl.java" />
         <option value="$PROJECT_DIR$/src/Contract/Credentials.java" />
+        <option value="$PROJECT_DIR$/src/Server/Database.java" />
+        <option value="$PROJECT_DIR$/src/Server/Configuration.java" />
+        <option value="$PROJECT_DIR$/src/Server/ConversationImpl.java" />
       </list>
     </option>
   </component>
@@ -147,8 +180,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="AndroidView" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -183,7 +216,7 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
+      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -356,11 +389,12 @@
       <workItem from="1512942874797" duration="1768000" />
       <workItem from="1513084431283" duration="1598000" />
       <workItem from="1513369176089" duration="2865000" />
+      <workItem from="1513454839139" duration="6012000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="24285000" />
+    <option name="totallyTimeSpent" value="31242000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -407,26 +441,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Client/ConversationClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Contract/Conversation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="14" lean-forward="true" selection-start-line="16" selection-start-column="14" selection-end-line="16" selection-end-column="14" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_151/src.zip!/java/util/Map.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2176">
@@ -779,50 +793,61 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Server/ServerMain.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
+        <state relative-caret-position="68">
           <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Server/Database.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="9" column="22" lean-forward="false" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Contract/aa.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Contract/aa.java" />
     <entry file="file://$PROJECT_DIR$/src/Contract/Conversation.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="367">
-          <caret line="17" column="18" lean-forward="true" selection-start-line="17" selection-start-column="18" selection-end-line="17" selection-end-column="18" />
+        <state relative-caret-position="289">
+          <caret line="17" column="18" lean-forward="false" selection-start-line="17" selection-start-column="18" selection-end-line="17" selection-end-column="18" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_151/src.zip!/java/lang/Object.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="99" column="22" lean-forward="false" selection-start-line="99" selection-start-column="22" selection-end-line="99" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Contract/Credentials.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+        <state relative-caret-position="630">
+          <caret line="30" column="20" lean-forward="false" selection-start-line="30" selection-start-column="20" selection-end-line="30" selection-end-column="20" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Server/Configuration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="6" column="1" lean-forward="true" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Server/Database.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="18" column="67" lean-forward="false" selection-start-line="18" selection-start-column="67" selection-end-line="18" selection-end-column="67" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Server/ConversationImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="775">
-          <caret line="31" column="5" lean-forward="true" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
+        <state relative-caret-position="312">
+          <caret line="42" column="46" lean-forward="true" selection-start-line="42" selection-start-column="46" selection-end-line="42" selection-end-column="46" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

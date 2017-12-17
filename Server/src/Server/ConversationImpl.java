@@ -9,6 +9,7 @@ import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.handler.MessageContext;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 @WebService(endpointInterface = "Contract.Conversation")
 public class ConversationImpl implements Conversation {
@@ -26,20 +27,17 @@ public class ConversationImpl implements Conversation {
     @Override
     public String logInAndGetToken(Credentials credentials) {
 
-        if (isUserAlreadyLoggedOn(credentials))
-            return getUserTokenFromDatabase(credentials);
-        else {
-            String token = generateTokenForUser(credentials);
-            putUserTokenAndCredentialsPairToDatabase(token, credentials);
-            return token;
-        }
+        String token = generateTokenForUser();
+        Database.INSTANCE.loggedUsers.put(token, credentials);
+
+        return token;
     }
 
     @Override
     public void logOut() {
 
         String token = getTokenFromHttpRequest();
-        deleteUserTokenCredentialsPairFromDatabase(token);
+        Database.INSTANCE.loggedUsers.remove(token);
     }
 
     private String getTokenFromHttpRequest() {
@@ -55,31 +53,27 @@ public class ConversationImpl implements Conversation {
         return token;
     }
 
-    private boolean isUserAlreadyLoggedOn(Credentials credentials) {
+    private String generateTokenForUser(){
 
-        //TODO sprawdzanie czy jest zalogowany
-        return false;
+        String token;
+
+        do {
+           token =  generateRandomToken();
+        } while (Database.INSTANCE.loggedUsers.containsKey(token));
+
+        return token;
     }
 
-    private String getUserTokenFromDatabase(Credentials credentials) {
+    private String generateRandomToken() {
 
-        //TODO pobieranie tokenu z kontenera
-        return "token";
-    }
+        Random rand = new Random();
+        StringBuilder sb = new StringBuilder();
 
-    private String generateTokenForUser(Credentials credentials){
+        for (int i = 0; i < Configuration.TOKEN_LENGHT; i++) {
+            int num = rand.nextInt(Configuration.TOKEN_GENERATOR_ALPHABET.length());
+            sb.append(Configuration.TOKEN_GENERATOR_ALPHABET.charAt(num));
+        }
 
-        //TODO generowanie tokenow
-        return "token";
-    }
-
-    private void putUserTokenAndCredentialsPairToDatabase(String token, Credentials credentials){
-
-        //TODO umieszczanie tokenu w jakims kontenerze
-    }
-
-    private void deleteUserTokenCredentialsPairFromDatabase(String token) {
-
-        //TODO usuwanie tokenu i credentiali z kontenera
+        return sb.toString();
     }
 }
