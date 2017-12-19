@@ -13,18 +13,24 @@ public class ConversationClient {
 
     public static void main(String[] args) throws MalformedURLException {
 
-        URL authenticationWsdlURL = new URL("http://localhost:8888/authentication?wsdl");
-        QName authenticationQName = new QName("http://Server/", "AuthenticationImplService");
+//        URL authenticationWsdlURL = new URL("http://localhost:8888/authentication?wsdl");
+//        QName authenticationQName = new QName("http://Server/", "AuthenticationImplService");
+//
+//        URL communicationWsdlURL = new URL("http://localhost:8888/communication?wsdl");
+//        QName communicationQName = new QName("http://Server/", "CommunicationImplService");
+//
+//        Service authenticationService = Service.create(authenticationWsdlURL, authenticationQName);
+//        Authentication authentication = authenticationService.getPort(Authentication.class);
+//        System.out.println("Authentication service connected.");
+//
+//        Service communicationService = Service.create(communicationWsdlURL, communicationQName);
+//        Communication communication = communicationService.getPort(Communication.class);
+//        System.out.println("Communication service connected.");
 
-        URL communicationWsdlURL = new URL("http://localhost:8888/communication?wsdl");
-        QName communicationQName = new QName("http://Server/", "CommunicationImplService");
-
-        Service authenticationService = Service.create(authenticationWsdlURL, authenticationQName);
-        Authentication authentication = authenticationService.getPort(Authentication.class);
+        Authentication authentication = ServerConectHandler.getAuthenticationPort();
         System.out.println("Authentication service connected.");
 
-        Service communicationService = Service.create(communicationWsdlURL, communicationQName);
-        Communication communication = communicationService.getPort(Communication.class);
+        Communication communication = ServerConectHandler.getCommunicationPort();
         System.out.println("Communication service connected.");
 
         System.out.println("Echo says:");
