@@ -6,7 +6,7 @@ import javax.jws.soap.SOAPBinding;
 
 @WebService
 @SOAPBinding(style = SOAPBinding.Style.RPC)
-public interface Conversation {
+public interface Authentication {
 
     @WebMethod
     void registerUser(Credentials credentials);

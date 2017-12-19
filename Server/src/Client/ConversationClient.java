@@ -1,6 +1,6 @@
 package Client;
 
-import Contract.Conversation;
+import Contract.Authentication;
 import Contract.Credentials;
 
 import javax.xml.namespace.QName;
@@ -11,11 +11,11 @@ import java.net.URL;
 public class ConversationClient {
 
     public static void main(String[] args) throws MalformedURLException {
-        URL wsdlURL = new URL("http://localhost:8888/conversation?wsdl");
-        QName qName = new QName("http://Server/", "ConversationImplService");
+        URL wsdlURL = new URL("http://localhost:8888/authentication?wsdl");
+        QName qName = new QName("http://Server/", "AuthenticationImplService");
 
         Service service = Service.create(wsdlURL, qName);
-        Conversation conversation = service.getPort(Conversation.class);
+        Authentication conversation = service.getPort(Authentication.class);
 
         System.out.println("Echo says:");
 

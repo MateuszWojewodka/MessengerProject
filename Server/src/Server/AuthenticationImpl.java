@@ -1,6 +1,6 @@
 package Server;
 
-import Contract.Conversation;
+import Contract.Authentication;
 import Contract.Credentials;
 
 import javax.annotation.Resource;
@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-@WebService(endpointInterface = "Contract.Conversation")
-public class ConversationImpl implements Conversation {
+@WebService(endpointInterface = "Contract.Authentication")
+public class AuthenticationImpl implements Authentication {
 
     @Resource
     WebServiceContext webServiceCtx;
