@@ -2,12 +2,10 @@ package Server;
 
 import Contract.Authentication;
 import Contract.Credentials;
-import Server.Datebase.AuthenticationLogic;
 import Server.Datebase.Database;
 
 import javax.annotation.Resource;
 import javax.jws.WebService;
-import javax.xml.crypto.Data;
 import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.handler.MessageContext;
 import java.util.List;
@@ -21,9 +19,11 @@ public class AuthenticationImpl implements Authentication {
     WebServiceContext webServiceCtx;
 
     @Override
-    public void registerUser(Credentials credentials) {
+    public void registerUser(Credentials credentials) throws Exception {
 
-        //Database.INSTANCE.registerUser(credentials);
+        if (Database.INSTANCE.authenticationLogic.isUserRegistered(credentials))
+            throw new Exception("This username is already taken.");
+
         Database.INSTANCE.authenticationLogic.registerUser(credentials);
     }
 

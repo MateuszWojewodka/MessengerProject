@@ -19,7 +19,11 @@ public class ConversationClient {
 
         System.out.println("Echo says:");
 
-        conversation.registerUser(new Credentials("User", "Pass"));
+        try {
+            conversation.registerUser(new Credentials("User", "Pass"));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
         try {
             System.out.println(conversation.

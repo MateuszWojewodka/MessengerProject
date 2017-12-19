@@ -9,7 +9,7 @@ import javax.jws.soap.SOAPBinding;
 public interface Authentication {
 
     @WebMethod
-    void registerUser(Credentials credentials);
+    void registerUser(Credentials credentials) throws Exception;
 
     @WebMethod
     String logInAndGetToken(Credentials credentials) throws Exception;

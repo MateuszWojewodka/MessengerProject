@@ -5,9 +5,9 @@ public enum Database {
 
     INSTANCE;
 
-    public AuthenticationLogic authenticationLogic;
+    public xAuthenticationLogic authenticationLogic;
 
     private Database() {
-        authenticationLogic = new AuthenticationLogic();
+        authenticationLogic = new xAuthenticationLogic();
     }
 }
