@@ -2,9 +2,12 @@ package Server;
 
 import Contract.Authentication;
 import Contract.Credentials;
+import Server.Datebase.AuthenticationLogic;
+import Server.Datebase.Database;
 
 import javax.annotation.Resource;
 import javax.jws.WebService;
+import javax.xml.crypto.Data;
 import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.handler.MessageContext;
 import java.util.List;
@@ -20,22 +23,23 @@ public class AuthenticationImpl implements Authentication {
     @Override
     public void registerUser(Credentials credentials) {
 
-        Database.INSTANCE.registerUser(credentials);
+        //Database.INSTANCE.registerUser(credentials);
+        Database.INSTANCE.authenticationLogic.registerUser(credentials);
     }
 
     @Override
     public String logInAndGetToken(Credentials credentials) throws Exception {
 
-        if (!Database.INSTANCE.isUserRegistered(credentials))
+        if (!Database.INSTANCE.authenticationLogic.isUserRegistered(credentials))
             throw new Exception("User is not registered.");
 
         String token;
 
-        token = Database.INSTANCE.getTokenIfUserIsAlreadyLoggedOn(credentials);
+        token = Database.INSTANCE.authenticationLogic.getTokenIfUserIsAlreadyLoggedOn(credentials);
         if (token != null) return token;
 
         token = generateTokenForUser();
-        Database.INSTANCE.logUserIn(token, credentials);
+        Database.INSTANCE.authenticationLogic.logUserIn(token, credentials);
 
         return token;
     }
@@ -44,7 +48,7 @@ public class AuthenticationImpl implements Authentication {
     public void logOut() {
 
         String token = getTokenFromHttpRequest();
-        Database.INSTANCE.logUserOut(token);
+        Database.INSTANCE.authenticationLogic.logUserOut(token);
     }
 
     private String getTokenFromHttpRequest() {
@@ -66,7 +70,7 @@ public class AuthenticationImpl implements Authentication {
 
         do {
            token =  generateRandomToken();
-        } while (Database.INSTANCE.isTokenAlreadyInDatabase(token));
+        } while (Database.INSTANCE.authenticationLogic.isTokenAlreadyInDatabase(token));
 
         return token;
     }

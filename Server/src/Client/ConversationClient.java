@@ -23,7 +23,7 @@ public class ConversationClient {
 
         try {
             System.out.println(conversation.
-                    logInAndGetToken(new Credentials("User1", "Pass1")));
+                    logInAndGetToken(new Credentials("User", "Pass")));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

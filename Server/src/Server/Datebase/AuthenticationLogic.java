@@ -1,19 +1,17 @@
-package Server;
+package Server.Datebase;
 
 import Contract.Credentials;
 
-
 import java.util.*;
 
-//Singleton class
-public enum Database {
+public class AuthenticationLogic {
 
-    INSTANCE;
+    //Field with no-modifier are visible only in package
+    Map<String, Credentials> loggedUsers;
+    Set<Credentials> registeredUsers;
 
-    private Map<String, Credentials> loggedUsers;
-    private Set<Credentials> registeredUsers;
-
-    private Database() {
+    //Constructor with no-modifier is visible only in package
+    AuthenticationLogic() {
 
         loggedUsers = Collections.synchronizedMap(new HashMap<>());
         registeredUsers = Collections.synchronizedSet(new HashSet<>());
