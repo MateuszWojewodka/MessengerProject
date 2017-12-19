@@ -1,4 +1,4 @@
-package Contract;
+package Contract.DTO;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

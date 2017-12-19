@@ -1,15 +1,12 @@
 package Server;
 
 import Contract.Authentication;
-import Contract.Credentials;
+import Contract.DTO.Credentials;
 import Server.Datebase.Database;
 
 import javax.annotation.Resource;
 import javax.jws.WebService;
 import javax.xml.ws.WebServiceContext;
-import javax.xml.ws.handler.MessageContext;
-import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 @WebService(endpointInterface = "Contract.Authentication")
@@ -21,25 +18,25 @@ public class AuthenticationImpl implements Authentication {
     @Override
     public void registerUser(Credentials credentials) throws Exception {
 
-        if (Database.INSTANCE.authenticationLogic.isUserRegistered(credentials))
+        if (Database.INSTANCE.authentication.isUserRegistered(credentials.username))
             throw new Exception("This username is already taken.");
 
-        Database.INSTANCE.authenticationLogic.registerUser(credentials);
+        Database.INSTANCE.authentication.registerUser(credentials);
     }
 
     @Override
     public String logInAndGetToken(Credentials credentials) throws Exception {
 
-        if (!Database.INSTANCE.authenticationLogic.isUserRegistered(credentials))
+        if (!Database.INSTANCE.authentication.isUserRegistered(credentials.username))
             throw new Exception("User is not registered.");
 
         String token;
 
-        token = Database.INSTANCE.authenticationLogic.getTokenIfUserIsAlreadyLoggedOn(credentials);
+        token = Database.INSTANCE.authentication.getTokenIfUserIsAlreadyLoggedOn(credentials);
         if (token != null) return token;
 
         token = generateTokenForUser();
-        Database.INSTANCE.authenticationLogic.logUserIn(token, credentials);
+        Database.INSTANCE.authentication.logUserIn(token, credentials);
 
         return token;
     }
@@ -47,21 +44,8 @@ public class AuthenticationImpl implements Authentication {
     @Override
     public void logOut() {
 
-        String token = getTokenFromHttpRequest();
-        Database.INSTANCE.authenticationLogic.logUserOut(token);
-    }
-
-    private String getTokenFromHttpRequest() {
-
-        MessageContext messageCtx = webServiceCtx.getMessageContext();
-        Map http_headers = (Map) messageCtx.get(MessageContext.HTTP_REQUEST_HEADERS);
-        List tokens = (List) http_headers.get("Token");
-
-        String token = "";
-        if (tokens != null)
-            token = tokens.get(0).toString();
-
-        return token;
+        String token = RequestHandling.getTokenFromHttpRequest(webServiceCtx);
+        Database.INSTANCE.authentication.logUserOut(token);
     }
 
     private String generateTokenForUser(){
@@ -70,7 +54,7 @@ public class AuthenticationImpl implements Authentication {
 
         do {
            token =  generateRandomToken();
-        } while (Database.INSTANCE.authenticationLogic.isTokenAlreadyInDatabase(token));
+        } while (Database.INSTANCE.authentication.isTokenAlreadyInDatabase(token));
 
         return token;
     }

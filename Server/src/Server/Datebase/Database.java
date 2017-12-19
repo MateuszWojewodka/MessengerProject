@@ -5,9 +5,12 @@ public enum Database {
 
     INSTANCE;
 
-    public xAuthenticationLogic authenticationLogic;
+    public xAuthenticationLogic authentication;
+    public xUserProfileLogic profiles;
 
     private Database() {
-        authenticationLogic = new xAuthenticationLogic();
+        authentication = new xAuthenticationLogic();
+        profiles = new xUserProfileLogic();
+
     }
 }
