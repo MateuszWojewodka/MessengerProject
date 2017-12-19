@@ -8,24 +8,24 @@ public class xAuthenticationLogic {
 
     //Collections are synchronized
     Map<String, Credentials> loggedUsers;
-    Set<Credentials> registeredUsers;
+    Map<String, String> registeredUsers;
 
     //Constructor with no-modifier is visible only in package
     xAuthenticationLogic() {
 
         loggedUsers = Collections.synchronizedMap(new HashMap<>());
-        registeredUsers = Collections.synchronizedSet(new HashSet<>());
+        registeredUsers = Collections.synchronizedMap(new HashMap<>());
     }
 
     public void registerUser(Credentials credentials) {
 
-        registeredUsers.add(credentials);
+        registeredUsers.put(credentials.username, credentials.password);
         Database.INSTANCE.profiles.createUserProfile(credentials.username);
     }
 
-    public boolean isUserRegistered(String credentials) {
+    public boolean isUserRegistered(String username) {
 
-        return registeredUsers.contains(credentials);
+        return registeredUsers.containsKey(username);
     }
 
     public void logUserIn(String token, Credentials credentials) {
