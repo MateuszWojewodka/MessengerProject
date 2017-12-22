@@ -5,7 +5,6 @@ import Server.Datebase.Database;
 
 import javax.annotation.Resource;
 import javax.jws.WebService;
-import javax.xml.crypto.Data;
 import javax.xml.ws.WebServiceContext;
 
 @WebService(endpointInterface = "Contract.Communication")
@@ -21,7 +20,7 @@ public class CommunicationImpl implements Communication {
         throwExceptionIfUserIsNotRegistered(friendUserName);
 
         Database.INSTANCE.profiles.
-                addFriendToUserProfileAndInitializeTheirConversation(
+                addFriendToUserProfile(
                         getNameOfUser(),
                         friendUserName);
     }
@@ -47,15 +46,15 @@ public class CommunicationImpl implements Communication {
         String senderName = getNameOfUser();
 
         //putting message in sender container
-        Database.INSTANCE.profiles.addMessageToConversationWithFriend(
+        Database.INSTANCE.profiles.addMessageToConversation(
                 senderName,
                 friendUserName,
                 message);
 
         //putting message in receiver container
-        Database.INSTANCE.profiles.addMessageToConversationWithFriend(
-                friendUserName,
+        Database.INSTANCE.profiles.addMessageToConversation(
                 senderName,
+                friendUserName,
                 message);
     }
 

@@ -21,16 +21,19 @@ public class xUserProfileLogic {
         usersProfiles.remove(username);
     }
 
-    public void addFriendToUserProfileAndInitializeTheirConversation(String ownerUsername, String friendUsername) {
+    public void addFriendToUserProfile(String ownerUsername, String friendUsername) {
         usersProfiles.get(ownerUsername).friends.add(friendUsername);
-        createConversation(ownerUsername, friendUsername);
     }
 
     public void removeFriendFromUserProfile(String ownerUsername, String friendUsername) {
         usersProfiles.get(ownerUsername).friends.remove(friendUsername);
     }
 
-    public void addMessageToConversationWithFriend(String sender, String receiver, String message) {
+    public void addMessageToConversation(String sender, String receiver, String message) {
+
+        //TODO checking if receiver is friend of mine
+        if (!isConversationBetweenUsersAlreadyInDatabase(sender, receiver))
+            createConversation(sender, receiver);
 
         List<Message> conversation = usersProfiles.get(sender).conversationsWithFriends.get(receiver);
         int messageId = conversation.size();
@@ -73,6 +76,10 @@ public class xUserProfileLogic {
         }
 
         return messagesToReturn;
+    }
+
+    private boolean isConversationBetweenUsersAlreadyInDatabase(String ownerUsername, String friendUsername) {
+        return usersProfiles.get(ownerUsername).conversationsWithFriends.containsKey(friendUsername);
     }
 
     private void createConversation(String ownerUsername, String friendUsername) {
