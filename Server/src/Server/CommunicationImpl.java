@@ -45,17 +45,7 @@ public class CommunicationImpl implements Communication {
 
         String senderName = getNameOfUser();
 
-        //putting message in sender container
-        Database.INSTANCE.profiles.addMessageToConversation(
-                senderName,
-                friendUserName,
-                message);
-
-        //putting message in receiver container
-        Database.INSTANCE.profiles.addMessageToConversation(
-                senderName,
-                friendUserName,
-                message);
+        Database.INSTANCE.conversation.addMessageToConversation(senderName, friendUserName, message);
     }
 
     private String getNameOfUser() {

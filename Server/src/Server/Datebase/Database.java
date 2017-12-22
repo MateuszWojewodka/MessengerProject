@@ -7,10 +7,11 @@ public enum Database {
 
     public xAuthenticationLogic authentication;
     public xUserProfileLogic profiles;
+    public xConversationLogic conversation;
 
     private Database() {
         authentication = new xAuthenticationLogic();
         profiles = new xUserProfileLogic();
-
+        conversation = new xConversationLogic();
     }
 }

@@ -29,6 +29,7 @@ public class ConversationClient {
 
         try {
             authentication.registerUser(new Credentials("Mariusz", "Pass"));
+            authentication.registerUser(new Credentials("Matis", "Pass"));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -37,7 +38,7 @@ public class ConversationClient {
 
         try {
             token = authentication.
-                    logInAndGetToken(new Credentials("User", "Pass"));
+                    logInAndGetToken(new Credentials("Mariusz", "Pass"));
 
             System.out.println(token);
 
@@ -54,7 +55,7 @@ public class ConversationClient {
 
         try {
             //communication.addFriend("Mariusz");
-            communication.sendMessageToFriend("Mariusz", "Druga wiadomosc!");
+            communication.sendMessageToFriend("Mariusz", "Teraz do samego siebie!");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
