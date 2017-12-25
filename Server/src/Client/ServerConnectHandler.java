@@ -8,7 +8,7 @@ import javax.xml.ws.Service;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public final class ServerConectHandler {
+public final class ServerConnectHandler {
 
     public static Authentication getAuthenticationPort() throws MalformedURLException {
 

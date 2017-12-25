@@ -5,6 +5,7 @@ import Server.Datebase.Database;
 
 import javax.annotation.Resource;
 import javax.jws.WebService;
+import javax.xml.crypto.Data;
 import javax.xml.ws.WebServiceContext;
 
 @WebService(endpointInterface = "Contract.Communication")
@@ -38,15 +39,46 @@ public class CommunicationImpl implements Communication {
     }
 
     @Override
-    public void sendMessageToFriend(String friendUserName, String message) throws Exception {
+    public int sendMessageToFriendAndGetMessageId(String friendUserName, String message) throws Exception {
 
         throwExceptionIfUserIsNotLoggedOn();
         throwExceptionIfUserIsNotRegistered(friendUserName);
 
         String senderName = getNameOfUser();
 
-        Database.INSTANCE.conversation.addMessageToConversation(senderName, friendUserName, message);
+        return Database.INSTANCE.conversation.addMessageToConversationAndGetMessageId(senderName, friendUserName, message);
     }
+
+    public String[] getLatestMessagesFromConversation(
+            String friendUserName,
+            int messagesCount) throws Exception {
+
+        throwExceptionIfUserIsNotLoggedOn();
+        throwExceptionIfUserIsNotRegistered(friendUserName);
+
+        return (String[]) Database.INSTANCE.conversation
+                .getLatestMessagesFromConversationWithFriend(
+                        getNameOfUser(),
+                        friendUserName,
+                        messagesCount).toArray();
+    }
+
+    public String[] getMessagesFromConversation(
+            String friendUserName,
+            int latestMessageId,
+            int messageCount) throws Exception {
+
+        throwExceptionIfUserIsNotLoggedOn();
+        throwExceptionIfUserIsNotRegistered(friendUserName);
+
+        return (String[]) Database.INSTANCE.conversation
+                .getMessagesFromConversationWithFriend(
+                        getNameOfUser(),
+                        friendUserName,
+                        latestMessageId,
+                        messageCount).toArray();
+    }
+
 
     private String getNameOfUser() {
 

@@ -1,5 +1,7 @@
 package Server;
 
+import Server.Datebase.Database;
+
 import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.handler.MessageContext;
 import java.util.List;

@@ -12,9 +12,10 @@ public class xConversationLogic {
         conversationsWithFriends = Collections.synchronizedMap(new HashMap<>());
     }
 
-    public void addMessageToConversation(String sender, String receiver, String message) {
+    public int addMessageToConversationAndGetMessageId(String sender, String receiver, String message) {
 
         //TODO checking if receiver is friend of mine
+        //TODO refactor database. It's only duty is to putting messages to containers
         if (!isConversationBetweenUsersAlreadyInDatabase(sender, receiver))
             createConversation(sender, receiver);
 
@@ -27,6 +28,8 @@ public class xConversationLogic {
                 sender,
                 receiver
         ));
+
+        return messageId;
     }
 
     public List<Message> getLatestMessagesFromConversationWithFriend(String firstUser, String secondUser,int count) {
@@ -44,7 +47,7 @@ public class xConversationLogic {
         return getMessegesFromConversationInRightOrder(conversation, lastMessageIndex, count);
     }
 
-    public List<Message> getMessegesFromConversationInRightOrder(List<Message> conversation, int lastMessageIndex, int count) {
+    private List<Message> getMessegesFromConversationInRightOrder(List<Message> conversation, int lastMessageIndex, int count) {
 
         List<Message> messagesToReturn = new ArrayList<>();
 
