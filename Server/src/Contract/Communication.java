@@ -20,8 +20,11 @@ public interface Communication {
     int sendMessageToFriendAndGetMessageId(String friendUserName, String message) throws Exception;
 
     @WebMethod
-    Message[] getLatestMessagesFromConversation(String friendUserName, int messagesCount) throws Exception;
+    Message[] getConversationMessagesFromLatest(String friendUserName, int messagesCount) throws Exception;
 
     @WebMethod
-    Message[] getMessagesFromConversation(String friendUserName, int latestMessageId, int messageCount) throws Exception;
+    Message[] getConversationMessagesFromLatestToSpecified(String friendUserName, int specifiedMessageId) throws Exception;
+
+    @WebMethod
+    Message[] getConversationMessagesFromSpecifiedOne(String friendUserName, int lastMessageId, int messageCount) throws Exception;
 }

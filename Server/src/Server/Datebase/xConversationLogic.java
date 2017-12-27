@@ -32,34 +32,70 @@ public class xConversationLogic {
         return messageId;
     }
 
-    public List<Message> getLatestMessagesFromConversationWithFriend(String firstUser, String secondUser,int count) {
+    public List<Message> getConversationMessagesFromLatest(String firstUser, String secondUser, int count) {
 
         List<Message> result = new ArrayList<>();
 
         List<Message> conversation = conversationsWithFriends.get(new UsersPair(firstUser, secondUser));
         if (conversation != null) {
             int lastMessageIndex = conversation.size() - 1;
-            result = getMessagesFromConversationInRightOrder(conversation, lastMessageIndex, count);
+            result = getConversationMessagesFromSpecifiedOneInRightOrder(conversation, lastMessageIndex, count);
         }
         return result;
     }
 
-    public List<Message> getMessagesFromConversationWithFriend(String firstUser, String secondUser,int lastMessageIndex, int count) {
+    public List<Message> getConversationMessagesFromLatestToSpecified(String firstUser, String secondUser, int specifiedMessageId) {
 
         List<Message> result = new ArrayList<>();
 
         List<Message> conversation = conversationsWithFriends.get(new UsersPair(firstUser, secondUser));
         if (conversation != null) {
-            result = getMessagesFromConversationInRightOrder(conversation, lastMessageIndex, count);
+            result = getConversationMessagesFromLatestToSpecifiedInRightOrder(conversation, specifiedMessageId);
         }
         return result;
     }
 
-    private List<Message> getMessagesFromConversationInRightOrder(List<Message> conversation, int lastMessageIndex, int count) {
+    public List<Message> getConversationMessagesFromSpecifiedOne(String firstUser, String secondUser, int lastMessageIndex, int count) {
+
+        List<Message> result = new ArrayList<>();
+
+        List<Message> conversation = conversationsWithFriends.get(new UsersPair(firstUser, secondUser));
+        if (conversation != null) {
+            result = getConversationMessagesFromSpecifiedOneInRightOrder(conversation, lastMessageIndex, count);
+        }
+        return result;
+    }
+
+    private List<Message> getConversationMessagesFromLatestToSpecifiedInRightOrder(
+            List<Message> conversation,
+            int messageToIndex) {
 
         List<Message> messagesToReturn = new ArrayList<>();
+        if (conversation == null)
+            return messagesToReturn;
 
-        int index = lastMessageIndex;
+        int lastElementIndex = conversation.size() - 1;
+
+        while(lastElementIndex > 0 && lastElementIndex != messageToIndex) {
+
+            Message msg = conversation.get(lastElementIndex);
+            messagesToReturn.add(0, msg);
+            lastElementIndex--;
+        }
+
+        return messagesToReturn;
+    }
+
+    private List<Message> getConversationMessagesFromSpecifiedOneInRightOrder(
+            List<Message> conversation,
+            int specifiedMessageIndex,
+            int count) {
+
+        List<Message> messagesToReturn = new ArrayList<>();
+        if (conversation == null)
+            return messagesToReturn;
+
+        int index = specifiedMessageIndex;
         for(int i = 0; i<count; i++) {
 
             if (index < 0) break;

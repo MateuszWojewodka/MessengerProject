@@ -6,9 +6,7 @@ import Server.Datebase.Database;
 
 import javax.annotation.Resource;
 import javax.jws.WebService;
-import javax.xml.crypto.Data;
 import javax.xml.ws.WebServiceContext;
-import java.util.List;
 
 @WebService(endpointInterface = "Contract.Communication")
 public class CommunicationImpl implements Communication {
@@ -51,7 +49,7 @@ public class CommunicationImpl implements Communication {
         return Database.INSTANCE.conversation.addMessageToConversationAndGetMessageId(senderName, friendUserName, message);
     }
 
-    public Message[] getLatestMessagesFromConversation(
+    public Message[] getConversationMessagesFromLatest(
             String friendUserName,
             int messagesCount) throws Exception {
 
@@ -59,28 +57,42 @@ public class CommunicationImpl implements Communication {
         throwExceptionIfUserIsNotRegistered(friendUserName);
 
         return Database.INSTANCE.conversation
-                .getLatestMessagesFromConversationWithFriend(
+                .getConversationMessagesFromLatest(
                         getNameOfUser(),
                         friendUserName,
                         messagesCount).toArray(new Message[0]);
     }
 
-    public Message[] getMessagesFromConversation(
+    public Message[] getConversationMessagesFromSpecifiedOne(
             String friendUserName,
-            int latestMessageId,
+            int lastMessageId,
             int messageCount) throws Exception {
 
         throwExceptionIfUserIsNotLoggedOn();
         throwExceptionIfUserIsNotRegistered(friendUserName);
 
         return Database.INSTANCE.conversation
-                .getMessagesFromConversationWithFriend(
+                .getConversationMessagesFromSpecifiedOne(
                         getNameOfUser(),
                         friendUserName,
-                        latestMessageId,
+                        lastMessageId,
                         messageCount).toArray(new Message[0]);
     }
 
+    @Override
+    public Message[] getConversationMessagesFromLatestToSpecified(
+            String friendUserName,
+            int specifiedMessageId) throws Exception {
+
+        throwExceptionIfUserIsNotLoggedOn();
+        throwExceptionIfUserIsNotRegistered(friendUserName);
+
+        return Database.INSTANCE.conversation
+                .getConversationMessagesFromLatestToSpecified(
+                        getNameOfUser(),
+                        friendUserName,
+                        specifiedMessageId).toArray(new Message[0]);
+    }
 
     private String getNameOfUser() {
 

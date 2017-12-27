@@ -22,6 +22,18 @@ public class ConversationClient {
 
     private static List<Message> conversation = new ArrayList<>();
 
+    private static Timer timer = new Timer();
+    private static TimerTask timerTask = new TimerTask() {
+        @Override
+        public void run(){
+            try {
+                updateMessagesContainer(FRIENDNAME);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    };
+
     public static void main(String[] args) throws Exception, MalformedURLException {
 
         authentication = ServerConnectHandler.getAuthenticationPort();
@@ -30,12 +42,14 @@ public class ConversationClient {
         communication = ServerConnectHandler.getCommunicationPort();
         System.out.println("Communication service connected.");
 
-        registerUser(FRIENDNAME, PASSWORD);
+        //registerUser(FRIENDNAME, PASSWORD);
 
         registerUser(USERNAME, PASSWORD);
         TOKEN = logUserInAndGetToken(USERNAME, PASSWORD);
 
-        getLatestMessagesFromConversationWithFriend(FRIENDNAME, 10);
+        //getLatestMessagesFromConversation(FRIENDNAME, 10);
+        timer.schedule(timerTask, 0, 500);
+
         for (Message message : conversation) {
             System.out.println(message.getMessageContent());
         }
@@ -88,21 +102,54 @@ public class ConversationClient {
 
         try {
             putTokenToCommunicationRequest();
-            communication.sendMessageToFriendAndGetMessageId(friendName, message);
+            int id = communication.sendMessageToFriendAndGetMessageId(friendName, message);
             System.out.println("-> Message has been sent.");
+
+            conversation.add(new Message(id, message, USERNAME, FRIENDNAME));
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
-    private static void getLatestMessagesFromConversationWithFriend(
+    private static void updateMessagesContainer(
+            String friendName) throws Exception {
+
+        if (conversation.size() == 0)
+            getLatestMessagesFromConversation(friendName, 10);
+        else {
+            int lastMessageIndex = conversation.size() - 1;
+            getLatestMessagesFromConversationToSpecifiedMessage(
+                    friendName,
+                    conversation.get(lastMessageIndex).getMessageId());
+        }
+    }
+
+    private static void getLatestMessagesFromConversationToSpecifiedMessage(
+            String friendName,
+            int specifiedMessageId) throws Exception {
+
+        try {
+            putTokenToCommunicationRequest();
+            Message[] messages =
+                    communication.getConversationMessagesFromLatestToSpecified(
+                            friendName,
+                            specifiedMessageId);
+            if (messages != null)
+                conversation.addAll(Arrays.asList(messages));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void getLatestMessagesFromConversation(
             String friendName,
             int count) throws Exception {
 
         try {
             putTokenToCommunicationRequest();
             Message[] messages =
-                    communication.getLatestMessagesFromConversation(friendName, count);
+                    communication.getConversationMessagesFromLatest(friendName, count);
             if (messages != null)
                 conversation.addAll(0, Arrays.asList(messages));
         } catch (Exception e) {
