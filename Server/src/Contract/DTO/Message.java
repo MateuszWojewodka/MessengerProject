@@ -1,11 +1,21 @@
 package Contract.DTO;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class Message {
 
+    @XmlElement
     private int messageId;
+    @XmlElement
     private String messageContent;
+    @XmlElement
     private String sender;
+    @XmlElement
     private String receiver;
+
+    public Message() {}
 
     public Message(int messageId,
                    String messageContent,

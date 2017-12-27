@@ -34,20 +34,28 @@ public class xConversationLogic {
 
     public List<Message> getLatestMessagesFromConversationWithFriend(String firstUser, String secondUser,int count) {
 
-        List<Message> conversation = conversationsWithFriends.get(new UsersPair(firstUser, secondUser));
-        int lastMessageIndex = conversation.size() - 1;
+        List<Message> result = new ArrayList<>();
 
-        return getMessegesFromConversationInRightOrder(conversation, lastMessageIndex, count);
+        List<Message> conversation = conversationsWithFriends.get(new UsersPair(firstUser, secondUser));
+        if (conversation != null) {
+            int lastMessageIndex = conversation.size() - 1;
+            result = getMessagesFromConversationInRightOrder(conversation, lastMessageIndex, count);
+        }
+        return result;
     }
 
     public List<Message> getMessagesFromConversationWithFriend(String firstUser, String secondUser,int lastMessageIndex, int count) {
 
-        List<Message> conversation = conversationsWithFriends.get(new UsersPair(firstUser, secondUser));
+        List<Message> result = new ArrayList<>();
 
-        return getMessegesFromConversationInRightOrder(conversation, lastMessageIndex, count);
+        List<Message> conversation = conversationsWithFriends.get(new UsersPair(firstUser, secondUser));
+        if (conversation != null) {
+            result = getMessagesFromConversationInRightOrder(conversation, lastMessageIndex, count);
+        }
+        return result;
     }
 
-    private List<Message> getMessegesFromConversationInRightOrder(List<Message> conversation, int lastMessageIndex, int count) {
+    private List<Message> getMessagesFromConversationInRightOrder(List<Message> conversation, int lastMessageIndex, int count) {
 
         List<Message> messagesToReturn = new ArrayList<>();
 
@@ -56,9 +64,9 @@ public class xConversationLogic {
 
             if (index < 0) break;
 
-            index = index - i;
             Message msg = conversation.get(index);
             messagesToReturn.add(0,msg);
+            index--;
         }
 
         return messagesToReturn;

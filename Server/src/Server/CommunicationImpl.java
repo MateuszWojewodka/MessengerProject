@@ -1,12 +1,14 @@
 package Server;
 
 import Contract.Communication;
+import Contract.DTO.Message;
 import Server.Datebase.Database;
 
 import javax.annotation.Resource;
 import javax.jws.WebService;
 import javax.xml.crypto.Data;
 import javax.xml.ws.WebServiceContext;
+import java.util.List;
 
 @WebService(endpointInterface = "Contract.Communication")
 public class CommunicationImpl implements Communication {
@@ -49,21 +51,21 @@ public class CommunicationImpl implements Communication {
         return Database.INSTANCE.conversation.addMessageToConversationAndGetMessageId(senderName, friendUserName, message);
     }
 
-    public String[] getLatestMessagesFromConversation(
+    public Message[] getLatestMessagesFromConversation(
             String friendUserName,
             int messagesCount) throws Exception {
 
         throwExceptionIfUserIsNotLoggedOn();
         throwExceptionIfUserIsNotRegistered(friendUserName);
 
-        return (String[]) Database.INSTANCE.conversation
+        return Database.INSTANCE.conversation
                 .getLatestMessagesFromConversationWithFriend(
                         getNameOfUser(),
                         friendUserName,
-                        messagesCount).toArray();
+                        messagesCount).toArray(new Message[0]);
     }
 
-    public String[] getMessagesFromConversation(
+    public Message[] getMessagesFromConversation(
             String friendUserName,
             int latestMessageId,
             int messageCount) throws Exception {
@@ -71,12 +73,12 @@ public class CommunicationImpl implements Communication {
         throwExceptionIfUserIsNotLoggedOn();
         throwExceptionIfUserIsNotRegistered(friendUserName);
 
-        return (String[]) Database.INSTANCE.conversation
+        return Database.INSTANCE.conversation
                 .getMessagesFromConversationWithFriend(
                         getNameOfUser(),
                         friendUserName,
                         latestMessageId,
-                        messageCount).toArray();
+                        messageCount).toArray(new Message[0]);
     }
 
 

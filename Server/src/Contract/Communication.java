@@ -1,5 +1,7 @@
 package Contract;
 
+import Contract.DTO.Message;
+
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
@@ -18,8 +20,8 @@ public interface Communication {
     int sendMessageToFriendAndGetMessageId(String friendUserName, String message) throws Exception;
 
     @WebMethod
-    String[] getLatestMessagesFromConversation(String friendUserName, int messagesCount) throws Exception;
+    Message[] getLatestMessagesFromConversation(String friendUserName, int messagesCount) throws Exception;
 
     @WebMethod
-    String[] getMessagesFromConversation(String friendUserName, int latestMessageId, int messageCount) throws Exception;
+    Message[] getMessagesFromConversation(String friendUserName, int latestMessageId, int messageCount) throws Exception;
 }

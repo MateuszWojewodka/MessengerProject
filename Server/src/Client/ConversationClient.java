@@ -3,6 +3,7 @@ package Client;
 import Contract.Authentication;
 import Contract.Communication;
 import Contract.DTO.Credentials;
+import Contract.DTO.Message;
 
 import javax.xml.ws.BindingProvider;
 import javax.xml.ws.handler.MessageContext;
@@ -11,13 +12,15 @@ import java.util.*;
 
 public class ConversationClient {
 
-    private static String USERNAME = "Mariusz";
-    private static String FRIENDNAME = "Matis";
+    private static String USERNAME = "Matis";
+    private static String FRIENDNAME = "Mariusz";
     private static String PASSWORD = "Pass";
 
     private static String TOKEN = "";
     private static Authentication authentication;
     private static Communication communication;
+
+    private static List<Message> conversation = new ArrayList<>();
 
     public static void main(String[] args) throws Exception, MalformedURLException {
 
@@ -27,8 +30,15 @@ public class ConversationClient {
         communication = ServerConnectHandler.getCommunicationPort();
         System.out.println("Communication service connected.");
 
+        registerUser(FRIENDNAME, PASSWORD);
+
         registerUser(USERNAME, PASSWORD);
         TOKEN = logUserInAndGetToken(USERNAME, PASSWORD);
+
+        getLatestMessagesFromConversationWithFriend(FRIENDNAME, 10);
+        for (Message message : conversation) {
+            System.out.println(message.getMessageContent());
+        }
 
         Scanner scanner = new Scanner(System.in);
         while (true) {
@@ -80,6 +90,21 @@ public class ConversationClient {
             putTokenToCommunicationRequest();
             communication.sendMessageToFriendAndGetMessageId(friendName, message);
             System.out.println("-> Message has been sent.");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void getLatestMessagesFromConversationWithFriend(
+            String friendName,
+            int count) throws Exception {
+
+        try {
+            putTokenToCommunicationRequest();
+            Message[] messages =
+                    communication.getLatestMessagesFromConversation(friendName, count);
+            if (messages != null)
+                conversation.addAll(0, Arrays.asList(messages));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
