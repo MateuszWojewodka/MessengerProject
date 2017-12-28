@@ -5,9 +5,7 @@ import Client.Database.LocalDatabaseHandler;
 import Contract.Communication;
 import Contract.DTO.Message;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class CommunicationHandler extends ServiceBaseHandler<Communication> {
 
@@ -26,24 +24,29 @@ public class CommunicationHandler extends ServiceBaseHandler<Communication> {
         return instance;
     }
 
-    private List<MessageToSend> messagesToSend = new ArrayList<>();
-    Thread messageSender = new MessageSender();
+    private List<MessageToSend> messagesToSend;
+    private Thread messageSender;
+    private Timer timerToUpdateMessages;
 
     private CommunicationHandler() throws Exception {
         super(Communication.class);
+
+        messagesToSend = new ArrayList<>();
+        messageSender = new MessageSenderThread();
+        timerToUpdateMessages = new Timer();
+
+        startMessageUpdater();
     }
 
-    public void updateMessagesContainerDatabase(
-            String userName,
+    private void updateMessagesContainerDatabase(
             String friendName) throws Exception {
 
-        if (LocalDatabaseHandler.isConversationEmpty(userName, friendName))
-            putToLocalDatabaseLatestMessagesFromConversation(userName, friendName, 10);
+        if (LocalDatabaseHandler.isConversationEmpty(friendName))
+            putToLocalDatabaseLatestMessagesFromConversation(friendName, 10);
         else {
             putToLocalDatabaseLatestMessagesFromConversationToSpecifiedMessage(
-                    userName,
                     friendName,
-                    LocalDatabaseHandler.getLastConversationMessageId(userName, friendName));
+                    LocalDatabaseHandler.getLastConversationMessageId(friendName));
         }
     }
 
@@ -57,7 +60,7 @@ public class CommunicationHandler extends ServiceBaseHandler<Communication> {
     }
 
     @TokenAuthenticated
-    public void sendMessageToServer(String userName, String friendName, String message) {
+    private void sendMessageToServer(String userName, String friendName, String message) {
 
         try {
             serviceObject.sendMessageToFriend(friendName, message);
@@ -70,7 +73,6 @@ public class CommunicationHandler extends ServiceBaseHandler<Communication> {
 
     @TokenAuthenticated
     private void putToLocalDatabaseLatestMessagesFromConversationToSpecifiedMessage(
-            String userName,
             String friendName,
             int specifiedMessageId) throws Exception {
 
@@ -80,7 +82,7 @@ public class CommunicationHandler extends ServiceBaseHandler<Communication> {
                             friendName,
                             specifiedMessageId);
             if (messages != null)
-                LocalDatabaseHandler.addMultipleMessagesToConversation(userName, friendName,Arrays.asList(messages));
+                LocalDatabaseHandler.addMultipleMessagesToConversation(friendName,Arrays.asList(messages));
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
@@ -89,7 +91,6 @@ public class CommunicationHandler extends ServiceBaseHandler<Communication> {
 
     @TokenAuthenticated
     private void putToLocalDatabaseLatestMessagesFromConversation(
-            String userName,
             String friendName,
             int count) throws Exception {
 
@@ -97,17 +98,33 @@ public class CommunicationHandler extends ServiceBaseHandler<Communication> {
             Message[] messages =
                     serviceObject.getConversationMessagesFromLatest(friendName, count);
             if (messages != null)
-                LocalDatabaseHandler.addMultipleMessagesToConversation(userName, friendName,Arrays.asList(messages));
+                LocalDatabaseHandler.addMultipleMessagesToConversation(friendName,Arrays.asList(messages));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
-    private class MessageSender extends Thread {
+    private void startMessageUpdater() {
+
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run(){
+                try {
+                    updateMessagesContainerDatabase("Mariusz");
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        };
+
+        timerToUpdateMessages.schedule(timerTask, 1000, 300);
+    }
+
+    private class MessageSenderThread extends Thread {
 
         private MessageToSend message;
 
-        public MessageSender() {
+        public MessageSenderThread() {
             start();
         }
 

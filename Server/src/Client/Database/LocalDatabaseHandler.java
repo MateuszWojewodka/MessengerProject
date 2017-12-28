@@ -2,34 +2,45 @@ package Client.Database;
 
 import Contract.DTO.Message;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LocalDatabaseHandler {
 
-    public static void addMessageToConversation(String userName, String friendName, Message message) {
+    public static void addMessageToConversation(String friendName, Message message) {
 
-        Database.INSTANCE.conversation.add(message);
+        createConversationIfDoesNotExist(friendName);
+        Database.INSTANCE.conversations.get(friendName).add(message);
     }
 
     public static void addMultipleMessagesToConversation(
-            String userName,
             String friendName,
             List<Message> messages) {
 
-        Database.INSTANCE.conversation.addAll(messages);
+        createConversationIfDoesNotExist(friendName);
+        Database.INSTANCE.conversations.get(friendName).addAll(messages);
     }
 
-    public static boolean isConversationEmpty(String userName, String friendName) {
+    public static boolean isConversationEmpty(String friendName) {
 
-        if (Database.INSTANCE.conversation == null || Database.INSTANCE.conversation.size() == 0)
+        createConversationIfDoesNotExist(friendName);
+        if(Database.INSTANCE.conversations.get(friendName) == null ||
+           Database.INSTANCE.conversations.get(friendName).size() == 0)
             return true;
         else return false;
     }
 
-    public static int getLastConversationMessageId(String userName, String friendName) {
+    public static int getLastConversationMessageId(String friendName) {
 
-        int lastMessageIndex = Database.INSTANCE.conversation.size() - 1;
+        createConversationIfDoesNotExist(friendName);
+        int lastMessageIndex = Database.INSTANCE.conversations.get(friendName).size() - 1;
 
-        return Database.INSTANCE.conversation.get(lastMessageIndex).getMessageId();
+        return Database.INSTANCE.conversations.get(friendName).get(lastMessageIndex).getMessageId();
+    }
+
+    private static void createConversationIfDoesNotExist(String friendName) {
+
+        if (!Database.INSTANCE.conversations.containsKey(friendName))
+            Database.INSTANCE.conversations.put(friendName, new ArrayList<>());
     }
 }

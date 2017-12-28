@@ -15,26 +15,12 @@ import java.util.*;
 
 public class ClientMain {
 
-    private static String USERNAME = "Mariusz";
-    private static String FRIENDNAME = "Matis";
+    private static String USERNAME = "Matis";
+    private static String FRIENDNAME = "Mariusz";
     private static String PASSWORD = "Pass";
 
     private static AuthenticationHandler authentication;
     private static CommunicationHandler communication;
-
-
-
-    private static Timer timer = new Timer();
-    private static TimerTask timerTask = new TimerTask() {
-        @Override
-        public void run(){
-            try {
-                communication.updateMessagesContainerDatabase(USERNAME,FRIENDNAME);
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-        }
-    };
 
     public static void main(String[] args) throws Exception, MalformedURLException {
 
@@ -44,8 +30,6 @@ public class ClientMain {
         authentication.registerUser(USERNAME, PASSWORD);
         authentication.registerUser(FRIENDNAME, PASSWORD);
         authentication.logUserIn(USERNAME, PASSWORD);
-
-        timer.schedule(timerTask, 0, 300);
 
         Scanner scanner = new Scanner(System.in);
         while (true) {
