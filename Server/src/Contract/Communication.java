@@ -11,12 +11,6 @@ import javax.jws.soap.SOAPBinding;
 public interface Communication {
 
     @WebMethod
-    void addFriend(String friendUserName) throws Exception;
-
-    @WebMethod
-    void removeFriend(String friendUserName) throws Exception;
-
-    @WebMethod
     void sendMessageToFriend(String friendUserName, String message) throws Exception;
 
     @WebMethod

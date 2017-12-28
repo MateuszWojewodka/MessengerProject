@@ -1,5 +1,8 @@
 package Server;
 
+import Server.ServicesImplementation.AuthenticationImpl;
+import Server.ServicesImplementation.CommunicationImpl;
+
 import javax.xml.ws.Endpoint;
 
 public class ServerMain {

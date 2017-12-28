@@ -1,14 +1,7 @@
 package Client;
 
-import Client.Database.Database;
-import Client.Enums.ServiceTypes;
 import Client.ServiceHandlers.AuthenticationHandler;
 import Client.ServiceHandlers.CommunicationHandler;
-import Client.ServiceHandlers.ServiceBaseHandler;
-import Contract.Authentication;
-import Contract.Communication;
-import Contract.DTO.Credentials;
-import Contract.DTO.Message;
 
 import java.net.MalformedURLException;
 import java.util.*;

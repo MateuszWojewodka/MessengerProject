@@ -1,7 +1,7 @@
 package Client.ServiceHandlers;
 
 import Client.Annotations.TokenAuthenticated;
-import Client.Database.LocalDatabaseHandler;
+import Client.Database.DatabaseHandler;
 import Contract.Communication;
 import Contract.DTO.Message;
 
@@ -41,12 +41,12 @@ public class CommunicationHandler extends ServiceBaseHandler<Communication> {
     private void updateMessagesContainerDatabase(
             String friendName) throws Exception {
 
-        if (LocalDatabaseHandler.isConversationEmpty(friendName))
+        if (DatabaseHandler.isConversationEmpty(friendName))
             putToLocalDatabaseLatestMessagesFromConversation(friendName, 10);
         else {
             putToLocalDatabaseLatestMessagesFromConversationToSpecifiedMessage(
                     friendName,
-                    LocalDatabaseHandler.getLastConversationMessageId(friendName));
+                    DatabaseHandler.getLastConversationMessageId(friendName));
         }
     }
 
@@ -82,7 +82,7 @@ public class CommunicationHandler extends ServiceBaseHandler<Communication> {
                             friendName,
                             specifiedMessageId);
             if (messages != null)
-                LocalDatabaseHandler.addMultipleMessagesToConversation(friendName,Arrays.asList(messages));
+                DatabaseHandler.addMultipleMessagesToConversation(friendName,Arrays.asList(messages));
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
@@ -98,7 +98,7 @@ public class CommunicationHandler extends ServiceBaseHandler<Communication> {
             Message[] messages =
                     serviceObject.getConversationMessagesFromLatest(friendName, count);
             if (messages != null)
-                LocalDatabaseHandler.addMultipleMessagesToConversation(friendName,Arrays.asList(messages));
+                DatabaseHandler.addMultipleMessagesToConversation(friendName,Arrays.asList(messages));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

@@ -19,6 +19,7 @@ public abstract class ServiceBaseHandler <serviceClassType> {
 
     private static final String SERVER = "localhost";
     private static final String PORT = "8888";
+    private static final String NAMESPACE_URI = "http://ServicesImplementation.Server/";
 
     //this token is shared by every inherited class
     protected static AtomicReference<String> sharedToken = new AtomicReference<>();
@@ -48,7 +49,7 @@ public abstract class ServiceBaseHandler <serviceClassType> {
     private void getPort() throws Exception {
 
         URL serviceWsdlURL = new URL("http://"+SERVER+":"+PORT+"/"+serviceType.getPath()+"?wsdl");
-        QName serviceQName = new QName("http://Server/",  serviceType.getLocalPart());
+        QName serviceQName = new QName(NAMESPACE_URI,  serviceType.getLocalPart());
 
         Service service = Service.create(serviceWsdlURL, serviceQName);
         serviceObject = service.getPort(serviceClass);

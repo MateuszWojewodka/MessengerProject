@@ -1,11 +1,12 @@
 package Client.Database;
 
+import Client.Database.Database;
 import Contract.DTO.Message;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LocalDatabaseHandler {
+public class DatabaseHandler {
 
     public static void addMessageToConversation(String friendName, Message message) {
 
