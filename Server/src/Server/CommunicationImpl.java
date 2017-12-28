@@ -39,14 +39,14 @@ public class CommunicationImpl implements Communication {
     }
 
     @Override
-    public int sendMessageToFriendAndGetMessageId(String friendUserName, String message) throws Exception {
+    public void sendMessageToFriend(String friendUserName, String message) throws Exception {
 
         throwExceptionIfUserIsNotLoggedOn();
         throwExceptionIfUserIsNotRegistered(friendUserName);
 
         String senderName = getNameOfUser();
 
-        return Database.INSTANCE.conversation.addMessageToConversationAndGetMessageId(senderName, friendUserName, message);
+        Database.INSTANCE.conversation.addMessageToConversation(senderName, friendUserName, message);
     }
 
     public Message[] getConversationMessagesFromLatest(

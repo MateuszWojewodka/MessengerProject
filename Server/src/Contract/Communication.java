@@ -17,7 +17,7 @@ public interface Communication {
     void removeFriend(String friendUserName) throws Exception;
 
     @WebMethod
-    int sendMessageToFriendAndGetMessageId(String friendUserName, String message) throws Exception;
+    void sendMessageToFriend(String friendUserName, String message) throws Exception;
 
     @WebMethod
     Message[] getConversationMessagesFromLatest(String friendUserName, int messagesCount) throws Exception;
