@@ -5,7 +5,9 @@ import Client.Database.LocalDatabaseHandler;
 import Contract.Communication;
 import Contract.DTO.Message;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class CommunicationHandler extends ServiceBaseHandler<Communication> {
 
@@ -23,6 +25,9 @@ public class CommunicationHandler extends ServiceBaseHandler<Communication> {
         }
         return instance;
     }
+
+    private List<MessageToSend> messagesToSend = new ArrayList<>();
+    Thread messageSender = new MessageSender();
 
     private CommunicationHandler() throws Exception {
         super(Communication.class);
@@ -42,13 +47,17 @@ public class CommunicationHandler extends ServiceBaseHandler<Communication> {
         }
     }
 
-    public void addMessageToSend(String userName, String friendName, String message) {
+    public void sendMessageToFriend(String userName, String friendName, String message) {
 
+        synchronized (messagesToSend) {
 
+            messagesToSend.add(new MessageToSend(message, userName, friendName));
+            messagesToSend.notifyAll();
+        }
     }
 
     @TokenAuthenticated
-    public void sendMessageToFriend(String userName, String friendName, String message) {
+    public void sendMessageToServer(String userName, String friendName, String message) {
 
         try {
             serviceObject.sendMessageToFriend(friendName, message);
@@ -91,6 +100,52 @@ public class CommunicationHandler extends ServiceBaseHandler<Communication> {
                 LocalDatabaseHandler.addMultipleMessagesToConversation(userName, friendName,Arrays.asList(messages));
         } catch (Exception e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    private class MessageSender extends Thread {
+
+        private MessageToSend message;
+
+        public MessageSender() {
+            start();
+        }
+
+        public void run() {
+
+            while(true) {
+                synchronized (messagesToSend) {
+
+                    while (messagesToSend.size() == 0) {
+                        try {
+                            messagesToSend.wait();
+                        } catch (InterruptedException e) {
+                        }
+                    }
+                    message = messagesToSend.get(0);
+                    messagesToSend.remove(0);
+                }
+                sendMessageToServer(
+                        message.sender,
+                        message.receiver,
+                        message.messageContent);
+            }
+        }
+    }
+
+    private class MessageToSend {
+
+        public String messageContent;
+        public String sender;
+        public String receiver;
+
+        public MessageToSend(String messageContent,
+                       String sender,
+                       String receiver) {
+
+            this.messageContent = messageContent;
+            this.sender = sender;
+            this.receiver = receiver;
         }
     }
 }
