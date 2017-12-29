@@ -14,7 +14,7 @@ public class AuthenticationImpl  extends ServiceBaseImpl implements Authenticati
     @Override
     public void registerUser(Credentials credentials) throws Exception {
 
-        DatabaseHandler.addUserToRegisteredUsers(credentials);
+        DatabaseHandler.addUserToRegisteredUsersAndCreateHisProfile(credentials);
     }
 
     @Override

@@ -2,9 +2,11 @@ package Server.ServicesImplementation;
 
 import Contract.Communication;
 import Contract.DTO.Message;
+import Server.Database.Database;
 import Server.Database.DatabaseHandler;
 
 import javax.jws.WebService;
+import java.util.List;
 
 @WebService(endpointInterface = "Contract.Communication")
 public class CommunicationImpl extends ServiceBaseImpl implements Communication {
@@ -20,6 +22,7 @@ public class CommunicationImpl extends ServiceBaseImpl implements Communication 
         DatabaseHandler.addMessageToConversation(senderName, friendUserName, message);
     }
 
+    @Override
     public Message[] getConversationMessagesFromLatest(
             String friendUserName,
             int messagesCount) throws Exception {
@@ -34,6 +37,7 @@ public class CommunicationImpl extends ServiceBaseImpl implements Communication 
                         messagesCount).toArray(new Message[0]);
     }
 
+    @Override
     public Message[] getConversationMessagesFromSpecifiedOne(
             String friendUserName,
             int lastMessageId,
@@ -63,5 +67,16 @@ public class CommunicationImpl extends ServiceBaseImpl implements Communication 
                         getNameOfUser(),
                         friendUserName,
                         specifiedMessageId).toArray(new Message[0]);
+    }
+
+    @Override
+    public void markConversationMessagesAsRead(String friendName, int[] messagesId) throws Exception {
+        throwExceptionIfUserIsNotLoggedOn();
+        throwExceptionIfUserIsNotRegistered(friendName);
+
+        for(int id : messagesId) {
+            DatabaseHandler.getMessageById(getNameOfUser(), friendName, id).markAsRead();
+        }
+
     }
 }

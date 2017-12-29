@@ -14,6 +14,8 @@ public class Message {
     private String sender;
     @XmlElement
     private String receiver;
+    @XmlElement
+    private boolean readByReceiver;
 
     public Message() {}
 
@@ -26,6 +28,7 @@ public class Message {
         this.messageContent = messageContent;
         this.sender = sender;
         this.receiver = receiver;
+        readByReceiver = false;
     }
 
     public int getMessageId() {
@@ -43,4 +46,8 @@ public class Message {
     public String getReceiver() {
         return receiver;
     }
+
+    public boolean isReadByReceiver() {return readByReceiver;}
+
+    public void markAsRead() {readByReceiver = true;}
 }

@@ -2,16 +2,63 @@ package Server.Database;
 
 import Contract.DTO.Credentials;
 import Contract.DTO.Message;
+import Contract.DTO.Notifications;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DatabaseHandler {
 
-    public static void addUserToRegisteredUsers(Credentials credentials){
+    public static void addFriendRequestToUserProfile(String userName, String requestingUser) throws Exception{
+        if(!Database.INSTANCE.usersProfiles.containsKey(userName))
+            throw new Exception("User doesn't have profile created. Register user at first.");
+
+        Database.INSTANCE.usersProfiles.get(userName).addFriendRequest(requestingUser);
+    }
+
+    public static Notifications getNotifications(String userName) throws Exception {
+
+        if(!Database.INSTANCE.usersProfiles.containsKey(userName))
+            throw new Exception("User doesn't have profile created. Register user at first.");
+
+        return Database.INSTANCE.usersProfiles.get(userName).getNotification();
+    }
+
+    public static String[] getFriendList(String userName) throws Exception {
+        if(!Database.INSTANCE.usersProfiles.containsKey(userName))
+            throw new Exception("User doesn't have profile created. Register user at first.");
+
+        return Database.INSTANCE.usersProfiles.get(userName).friends.toArray(new String[0]);
+    }
+
+    public static void removeFriendRequestFromUserProfile(String userName, String requestingUser) throws Exception {
+        if(!Database.INSTANCE.usersProfiles.containsKey(userName))
+            throw new Exception("User doesn't have profile created. Register user at first.");
+
+        Database.INSTANCE.usersProfiles.get(userName).removeFriendRequest(requestingUser);
+    }
+
+    public static void addFriendToUser(String userName, String friendName) throws Exception {
+        if(!Database.INSTANCE.usersProfiles.containsKey(userName))
+            throw new Exception("User doesn't have profile created. Register user at first.");
+
+        Database.INSTANCE.usersProfiles.get(userName).addFriend(friendName);
+    }
+
+    public static void removeFriendFromUser(String userName, String friendName) throws Exception {
+        if(!Database.INSTANCE.usersProfiles.containsKey(userName))
+            throw new Exception("User doesn't have profile created. Register user at first.");
+
+        Database.INSTANCE.usersProfiles.get(userName).removeFriend(friendName);
+    }
+
+    public static void addUserToRegisteredUsersAndCreateHisProfile(Credentials credentials){
         Database.INSTANCE.registeredUsers.put(
                 credentials.username,
                 credentials.password);
+        createUserProfile(credentials.username);
     }
 
     public static boolean isUserInRegisteredUsers(String username) {
@@ -47,12 +94,12 @@ public class DatabaseHandler {
         if (!isConversationBetweenUsersAlreadyInDatabase(sender, receiver))
             createConversation(sender, receiver);
 
-        List<Message> conversation =
+        Map<Integer, Message> conversation =
                 Database.INSTANCE.conversationsWithFriends.get(new UsersPair(sender, receiver));
 
         int messageId = conversation.size();
 
-        conversation.add(new Message(
+        conversation.put(messageId, new Message(
                 messageId,
                 message,
                 sender,
@@ -60,11 +107,23 @@ public class DatabaseHandler {
         ));
     }
 
+    public static Message getMessageById(String firstUser, String secondUser, int messageId) {
+
+        Message result = new Message();
+
+        Map<Integer, Message> conversation =
+                Database.INSTANCE.conversationsWithFriends.get(new UsersPair(firstUser, secondUser));
+
+        if (conversation != null) result = conversation.get(messageId);
+
+        return result;
+    }
+
     public static List<Message> getConversationMessagesFromLatest(String firstUser, String secondUser, int count) {
 
         List<Message> result = new ArrayList<>();
 
-        List<Message> conversation =
+        Map<Integer, Message> conversation =
                 Database.INSTANCE.conversationsWithFriends.get(new UsersPair(firstUser, secondUser));
         if (conversation != null) {
             int lastMessageIndex = conversation.size() - 1;
@@ -77,7 +136,7 @@ public class DatabaseHandler {
 
         List<Message> result = new ArrayList<>();
 
-        List<Message> conversation =
+        Map<Integer, Message> conversation =
                 Database.INSTANCE.conversationsWithFriends.get(new UsersPair(firstUser, secondUser));
         if (conversation != null) {
             result = getConversationMessagesFromLatestToSpecifiedInRightOrder(conversation, specifiedMessageId);
@@ -89,12 +148,16 @@ public class DatabaseHandler {
 
         List<Message> result = new ArrayList<>();
 
-        List<Message> conversation =
+        Map<Integer, Message> conversation =
                 Database.INSTANCE.conversationsWithFriends.get(new UsersPair(firstUser, secondUser));
         if (conversation != null) {
             result = getConversationMessagesFromSpecifiedOneInRightOrder(conversation, lastMessageIndex, count);
         }
         return result;
+    }
+
+    private static void createUserProfile(String username) {
+        Database.INSTANCE.usersProfiles.put(username, new Profile());
     }
 
     private static boolean isConversationBetweenUsersAlreadyInDatabase(String firstUser, String secondUser) {
@@ -106,46 +169,47 @@ public class DatabaseHandler {
     private static void createConversation(String firstUser, String secondUser) {
         Database.INSTANCE.conversationsWithFriends.put(
                 new UsersPair(firstUser,secondUser),
-                new ArrayList<>());
+                new HashMap<>());
     }
 
     private static List<Message> getConversationMessagesFromLatestToSpecifiedInRightOrder(
-            List<Message> conversation,
-            int messageToIndex) {
+            Map<Integer, Message> conversation,
+            int messageToId) {
 
         List<Message> messagesToReturn = new ArrayList<>();
         if (conversation == null)
             return messagesToReturn;
 
-        int lastElementIndex = conversation.size() - 1;
+        int lastElementId = conversation.size();
 
-        while(lastElementIndex > 0 && lastElementIndex != messageToIndex) {
+        while(lastElementId > 0 && lastElementId != messageToId) {
 
-            Message msg = conversation.get(lastElementIndex);
-            messagesToReturn.add(0, msg);
-            lastElementIndex--;
+            Message message = conversation.get(lastElementId);
+            if (message != null) messagesToReturn.add(0, message);
+            lastElementId--;
         }
 
         return messagesToReturn;
     }
 
     private static List<Message> getConversationMessagesFromSpecifiedOneInRightOrder(
-            List<Message> conversation,
-            int specifiedMessageIndex,
+            Map<Integer, Message> conversation,
+            int specifiedMessageId,
             int count) {
 
         List<Message> messagesToReturn = new ArrayList<>();
+
         if (conversation == null)
             return messagesToReturn;
 
-        int index = specifiedMessageIndex;
+        int id = specifiedMessageId;
         for(int i = 0; i<count; i++) {
 
-            if (index < 0) break;
+            if (id < 0) break;
 
-            Message msg = conversation.get(index);
-            messagesToReturn.add(0,msg);
-            index--;
+            Message message = conversation.get(id);
+            if (message != null) messagesToReturn.add(0,message);
+            id--;
         }
 
         return messagesToReturn;

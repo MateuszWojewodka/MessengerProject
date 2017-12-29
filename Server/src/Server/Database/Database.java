@@ -12,7 +12,7 @@ public enum Database {
 
     Map<String, Credentials> loggedUsers;
     Map<String, String> registeredUsers;
-    Map<UsersPair, List<Message>> conversationsWithFriends;
+    Map<UsersPair, Map<Integer, Message>> conversationsWithFriends;
     Map<String, Profile> usersProfiles;
 
     private Database() {

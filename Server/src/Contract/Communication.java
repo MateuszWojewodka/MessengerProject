@@ -21,4 +21,7 @@ public interface Communication {
 
     @WebMethod
     Message[] getConversationMessagesFromSpecifiedOne(String friendUserName, int lastMessageId, int messageCount) throws Exception;
+
+    @WebMethod
+    void markConversationMessagesAsRead(String friendName, int[] messagesId) throws Exception;
 }

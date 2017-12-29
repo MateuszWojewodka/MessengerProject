@@ -20,8 +20,8 @@ public class ClientMain {
         authentication = AuthenticationHandler.getInstance();
         communication = CommunicationHandler.getInstance();
 
-        authentication.registerUser(USERNAME, PASSWORD);
-        authentication.registerUser(FRIENDNAME, PASSWORD);
+        //authentication.registerUser(USERNAME, PASSWORD);
+        //authentication.registerUser(FRIENDNAME, PASSWORD);
         authentication.logUserIn(USERNAME, PASSWORD);
 
         Scanner scanner = new Scanner(System.in);
