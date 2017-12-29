@@ -34,8 +34,6 @@ public class CommunicationHandler extends ServiceBaseHandler<Communication> {
         messagesToSend = new ArrayList<>();
         messageSender = new MessageSenderThread();
         timerToUpdateMessages = new Timer();
-
-        startMessageUpdater();
     }
 
     private void updateMessagesContainerDatabase(
@@ -104,20 +102,25 @@ public class CommunicationHandler extends ServiceBaseHandler<Communication> {
         }
     }
 
-    private void startMessageUpdater() {
+    public void startMessageUpdater(String friendName) {
 
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run(){
                 try {
-                    updateMessagesContainerDatabase("Mariusz");
+                    updateMessagesContainerDatabase(friendName);
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
             }
         };
 
-        timerToUpdateMessages.schedule(timerTask, 1000, 300);
+        timerToUpdateMessages.schedule(timerTask, 0, 300);
+    }
+
+    public void stopAllMessageUpdaterTasks(String friendName) {
+
+        timerToUpdateMessages.cancel();
     }
 
     private class MessageSenderThread extends Thread {

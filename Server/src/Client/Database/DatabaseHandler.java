@@ -2,6 +2,7 @@ package Client.Database;
 
 import Client.Database.Database;
 import Contract.DTO.Message;
+import Contract.DTO.Notifications;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,14 @@ public class DatabaseHandler {
 
         createConversationIfDoesNotExist(friendName);
         Database.INSTANCE.conversations.get(friendName).add(message);
+    }
+
+    public static void setNotications(Notifications notifications) {
+        Database.INSTANCE.notifications.set(notifications);
+    }
+
+    public static Notifications getNotifications() {
+        return Database.INSTANCE.notifications.get();
     }
 
     public static void addMultipleMessagesToConversation(
