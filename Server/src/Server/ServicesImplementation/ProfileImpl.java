@@ -21,6 +21,9 @@ public class ProfileImpl extends ServiceBaseImpl implements Profile {
 
     @Override
     public void sendFriendRequest(String friendName) throws Exception {
+
+        throwExceptionIfUserIsNotRegistered(friendName);
+
         DatabaseHandler.addFriendRequestToUserProfile(friendName, getNameOfUser());
     }
 

@@ -36,7 +36,7 @@ public class ClientMain {
         authentication.logUserIn(USERNAME, PASSWORD);
         enterWaiter.nextLine();
 
-        profile.sendFriendRequest(FRIENDNAME);
+        profile.sendFriendRequest("dupa");
         enterWaiter.nextLine();
 
 //        communication.startMessageUpdater(FRIENDNAME);

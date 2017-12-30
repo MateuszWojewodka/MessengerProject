@@ -14,6 +14,9 @@ public class AuthenticationImpl  extends ServiceBaseImpl implements Authenticati
     @Override
     public void registerUser(Credentials credentials) throws Exception {
 
+        if (isUserIsRegistered(credentials.username)) {
+            throw new Exception("User is already registered. Choose another name.");
+        }
         DatabaseHandler.addUserToRegisteredUsersAndCreateHisProfile(credentials);
     }
 
