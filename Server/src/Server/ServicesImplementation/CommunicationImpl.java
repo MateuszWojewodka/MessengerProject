@@ -12,7 +12,7 @@ public class CommunicationImpl extends ServiceBaseImpl implements Communication 
     @Override
     public void sendMessageToFriend(String friendUserName, String message) throws Exception {
 
-        throwExceptionIfUserIsNotLoggedOn();
+        throwExceptionIfCurrentUserIsNotLoggedOn();
         throwExceptionIfUserIsNotRegistered(friendUserName);
         throwExceptionIfUserIsNotFriendOf(friendUserName);
 
@@ -26,7 +26,7 @@ public class CommunicationImpl extends ServiceBaseImpl implements Communication 
             String friendUserName,
             int messagesCount) throws Exception {
 
-        throwExceptionIfUserIsNotLoggedOn();
+        throwExceptionIfCurrentUserIsNotLoggedOn();
         throwExceptionIfUserIsNotRegistered(friendUserName);
 
         return DatabaseHandler
@@ -42,7 +42,7 @@ public class CommunicationImpl extends ServiceBaseImpl implements Communication 
             int lastMessageId,
             int messageCount) throws Exception {
 
-        throwExceptionIfUserIsNotLoggedOn();
+        throwExceptionIfCurrentUserIsNotLoggedOn();
         throwExceptionIfUserIsNotRegistered(friendUserName);
 
         return DatabaseHandler
@@ -58,7 +58,7 @@ public class CommunicationImpl extends ServiceBaseImpl implements Communication 
             String friendUserName,
             int specifiedMessageId) throws Exception {
 
-        throwExceptionIfUserIsNotLoggedOn();
+        throwExceptionIfCurrentUserIsNotLoggedOn();
         throwExceptionIfUserIsNotRegistered(friendUserName);
 
         return DatabaseHandler
@@ -70,7 +70,8 @@ public class CommunicationImpl extends ServiceBaseImpl implements Communication 
 
     @Override
     public void markConversationMessagesAsRead(String friendName, int[] messagesId) throws Exception {
-        throwExceptionIfUserIsNotLoggedOn();
+
+        throwExceptionIfCurrentUserIsNotLoggedOn();
         throwExceptionIfUserIsNotRegistered(friendName);
 
         for(int id : messagesId) {

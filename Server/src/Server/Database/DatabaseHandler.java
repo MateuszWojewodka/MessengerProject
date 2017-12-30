@@ -4,7 +4,6 @@ import Contract.DTO.Credentials;
 import Contract.DTO.Message;
 import Contract.DTO.Notifications;
 
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,53 +17,11 @@ public class DatabaseHandler {
         Database.INSTANCE.usersProfiles.get(userName).addNewMessageNotification(messageSender);
     }
 
-    public static void removeNewMessageNotificationFromUserProfile(String userName, String messageSender) throws Exception {
-        if(!Database.INSTANCE.usersProfiles.containsKey(userName))
-            throw new Exception("User doesn't have profile created. Register user at first.");
-        Database.INSTANCE.usersProfiles.get(userName).removeNewMessageNotification(messageSender);
-    }
-
     public static void addFriendRequestToUserProfile(String userName, String requestingUser) throws Exception{
         if(!Database.INSTANCE.usersProfiles.containsKey(userName))
             throw new Exception("User doesn't have profile created. Register user at first.");
 
         Database.INSTANCE.usersProfiles.get(userName).addFriendRequest(requestingUser);
-    }
-
-    public static Notifications getNotifications(String userName) throws Exception {
-
-        if(!Database.INSTANCE.usersProfiles.containsKey(userName))
-            throw new Exception("User doesn't have profile created. Register user at first.");
-
-        return Database.INSTANCE.usersProfiles.get(userName).getNotification();
-    }
-
-    public static String[] getFriendList(String userName) throws Exception {
-        if(!Database.INSTANCE.usersProfiles.containsKey(userName))
-            throw new Exception("User doesn't have profile created. Register user at first.");
-
-        return Database.INSTANCE.usersProfiles.get(userName).friends.toArray(new String[0]);
-    }
-
-    public static boolean isUserOnFriendListOf(String userName, String userWhichFriendListWillBeChecked) throws Exception {
-        if(!Database.INSTANCE.usersProfiles.containsKey(userWhichFriendListWillBeChecked))
-            throw new Exception("User doesn't have profile created. Register user at first.");
-
-        return Database.INSTANCE.usersProfiles.get(userName).friends.contains(userWhichFriendListWillBeChecked);
-    }
-
-    public static boolean isFriendRequestInUsersNotifications(String userName, String requestingUser) throws Exception {
-        if(!Database.INSTANCE.usersProfiles.containsKey(userName))
-            throw new Exception("User doesn't have profile created. Register user at first.");
-
-        return Database.INSTANCE.usersProfiles.get(userName).isFriendRequestInNotifications(requestingUser);
-    }
-
-    public static void removeFriendRequestFromUserProfile(String userName, String requestingUser) throws Exception {
-        if(!Database.INSTANCE.usersProfiles.containsKey(userName))
-            throw new Exception("User doesn't have profile created. Register user at first.");
-
-        Database.INSTANCE.usersProfiles.get(userName).removeFriendRequest(requestingUser);
     }
 
     public static void addFriendToUser(String userName, String friendName) throws Exception {
@@ -74,13 +31,6 @@ public class DatabaseHandler {
         Database.INSTANCE.usersProfiles.get(userName).addFriend(friendName);
     }
 
-    public static void removeFriendFromUser(String userName, String friendName) throws Exception {
-        if(!Database.INSTANCE.usersProfiles.containsKey(userName))
-            throw new Exception("User doesn't have profile created. Register user at first.");
-
-        Database.INSTANCE.usersProfiles.get(userName).removeFriend(friendName);
-    }
-
     public static void addUserToRegisteredUsersAndCreateHisProfile(Credentials credentials){
         Database.INSTANCE.registeredUsers.put(
                 credentials.username,
@@ -88,36 +38,8 @@ public class DatabaseHandler {
         createUserProfile(credentials.username);
     }
 
-    public static boolean isUserInRegisteredUsers(String username) {
-        return Database.INSTANCE.registeredUsers.containsKey(username);
-    }
-
     public static void addUserToLoggedUsers(String token, Credentials credentials) {
         Database.INSTANCE.loggedUsers.put(token, credentials);
-    }
-
-    public static void removeUserFromLoggedUsers(String token) {
-        Database.INSTANCE.loggedUsers.remove(token);
-    }
-
-    public static boolean isTokenInUseByLoggedUser(String token) {
-        return Database.INSTANCE.loggedUsers.containsKey(token);
-    }
-
-    public static String getUsernameFromToken(String token) throws Exception{
-
-        if(!Database.INSTANCE.loggedUsers.containsKey(token))
-            throw new Exception("User is not logged on");
-
-        return Database.INSTANCE.loggedUsers.get(token).username;
-    }
-
-    public static String checkIfUserIsLoggedOnAndGetToken(Credentials credentials) {
-        for (String token : Database.INSTANCE.loggedUsers.keySet()) {
-            if (Database.INSTANCE.loggedUsers.get(token).equals(credentials))
-                return token;
-        }
-        return null;
     }
 
     public static void addMessageToConversation(String sender, String receiver, String message) {
@@ -136,6 +58,82 @@ public class DatabaseHandler {
                 sender,
                 receiver
         ));
+    }
+
+    public static void removeNewMessageNotificationFromUserProfile(String userName, String messageSender) throws Exception {
+        if(!Database.INSTANCE.usersProfiles.containsKey(userName))
+            throw new Exception("User doesn't have profile created. Register user at first.");
+        Database.INSTANCE.usersProfiles.get(userName).removeNewMessageNotification(messageSender);
+    }
+
+    public static void removeFriendRequestFromUserProfile(String userName, String requestingUser) throws Exception {
+        if(!Database.INSTANCE.usersProfiles.containsKey(userName))
+            throw new Exception("User doesn't have profile created. Register user at first.");
+
+        Database.INSTANCE.usersProfiles.get(userName).removeFriendRequest(requestingUser);
+    }
+
+    public static void removeFriendFromUser(String userName, String friendName) throws Exception {
+        if(!Database.INSTANCE.usersProfiles.containsKey(userName))
+            throw new Exception("User doesn't have profile created. Register user at first.");
+
+        Database.INSTANCE.usersProfiles.get(userName).removeFriend(friendName);
+    }
+    public static void removeUserFromLoggedUsers(String token) {
+        Database.INSTANCE.loggedUsers.remove(token);
+    }
+
+    public static boolean isUserOnFriendListOf(String userName, String userWhichFriendListWillBeChecked) throws Exception {
+        if(!Database.INSTANCE.usersProfiles.containsKey(userWhichFriendListWillBeChecked))
+            throw new Exception("User doesn't have profile created. Register user at first.");
+
+        return Database.INSTANCE.usersProfiles.get(userName).friends.contains(userWhichFriendListWillBeChecked);
+    }
+
+    public static boolean isFriendRequestInUsersNotifications(String userName, String requestingUser) throws Exception {
+        if(!Database.INSTANCE.usersProfiles.containsKey(userName))
+            throw new Exception("User doesn't have profile created. Register user at first.");
+
+        return Database.INSTANCE.usersProfiles.get(userName).isFriendRequestInNotifications(requestingUser);
+    }
+
+    public static boolean isUserInRegisteredUsers(String username) {
+        return Database.INSTANCE.registeredUsers.containsKey(username);
+    }
+
+    public static boolean isTokenInUseByLoggedUser(String token) {
+        return Database.INSTANCE.loggedUsers.containsKey(token);
+    }
+
+    public static String checkIfUserIsLoggedOnAndGetToken(Credentials credentials) {
+        for (String token : Database.INSTANCE.loggedUsers.keySet()) {
+            if (Database.INSTANCE.loggedUsers.get(token).equals(credentials))
+                return token;
+        }
+        return null;
+    }
+
+    public static Notifications getNotifications(String userName) throws Exception {
+
+        if(!Database.INSTANCE.usersProfiles.containsKey(userName))
+            throw new Exception("User doesn't have profile created. Register user at first.");
+
+        return Database.INSTANCE.usersProfiles.get(userName).getNotification();
+    }
+
+    public static String[] getFriendList(String userName) throws Exception {
+        if(!Database.INSTANCE.usersProfiles.containsKey(userName))
+            throw new Exception("User doesn't have profile created. Register user at first.");
+
+        return Database.INSTANCE.usersProfiles.get(userName).friends.toArray(new String[0]);
+    }
+
+    public static String getUsernameFromToken(String token) throws Exception{
+
+        if(!Database.INSTANCE.loggedUsers.containsKey(token))
+            throw new Exception("User is not logged on");
+
+        return Database.INSTANCE.loggedUsers.get(token).username;
     }
 
     public static UsersPair[] getConversationUsersPairList() {
@@ -219,6 +217,9 @@ public class DatabaseHandler {
         }
         return result;
     }
+
+    //*****************************************************************************
+    //PRIVATE METHODS
 
     private static void createUserProfile(String username) {
         Database.INSTANCE.usersProfiles.put(username, new Profile());

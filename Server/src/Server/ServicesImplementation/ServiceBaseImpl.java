@@ -47,7 +47,7 @@ public abstract class ServiceBaseImpl {
         return DatabaseHandler.getUsernameFromToken(token);
     }
 
-    public void throwExceptionIfUserIsNotLoggedOn() throws Exception {
+    public void throwExceptionIfCurrentUserIsNotLoggedOn() throws Exception {
 
         if (!isUserIsLoggedOn()) {
             throw new Exception("User is not logged on.");

@@ -11,6 +11,9 @@ import java.util.Random;
 @WebService(endpointInterface = "Contract.Authentication")
 public class AuthenticationImpl  extends ServiceBaseImpl implements Authentication {
 
+    private final String TOKEN_GENERATOR_ALPHABET = "1234567890abcdefghijklmnoprstuwxyz-+*/=";
+    private final int TOKEN_LENGHT = 10;
+
     @Override
     public void registerUser(Credentials credentials) throws Exception {
 
@@ -58,9 +61,9 @@ public class AuthenticationImpl  extends ServiceBaseImpl implements Authenticati
         Random rand = new Random();
         StringBuilder sb = new StringBuilder();
 
-        for (int i = 0; i < Configuration.TOKEN_LENGHT; i++) {
-            int num = rand.nextInt(Configuration.TOKEN_GENERATOR_ALPHABET.length());
-            sb.append(Configuration.TOKEN_GENERATOR_ALPHABET.charAt(num));
+        for (int i = 0; i < TOKEN_LENGHT; i++) {
+            int num = rand.nextInt(TOKEN_GENERATOR_ALPHABET.length());
+            sb.append(TOKEN_GENERATOR_ALPHABET.charAt(num));
         }
 
         return sb.toString();
