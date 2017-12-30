@@ -41,7 +41,7 @@ public abstract class ServiceBaseImpl {
             return true;
     }
 
-    protected String getNameOfUser() {
+    protected String getNameOfUser() throws  Exception{
 
         String token = getTokenFromHttpRequest();
         return DatabaseHandler.getUsernameFromToken(token);
@@ -58,5 +58,11 @@ public abstract class ServiceBaseImpl {
 
         if (!isUserIsRegistered(username))
             throw new Exception("User " + username + " is not registered.");
+    }
+
+    public void throwExceptionIfUserIsNotFriendOf(String userWhichFriendListWillBeChecked) throws Exception {
+
+        if(!DatabaseHandler.isUserOnFriendListOf(getNameOfUser(), userWhichFriendListWillBeChecked))
+            throw new Exception(userWhichFriendListWillBeChecked + " doesn't have you on his friend list.");
     }
 }

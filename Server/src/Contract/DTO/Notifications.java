@@ -2,21 +2,19 @@ package Contract.DTO;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @XmlRootElement
 public class Notifications {
 
     @XmlElement
-    public List<String> friendRequestsSenders;
+    public Set<String> friendRequestsSenders;
     @XmlElement
-    public List<String> newMessagesSenders;
+    public Set<String> newMessagesSenders;
 
     public Notifications() {
 
-        friendRequestsSenders = Collections.synchronizedList(new ArrayList<>());
-        newMessagesSenders = Collections.synchronizedList(new ArrayList<>());
+        friendRequestsSenders = Collections.synchronizedSet(new HashSet<>());
+        newMessagesSenders = Collections.synchronizedSet(new HashSet<>());
     }
 }

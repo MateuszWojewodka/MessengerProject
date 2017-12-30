@@ -4,12 +4,25 @@ import Contract.DTO.Credentials;
 import Contract.DTO.Message;
 import Contract.DTO.Notifications;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class DatabaseHandler {
+
+    public static void addNewMessageNotificationToUserProfile(String userName, String messageSender) throws Exception {
+        if(!Database.INSTANCE.usersProfiles.containsKey(userName))
+            throw new Exception("User doesn't have profile created. Register user at first.");
+        Database.INSTANCE.usersProfiles.get(userName).addNewMessageNotification(messageSender);
+    }
+
+    public static void removeNewMessageNotificationFromUserProfile(String userName, String messageSender) throws Exception {
+        if(!Database.INSTANCE.usersProfiles.containsKey(userName))
+            throw new Exception("User doesn't have profile created. Register user at first.");
+        Database.INSTANCE.usersProfiles.get(userName).removeNewMessageNotification(messageSender);
+    }
 
     public static void addFriendRequestToUserProfile(String userName, String requestingUser) throws Exception{
         if(!Database.INSTANCE.usersProfiles.containsKey(userName))
@@ -31,6 +44,20 @@ public class DatabaseHandler {
             throw new Exception("User doesn't have profile created. Register user at first.");
 
         return Database.INSTANCE.usersProfiles.get(userName).friends.toArray(new String[0]);
+    }
+
+    public static boolean isUserOnFriendListOf(String userName, String userWhichFriendListWillBeChecked) throws Exception {
+        if(!Database.INSTANCE.usersProfiles.containsKey(userWhichFriendListWillBeChecked))
+            throw new Exception("User doesn't have profile created. Register user at first.");
+
+        return Database.INSTANCE.usersProfiles.get(userName).friends.contains(userWhichFriendListWillBeChecked);
+    }
+
+    public static boolean isFriendRequestInUsersNotifications(String userName, String requestingUser) throws Exception {
+        if(!Database.INSTANCE.usersProfiles.containsKey(userName))
+            throw new Exception("User doesn't have profile created. Register user at first.");
+
+        return Database.INSTANCE.usersProfiles.get(userName).isFriendRequestInNotifications(requestingUser);
     }
 
     public static void removeFriendRequestFromUserProfile(String userName, String requestingUser) throws Exception {
@@ -77,7 +104,11 @@ public class DatabaseHandler {
         return Database.INSTANCE.loggedUsers.containsKey(token);
     }
 
-    public static String getUsernameFromToken(String token) {
+    public static String getUsernameFromToken(String token) throws Exception{
+
+        if(!Database.INSTANCE.loggedUsers.containsKey(token))
+            throw new Exception("User is not logged on");
+
         return Database.INSTANCE.loggedUsers.get(token).username;
     }
 
@@ -107,7 +138,40 @@ public class DatabaseHandler {
         ));
     }
 
-    public static Message getMessageById(String firstUser, String secondUser, int messageId) {
+    public static UsersPair[] getConversationUsersPairList() {
+
+        return Database.INSTANCE.conversationsWithFriends.keySet().toArray(new UsersPair[0]);
+    }
+
+    public static Message getLastMessageFromConversation(String firstUser, String secondUser) {
+
+        Message result = new Message();
+
+        Map<Integer, Message> conversation =
+                Database.INSTANCE.conversationsWithFriends.get(new UsersPair(firstUser, secondUser));
+
+        if(conversation != null) {
+            int lastMessageId = conversation.size() - 1;
+            result  = conversation.get(lastMessageId);
+        }
+        return result;
+    }
+
+    public static Message getLastMessageFromConversation(UsersPair usersPair) {
+
+        Message result = new Message();
+
+        Map<Integer, Message> conversation =
+                Database.INSTANCE.conversationsWithFriends.get(usersPair);
+
+        if(conversation != null) {
+            int lastMessageId = conversation.size() - 1;
+            result  = conversation.get(lastMessageId);
+        }
+        return result;
+    }
+
+    public static Message getMessageFromConversationById(String firstUser, String secondUser, int messageId) {
 
         Message result = new Message();
 
@@ -126,8 +190,8 @@ public class DatabaseHandler {
         Map<Integer, Message> conversation =
                 Database.INSTANCE.conversationsWithFriends.get(new UsersPair(firstUser, secondUser));
         if (conversation != null) {
-            int lastMessageIndex = conversation.size() - 1;
-            result = getConversationMessagesFromSpecifiedOneInRightOrder(conversation, lastMessageIndex, count);
+            int lastMessageId = conversation.size() - 1;
+            result = getConversationMessagesFromSpecifiedOneInRightOrder(conversation, lastMessageId, count);
         }
         return result;
     }
@@ -144,14 +208,14 @@ public class DatabaseHandler {
         return result;
     }
 
-    public static List<Message> getConversationMessagesFromSpecifiedOne(String firstUser, String secondUser, int lastMessageIndex, int count) {
+    public static List<Message> getConversationMessagesFromSpecifiedOne(String firstUser, String secondUser, int lastMessageId, int count) {
 
         List<Message> result = new ArrayList<>();
 
         Map<Integer, Message> conversation =
                 Database.INSTANCE.conversationsWithFriends.get(new UsersPair(firstUser, secondUser));
         if (conversation != null) {
-            result = getConversationMessagesFromSpecifiedOneInRightOrder(conversation, lastMessageIndex, count);
+            result = getConversationMessagesFromSpecifiedOneInRightOrder(conversation, lastMessageId, count);
         }
         return result;
     }

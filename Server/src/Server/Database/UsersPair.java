@@ -1,6 +1,6 @@
 package Server.Database;
 
-class UsersPair {
+public class UsersPair {
 
     private String firstUser;
     private String secondUser;

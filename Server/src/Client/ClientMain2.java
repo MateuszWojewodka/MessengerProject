@@ -1,19 +1,16 @@
 package Client;
 
-import Client.Database.Database;
 import Client.ServiceHandlers.AuthenticationHandler;
 import Client.ServiceHandlers.CommunicationHandler;
 import Client.ServiceHandlers.ProfileHandler;
-import Contract.DTO.Message;
-import Contract.Profile;
 
 import java.net.MalformedURLException;
-import java.util.*;
+import java.util.Scanner;
 
-public class ClientMain {
+public class ClientMain2 {
 
-    private static String USERNAME = "Matis";
-    private static String FRIENDNAME = "Mariusz";
+    private static String USERNAME = "Mariusz";
+    private static String FRIENDNAME = "Matis";
     private static String PASSWORD = "Pass";
 
     private static AuthenticationHandler authentication;
@@ -36,17 +33,7 @@ public class ClientMain {
         authentication.logUserIn(USERNAME, PASSWORD);
         enterWaiter.nextLine();
 
-        profile.sendFriendRequest(FRIENDNAME);
-        enterWaiter.nextLine();
-
-//        communication.startMessageUpdater(FRIENDNAME);
-//        enterWaiter.nextLine();
-//
-//
-//        List<Message> conv = Database.INSTANCE.conversations.get(FRIENDNAME);
-//        Message lastMessage = conv.get(conv.size() - 1);
-
-        //communication.markMessagesAsRead(FRIENDNAME, new int[]{lastMessage.getMessageId()});
+        profile.acceptFriendRequest(FRIENDNAME);
 
         Scanner scanner = new Scanner(System.in);
         while (true) {

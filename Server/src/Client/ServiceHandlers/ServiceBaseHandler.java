@@ -3,6 +3,7 @@ package Client.ServiceHandlers;
 import Client.Enums.ServiceTypes;
 import Contract.Authentication;
 import Contract.Communication;
+import Contract.Profile;
 
 import javax.xml.namespace.QName;
 import javax.xml.ws.BindingProvider;
@@ -61,6 +62,8 @@ public abstract class ServiceBaseHandler <serviceClassType> {
             return ServiceTypes.COMMUNICATION;
         else if (Authentication.class.isAssignableFrom(serviceClass))
             return  ServiceTypes.AUTHENTICATION;
+        else if (Profile.class.isAssignableFrom(serviceClass))
+            return ServiceTypes.PROFILE;
         else
             throw new Exception("No ServiceType exist for given type");
     }

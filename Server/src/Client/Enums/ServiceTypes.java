@@ -3,7 +3,8 @@ package Client.Enums;
 public enum ServiceTypes {
 
     AUTHENTICATION("authentication", "AuthenticationImplService"),
-    COMMUNICATION("communication", "CommunicationImplService");
+    COMMUNICATION("communication", "CommunicationImplService"),
+    PROFILE("profile", "ProfileImplService");
 
     private String path;
     private String localPart;

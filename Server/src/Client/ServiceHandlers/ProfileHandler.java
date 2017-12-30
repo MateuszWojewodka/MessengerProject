@@ -50,6 +50,7 @@ public class ProfileHandler extends ServiceBaseHandler <Profile>{
 
         try {
             serviceObject.sendFriendRequest(friendName);
+            System.out.println("Friend request has been sent to " + friendName);
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
@@ -60,6 +61,7 @@ public class ProfileHandler extends ServiceBaseHandler <Profile>{
     public void removeFriend(String friendName) throws Exception {
         try {
             serviceObject.removeFriend(friendName);
+            System.out.println(friendName + " has been removed from your friendlist.");
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
@@ -70,6 +72,7 @@ public class ProfileHandler extends ServiceBaseHandler <Profile>{
     public void acceptFriendRequest(String friendName) throws Exception{
         try {
             serviceObject.acceptFriendRequest(friendName);
+            System.out.println(friendName + " friend request has been accepted.");
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
@@ -80,6 +83,7 @@ public class ProfileHandler extends ServiceBaseHandler <Profile>{
     public void rejectFriendRequest(String friendName) throws Exception{
         try {
             serviceObject.rejectFriendRequest(friendName);
+            System.out.println(friendName + " friend request has been rejected.");
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
@@ -87,7 +91,7 @@ public class ProfileHandler extends ServiceBaseHandler <Profile>{
     }
 
     @TokenAuthenticated
-    public Notifications getNotifications() throws Exception{
+    public Notifications getNotifications() {
 
         Notifications result = new Notifications();
         try {
@@ -104,12 +108,8 @@ public class ProfileHandler extends ServiceBaseHandler <Profile>{
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run(){
-                try {
-                    Notifications n = serviceObject.getNotifications();
-                    DatabaseHandler.setNotications(n);
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }
+                Notifications n = getNotifications();
+                DatabaseHandler.setNotications(n);
             }
         };
         timerToUpdateNotifications.schedule(timerTask, 1000, 300);

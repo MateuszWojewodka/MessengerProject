@@ -48,6 +48,12 @@ public class CommunicationHandler extends ServiceBaseHandler<Communication> {
         }
     }
 
+    @TokenAuthenticated
+    public void markMessagesAsRead(String friendName, int[] messagesId) throws Exception {
+
+        serviceObject.markConversationMessagesAsRead(friendName, messagesId);
+    }
+
     public void sendMessageToFriend(String userName, String friendName, String message) {
 
         synchronized (messagesToSend) {

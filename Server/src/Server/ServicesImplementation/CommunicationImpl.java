@@ -2,11 +2,9 @@ package Server.ServicesImplementation;
 
 import Contract.Communication;
 import Contract.DTO.Message;
-import Server.Database.Database;
 import Server.Database.DatabaseHandler;
 
 import javax.jws.WebService;
-import java.util.List;
 
 @WebService(endpointInterface = "Contract.Communication")
 public class CommunicationImpl extends ServiceBaseImpl implements Communication {
@@ -16,6 +14,7 @@ public class CommunicationImpl extends ServiceBaseImpl implements Communication 
 
         throwExceptionIfUserIsNotLoggedOn();
         throwExceptionIfUserIsNotRegistered(friendUserName);
+        throwExceptionIfUserIsNotFriendOf(friendUserName);
 
         String senderName = getNameOfUser();
 
@@ -75,8 +74,7 @@ public class CommunicationImpl extends ServiceBaseImpl implements Communication 
         throwExceptionIfUserIsNotRegistered(friendName);
 
         for(int id : messagesId) {
-            DatabaseHandler.getMessageById(getNameOfUser(), friendName, id).markAsRead();
+            DatabaseHandler.getMessageFromConversationById(getNameOfUser(), friendName, id).markAsRead();
         }
-
     }
 }

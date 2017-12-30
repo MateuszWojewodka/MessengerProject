@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-class Profile {
+public class Profile {
 
     public Set<String> friends;
     public Notifications notification;
@@ -31,6 +31,18 @@ class Profile {
 
     public void removeFriendRequest(String userRequestingName) {
         notification.friendRequestsSenders.remove(userRequestingName);
+    }
+
+    public boolean isFriendRequestInNotifications(String requestingUserName) {
+        return notification.friendRequestsSenders.contains(requestingUserName);
+    }
+
+    public void addNewMessageNotification(String messageSender) {
+        notification.newMessagesSenders.add(messageSender);
+    }
+
+    public void removeNewMessageNotification(String messageSender) {
+        notification.newMessagesSenders.remove(messageSender);
     }
 
     public Notifications getNotification() {
