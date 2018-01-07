@@ -24,7 +24,7 @@ public class AuthenticationHandler extends ServiceBaseHandler <Authentication>{
         super(Authentication.class);
     }
 
-    public void registerUser(String myUserName, String myPassword) throws Exception {
+    public void registerUser(String myUserName, String myPassword) {
 
         try {
             serviceObject.registerUser(new Credentials(myUserName, myPassword));
@@ -34,7 +34,7 @@ public class AuthenticationHandler extends ServiceBaseHandler <Authentication>{
         }
     }
 
-    public boolean logUserIn(String myUserName, String myPassword) throws Exception {
+    public boolean logUserIn(String myUserName, String myPassword) {
 
         try {
             String token = serviceObject.

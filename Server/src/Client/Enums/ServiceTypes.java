@@ -20,5 +20,4 @@ public enum ServiceTypes {
     }
 
     public String getLocalPart() {return localPart;}
-
 }

@@ -2,7 +2,6 @@ package Server.ServicesImplementation;
 
 import Contract.Authentication;
 import Contract.DTO.Credentials;
-import Server.Configuration;
 import Server.Database.DatabaseHandler;
 
 import javax.jws.WebService;
