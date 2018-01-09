@@ -1,19 +1,18 @@
 package Client.ServiceHandlersWithKSoap;
 
-import Contract.Authentication;
 import Contract.DTO.Credentials;
 import org.ksoap2.serialization.SoapPrimitive;
 
 public class AuthenticationHandler extends ServiceBaseHandler {
 
     public AuthenticationHandler() {
-        super(Configuration.AUTHENTICATION_PATH);
+        super(Configuration.AUTHENTICATION_MODULE_NAME);
     }
 
     public void registerUser(Credentials credentials) {
 
         try {
-            callMethodAndGetSoapResponse(
+            callMethodWithParametersAndGetSoapResponse(
                     Configuration.REGISTER_USER_METHOD_NAME,
                     credentials);
             System.out.println("--> " + credentials.username + " has been registered.");
@@ -26,7 +25,7 @@ public class AuthenticationHandler extends ServiceBaseHandler {
     public boolean logInAndGetToken(Credentials credentials) {
 
         try {
-            SoapPrimitive tokenResult = (SoapPrimitive) callMethodAndGetSoapResponse(
+            SoapPrimitive tokenResult = (SoapPrimitive) callMethodWithParametersAndGetSoapResponse(
                     Configuration.LOGIN_AND_GET_TOKEN_METHOD_NAME,
                     credentials);
 
@@ -45,7 +44,7 @@ public class AuthenticationHandler extends ServiceBaseHandler {
     public boolean logOut(Credentials credentials) {
 
         try {
-            callMethodAndGetSoapResponse("logOut", new Object());
+            callMethodWithParametersAndGetSoapResponse("logOut", new Object());
             System.out.println("--> " + credentials.username + " has been logged out.");
             return true;
         }

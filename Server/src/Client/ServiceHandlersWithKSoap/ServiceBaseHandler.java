@@ -5,6 +5,7 @@ import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.*;
 import org.ksoap2.transport.HttpTransportSE;
 
+import java.lang.reflect.Array;
 import java.net.Proxy;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ abstract class ServiceBaseHandler {
             sharedToken.set("");
     }
 
-    protected Object callMethodAndGetSoapResponse(String methodName, Object ...params) throws Exception {
+    protected Object callMethodWithParametersAndGetSoapResponse(String methodName, Object ...params) throws Exception {
 
         SoapObject request = getSoapRequest(methodName, params);
         SoapSerializationEnvelope envelope = getSoapSerializationEnvelope(request);
@@ -51,15 +52,28 @@ abstract class ServiceBaseHandler {
 
         for (int i = 0; i < params.length; i++){
 
-            PropertyInfo pi = new PropertyInfo();
-            pi.setName("arg" + i);
-            pi.setValue(params[i]);
-            pi.setType(params[i].getClass());
+            if (params[i].getClass().isArray()) {
 
-            request.addProperty(pi);
+                addArrayObjectToRequest(request, params[i], i);
+            }
+            else {
+
+                request.addProperty("arg" + i, params[i]);
+            }
         }
 
         return request;
+    }
+
+    private void addArrayObjectToRequest(SoapObject request, Object arrayObject, int objectArgumentNumber) {
+
+        SoapObject soapArray = new SoapObject("", "arg" + objectArgumentNumber);
+
+        for (Object object : (Object[]) arrayObject){
+            soapArray.addProperty("item", arrayObject);
+        }
+
+        request.addSoapObject(soapArray);
     }
 
     private HttpTransportSE getHttpTransportSE() {
