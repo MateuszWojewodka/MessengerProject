@@ -31,8 +31,22 @@ public class AuthenticationHandler extends ServiceBaseHandler {
                     credentials);
 
             String token = tokenResult.getValue().toString();
-            System.out.println("--> Token is: " + token);
+            sharedToken.set(token);
 
+            System.out.println("--> Token is: " + token);
+            return true;
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean logOut(Credentials credentials) {
+
+        try {
+            callMethodAndGetSoapResponse("logOut", new Object());
+            System.out.println("--> " + credentials.username + " has been logged out.");
             return true;
         }
         catch (Exception e) {

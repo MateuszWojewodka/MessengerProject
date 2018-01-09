@@ -1,18 +1,27 @@
 package Client.ServiceHandlersWithKSoap;
 
+import org.ksoap2.HeaderProperty;
 import org.ksoap2.SoapEnvelope;
-import org.ksoap2.SoapFault;
 import org.ksoap2.serialization.*;
 import org.ksoap2.transport.HttpTransportSE;
 
 import java.net.Proxy;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 abstract class ServiceBaseHandler {
 
     private String moduleName;
 
+    //this token is shared by every inherited class
+    protected static AtomicReference<String> sharedToken = new AtomicReference<>();
+
     protected ServiceBaseHandler(String moduleName) {
         this.moduleName = moduleName;
+
+        if (sharedToken.get() == null)
+            sharedToken.set("");
     }
 
     protected Object callMethodAndGetSoapResponse(String methodName, Object ...params) throws Exception {
@@ -21,14 +30,22 @@ abstract class ServiceBaseHandler {
         SoapSerializationEnvelope envelope = getSoapSerializationEnvelope(request);
 
         HttpTransportSE ht = getHttpTransportSE();
-        ht.call(Configuration.SOAP_ACTION, envelope);
+        ht.call(Configuration.SOAP_ACTION, envelope, getHeaderListWithToken(sharedToken.get()));
 
         return envelope.getResponse();
     }
 
+    private List<HeaderProperty> getHeaderListWithToken(String token) {
+
+        List<HeaderProperty> headerList = new ArrayList<>();
+        headerList.add(new HeaderProperty("Token", token));
+
+        return headerList;
+    }
+
     private SoapObject getSoapRequest(String methodName, Object ...params) {
 
-        //important to do it like that, otherwise way namespace is added in wrong way
+        //important to do it like that, otherwise namespace is added in wrong way
         SoapObject request = new SoapObject("", "ser:" + methodName);
         request.addAttribute("xmlns:ser", Configuration.NAMESPACE);
 
