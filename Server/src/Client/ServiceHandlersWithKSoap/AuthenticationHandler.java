@@ -41,11 +41,11 @@ public class AuthenticationHandler extends ServiceBaseHandler {
         }
     }
 
-    public boolean logOut(Credentials credentials) {
+    public boolean logOut() {
 
         try {
-            callMethodWithParametersAndGetSoapResponse("logOut", new Object());
-            System.out.println("--> " + credentials.username + " has been logged out.");
+            callMethodWithParametersAndGetSoapResponse("logOut", null);
+            System.out.println("--> User has been logged out.");
             return true;
         }
         catch (Exception e) {

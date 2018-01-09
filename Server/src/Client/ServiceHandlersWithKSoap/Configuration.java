@@ -19,4 +19,11 @@ class Configuration {
     static final String GET_CONVERSATION_MESSAGES_FROM_LATEST_TO_SPECIFIED_METHOD_NAME = "getConversationMessagesFromLatestToSpecified";
     static final String GET_CONVERSATION_MESSAGES_FROM_SPECIFIED_ONE_METHOD_NAME = "getConversationMessagesFromSpecifiedOne";
     static final String MARK_CONVERSATION_MESSAGES_AS_READ_METHOD_NAME = "markConversationMessagesAsRead";
+
+    static final String GET_FRIEND_LIST_METHOD_NAME = "getFriendsList";
+    static final String SEND_FRIEND_REQUEST_METHOD_NAME = "sendFriendRequest";
+    static final String REMOVE_FRIEND_METHOD_NAME = "removeFriend";
+    static final String ACCEPT_FRIEND_REQUEST_METHOD_NAME = "acceptFriendRequest";
+    static final String REJECT_FRIEND_REQUEST_METHOD_NAME = "rejectFriendRequest";
+    static final String GET_NOTIFICATIONS_METHOD_NAME = "getNotifications";
 }

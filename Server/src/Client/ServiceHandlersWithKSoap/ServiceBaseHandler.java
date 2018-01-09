@@ -50,15 +50,18 @@ abstract class ServiceBaseHandler {
         SoapObject request = new SoapObject("", "ser:" + methodName);
         request.addAttribute("xmlns:ser", Configuration.NAMESPACE);
 
-        for (int i = 0; i < params.length; i++){
+        if (params != null) {
 
-            if (params[i].getClass().isArray()) {
+            for (int i = 0; i < params.length; i++){
 
-                addArrayObjectToRequest(request, params[i], i);
-            }
-            else {
+                if (params[i].getClass().isArray()) {
 
-                request.addProperty("arg" + i, params[i]);
+                    addArrayObjectToRequest(request, params[i], i);
+                }
+                else {
+
+                    request.addProperty("arg" + i, params[i]);
+                }
             }
         }
 

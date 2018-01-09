@@ -12,7 +12,7 @@ public class Notifications {
     @XmlElement
     public Set<String> newMessagesSenders;
 
-    public Notifications() {
+    public Notifications()  {
 
         friendRequestsSenders = Collections.synchronizedSet(new HashSet<>());
         newMessagesSenders = Collections.synchronizedSet(new HashSet<>());

@@ -28,7 +28,7 @@ public class CommunicationHandler extends ServiceBaseHandler {
                     Configuration.GET_CONVERSATION_MESSAGES_FROM_LATEST_METHOD_NAME,
                     friendUserName, messagesCount);
 
-            return retrieveMessageTableFromSoapObject(response);
+            return retrieveMessageArrayFromSoapObject(response);
         }
         catch (Exception e)
         {
@@ -44,7 +44,7 @@ public class CommunicationHandler extends ServiceBaseHandler {
                     Configuration.GET_CONVERSATION_MESSAGES_FROM_LATEST_TO_SPECIFIED_METHOD_NAME,
                     friendUserName, specifiedMessageId);
 
-            return retrieveMessageTableFromSoapObject(response);
+            return retrieveMessageArrayFromSoapObject(response);
         }
         catch (Exception e)
         {
@@ -60,7 +60,7 @@ public class CommunicationHandler extends ServiceBaseHandler {
                     Configuration.GET_CONVERSATION_MESSAGES_FROM_SPECIFIED_ONE_METHOD_NAME,
                     friendUserName, lastMessageId, messageCount);
 
-            return retrieveMessageTableFromSoapObject(response);
+            return retrieveMessageArrayFromSoapObject(response);
         }
         catch (Exception e)
         {
@@ -82,7 +82,7 @@ public class CommunicationHandler extends ServiceBaseHandler {
         }
     }
 
-    private Message[] retrieveMessageTableFromSoapObject(SoapObject object) {
+    private Message[] retrieveMessageArrayFromSoapObject(SoapObject object) {
 
         Message[] result = new Message[object.getPropertyCount()];
 
