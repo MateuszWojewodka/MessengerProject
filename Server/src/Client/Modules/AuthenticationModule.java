@@ -1,26 +1,26 @@
-package Client.ServiceHandlers;
+package Client.Modules;
 
 import Contract.Authentication;
 import Contract.DTO.Credentials;
 
-public class AuthenticationHandler extends ServiceBaseHandler <Authentication>{
+public class AuthenticationModule extends ServiceBaseHandler <Authentication>{
 
     //volatile means that cache memory is updating with main memory with every call
-    private static volatile AuthenticationHandler instance = null;
+    private static volatile AuthenticationModule instance = null;
 
     //thread safe operation
-    public static AuthenticationHandler getInstance() throws Exception {
+    public static AuthenticationModule getInstance() throws Exception {
         if (instance == null) {
-            synchronized (AuthenticationHandler.class) {
+            synchronized (AuthenticationModule.class) {
                 if (instance == null) {
-                    instance = new AuthenticationHandler();
+                    instance = new AuthenticationModule();
                 }
             }
         }
         return instance;
     }
 
-    private AuthenticationHandler() throws Exception {
+    private AuthenticationModule() throws Exception {
         super(Authentication.class);
     }
 

@@ -1,4 +1,4 @@
-package Client.ServiceHandlers;
+package Client.Modules;
 
 import Client.Annotations.TokenAuthenticated;
 import Client.Database.DatabaseHandler;
@@ -7,17 +7,17 @@ import Contract.DTO.Message;
 
 import java.util.*;
 
-public class CommunicationHandler extends ServiceBaseHandler<Communication> {
+public class CommunicationModule extends ServiceBaseHandler<Communication> {
 
     //volatile means that cache memory is updating with main memory with every call
-    private static volatile CommunicationHandler instance = null;
+    private static volatile CommunicationModule instance = null;
 
     //thread safe operation
-    public static CommunicationHandler getInstance() throws Exception {
+    public static CommunicationModule getInstance() throws Exception {
         if (instance == null) {
-            synchronized (CommunicationHandler.class) {
+            synchronized (CommunicationModule.class) {
                 if (instance == null) {
-                    instance = new CommunicationHandler();
+                    instance = new CommunicationModule();
                 }
             }
         }
@@ -28,7 +28,7 @@ public class CommunicationHandler extends ServiceBaseHandler<Communication> {
     private Thread messageSender;
     private Timer timerToUpdateMessages;
 
-    private CommunicationHandler() throws Exception {
+    private CommunicationModule() throws Exception {
         super(Communication.class);
 
         messagesToSend = new ArrayList<>();

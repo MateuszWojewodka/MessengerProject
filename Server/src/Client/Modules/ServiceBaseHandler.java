@@ -1,4 +1,4 @@
-package Client.ServiceHandlers;
+package Client.Modules;
 
 import Client.Enums.ServiceTypes;
 import Contract.Authentication;

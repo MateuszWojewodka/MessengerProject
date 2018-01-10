@@ -30,7 +30,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AuthenticationHandler.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="AuthenticationHandler.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Client/ServiceHandlersWithKSoap/AuthenticationHandler.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="634">
@@ -38,6 +38,16 @@
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AuthenticationModule.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Client/Modules/AuthenticationModule.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="950">
+              <caret line="39" column="41" lean-forward="false" selection-start-line="39" selection-start-column="41" selection-end-line="39" selection-end-column="41" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -82,11 +92,11 @@
         <entry file="file://$PROJECT_DIR$/src/Client/ClientMain.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="470">
-              <caret line="38" column="36" lean-forward="false" selection-start-line="38" selection-start-column="36" selection-end-line="38" selection-end-column="36" />
+              <caret line="35" column="36" lean-forward="false" selection-start-line="35" selection-start-column="36" selection-end-line="35" selection-end-column="36" />
               <folding>
-                <marker date="1515617132808" expanded="true" signature="936:1762" ph="{...}" />
-                <marker date="1515617132808" expanded="true" signature="1251:1582" ph="//..." />
-                <marker date="1515617132808" expanded="true" signature="1670:1762" ph="{...}" />
+                <marker date="1515617490186" expanded="true" signature="816:1642" ph="{...}" />
+                <marker date="1515617490186" expanded="true" signature="1131:1462" ph="//..." />
+                <marker date="1515617490186" expanded="true" signature="1550:1642" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -127,8 +137,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/Server/DatabaseHandlers/xAuthenticationLogic.java" />
-        <option value="$PROJECT_DIR$/src/Server/DatabaseHandlers/xConversationLogic.java" />
         <option value="$PROJECT_DIR$/src/Server/DatabaseHandlers/xUserProfileLogic.java" />
         <option value="$PROJECT_DIR$/src/Server/RequestHandling.java" />
         <option value="$PROJECT_DIR$/src/Client/Database/ConversationDatabaseHandler.java" />
@@ -178,6 +186,8 @@
         <option value="$PROJECT_DIR$/src/Client/ServiceHandlersWithKSoap/ProfileHandler.java" />
         <option value="$PROJECT_DIR$/src/Client/ServiceHandlersWithKSoap/CommunicationHandler.java" />
         <option value="$PROJECT_DIR$/src/Client/ServiceHandlersWithKSoap/AuthenticationHandler.java" />
+        <option value="$PROJECT_DIR$/src/Client/Modules/AuthenticationHandler.java" />
+        <option value="$PROJECT_DIR$/src/Client/Modules/AuthenticationModule.java" />
       </list>
     </option>
   </component>
@@ -246,7 +256,7 @@
               <item name="Server" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="Client" type="462c0819:PsiDirectoryNode" />
-              <item name="ServiceHandlers" type="462c0819:PsiDirectoryNode" />
+              <item name="Modules" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="MessengerServerApp" type="b2602c69:ProjectViewProjectNode" />
@@ -378,7 +388,7 @@
     <configuration name="ClientMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
-          <option name="PATTERN" value="Client.ServiceHandlers.ServiceBaseHandler" />
+          <option name="PATTERN" value="Client.Modules.ServiceBaseHandler" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -571,11 +581,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="290919000" />
+    <option name="totallyTimeSpent" value="290963000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -590,7 +599,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23802084" sideWeight="0.49445325" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23802084" sideWeight="0.49445325" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -789,11 +798,11 @@
     <entry file="file://$PROJECT_DIR$/src/Client/ClientMain.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="470">
-          <caret line="38" column="36" lean-forward="false" selection-start-line="38" selection-start-column="36" selection-end-line="38" selection-end-column="36" />
+          <caret line="35" column="36" lean-forward="false" selection-start-line="35" selection-start-column="36" selection-end-line="35" selection-end-column="36" />
           <folding>
-            <marker date="1515617132808" expanded="true" signature="936:1762" ph="{...}" />
-            <marker date="1515617132808" expanded="true" signature="1251:1582" ph="//..." />
-            <marker date="1515617132808" expanded="true" signature="1670:1762" ph="{...}" />
+            <marker date="1515617490186" expanded="true" signature="816:1642" ph="{...}" />
+            <marker date="1515617490186" expanded="true" signature="1131:1462" ph="//..." />
+            <marker date="1515617490186" expanded="true" signature="1550:1642" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -825,7 +834,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Client/ServiceHandlers/ProfileHandler.java">
+    <entry file="file://$PROJECT_DIR$/src/Client/Modules/ProfileModule.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
           <caret line="25" column="5" lean-forward="false" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
@@ -847,7 +856,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Client/ServiceHandlers/ServiceBaseHandler.java">
+    <entry file="file://$PROJECT_DIR$/src/Client/Modules/ServiceBaseHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="415">
           <caret line="35" column="52" lean-forward="true" selection-start-line="35" selection-start-column="52" selection-end-line="35" selection-end-column="52" />
@@ -871,15 +880,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Client/ServiceHandlers/AuthenticationHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="477">
-          <caret line="39" column="41" lean-forward="false" selection-start-line="39" selection-start-column="41" selection-end-line="39" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Client/ServiceHandlers/CommunicationHandler.java">
+    <entry file="file://$PROJECT_DIR$/src/Client/Modules/CommunicationModule.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="494">
           <caret line="102" column="67" lean-forward="false" selection-start-line="102" selection-start-column="34" selection-end-line="102" selection-end-column="67" />
@@ -992,6 +993,14 @@
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Client/Modules/AuthenticationModule.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="950">
+          <caret line="39" column="41" lean-forward="false" selection-start-line="39" selection-start-column="41" selection-end-line="39" selection-end-column="41" />
+          <folding />
         </state>
       </provider>
     </entry>

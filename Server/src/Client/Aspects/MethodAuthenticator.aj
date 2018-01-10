@@ -1,6 +1,6 @@
 package Client.Aspects;
 
-import Client.ServiceHandlers.ServiceBaseHandler;
+import Client.Modules.ServiceBaseHandler;
 
 public aspect MethodAuthenticator {
 

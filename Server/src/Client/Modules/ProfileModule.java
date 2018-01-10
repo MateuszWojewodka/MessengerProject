@@ -1,4 +1,4 @@
-package Client.ServiceHandlers;
+package Client.Modules;
 
 import Client.Annotations.TokenAuthenticated;
 import Client.Database.DatabaseHandler;
@@ -8,17 +8,17 @@ import Contract.Profile;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ProfileHandler extends ServiceBaseHandler <Profile>{
+public class ProfileModule extends ServiceBaseHandler <Profile>{
 
     //volatile means that cache memory is updating with main memory with every call
-    private static volatile ProfileHandler instance = null;
+    private static volatile ProfileModule instance = null;
 
     //thread safe operation
-    public static ProfileHandler getInstance() throws Exception {
+    public static ProfileModule getInstance() throws Exception {
         if (instance == null) {
-            synchronized (ProfileHandler.class) {
+            synchronized (ProfileModule.class) {
                 if (instance == null) {
-                    instance = new ProfileHandler();
+                    instance = new ProfileModule();
                 }
             }
         }
@@ -27,7 +27,7 @@ public class ProfileHandler extends ServiceBaseHandler <Profile>{
 
     private Timer timerToUpdateNotifications = new Timer();
 
-    private ProfileHandler() throws Exception {
+    private ProfileModule() throws Exception {
         super(Profile.class);
         startNotificationUpdater();
     }
