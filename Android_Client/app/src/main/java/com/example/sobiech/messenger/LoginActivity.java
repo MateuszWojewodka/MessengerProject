@@ -30,8 +30,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.ksoap2.serialization.SoapObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
