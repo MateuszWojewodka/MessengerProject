@@ -1,1 +1,1 @@
-# Android Application project
+# MessengerProject
