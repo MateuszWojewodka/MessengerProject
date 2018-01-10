@@ -11,75 +11,43 @@ public class CommunicationHandler extends ServiceBaseHandler {
 
     void sendMessageToFriend(String friendUserName, String message) throws Exception {
 
-        try {
-            callMethodWithParametersAndGetSoapResponse(
-                    Configuration.SEND_MESSAGE_TO_FRIEND_METHOD_NAME,
-                    friendUserName, message);
-        }
-        catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        callMethodWithParametersAndGetSoapResponse(
+                Configuration.SEND_MESSAGE_TO_FRIEND_METHOD_NAME,
+                friendUserName, message);
     }
 
     Message[] getConversationMessagesFromLatest(String friendUserName, int messagesCount) throws Exception {
 
-        try {
-            SoapObject response = (SoapObject) callMethodWithParametersAndGetSoapResponse(
-                    Configuration.GET_CONVERSATION_MESSAGES_FROM_LATEST_METHOD_NAME,
-                    friendUserName, messagesCount);
+        SoapObject response = (SoapObject) callMethodWithParametersAndGetSoapResponse(
+                Configuration.GET_CONVERSATION_MESSAGES_FROM_LATEST_METHOD_NAME,
+                friendUserName, messagesCount);
 
-            return retrieveMessageArrayFromSoapObject(response);
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            return null;
-        }
+        return retrieveMessageArrayFromSoapObject(response);
     }
 
     Message[] getConversationMessagesFromLatestToSpecified(String friendUserName, int specifiedMessageId) throws Exception {
 
-        try {
-            SoapObject response = (SoapObject) callMethodWithParametersAndGetSoapResponse(
-                    Configuration.GET_CONVERSATION_MESSAGES_FROM_LATEST_TO_SPECIFIED_METHOD_NAME,
-                    friendUserName, specifiedMessageId);
+        SoapObject response = (SoapObject) callMethodWithParametersAndGetSoapResponse(
+                Configuration.GET_CONVERSATION_MESSAGES_FROM_LATEST_TO_SPECIFIED_METHOD_NAME,
+                friendUserName, specifiedMessageId);
 
-            return retrieveMessageArrayFromSoapObject(response);
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            return null;
-        }
+        return retrieveMessageArrayFromSoapObject(response);
     }
 
     Message[] getConversationMessagesFromSpecifiedOne(String friendUserName, int lastMessageId, int messageCount) throws Exception {
 
-        try {
-            SoapObject response = (SoapObject) callMethodWithParametersAndGetSoapResponse(
-                    Configuration.GET_CONVERSATION_MESSAGES_FROM_SPECIFIED_ONE_METHOD_NAME,
-                    friendUserName, lastMessageId, messageCount);
+        SoapObject response = (SoapObject) callMethodWithParametersAndGetSoapResponse(
+                Configuration.GET_CONVERSATION_MESSAGES_FROM_SPECIFIED_ONE_METHOD_NAME,
+                friendUserName, lastMessageId, messageCount);
 
-            return retrieveMessageArrayFromSoapObject(response);
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            return null;
-        }
+        return retrieveMessageArrayFromSoapObject(response);
     }
 
     void markConversationMessagesAsRead(String friendName, int[] messagesId) throws Exception {
 
-        try {
-            callMethodWithParametersAndGetSoapResponse(
-                    Configuration.MARK_CONVERSATION_MESSAGES_AS_READ_METHOD_NAME,
-                    friendName, messagesId);
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
+        callMethodWithParametersAndGetSoapResponse(
+                Configuration.MARK_CONVERSATION_MESSAGES_AS_READ_METHOD_NAME,
+                friendName, messagesId);
     }
 
     private Message[] retrieveMessageArrayFromSoapObject(SoapObject object) {

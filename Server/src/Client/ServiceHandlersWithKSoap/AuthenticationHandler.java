@@ -9,48 +9,30 @@ public class AuthenticationHandler extends ServiceBaseHandler {
         super(Configuration.AUTHENTICATION_MODULE_NAME);
     }
 
-    public void registerUser(Credentials credentials) {
+    public void registerUser(Credentials credentials) throws Exception {
 
-        try {
-            callMethodWithParametersAndGetSoapResponse(
-                    Configuration.REGISTER_USER_METHOD_NAME,
-                    credentials);
-            System.out.println("--> " + credentials.username + " has been registered.");
-        }
-        catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        callMethodWithParametersAndGetSoapResponse(
+                Configuration.REGISTER_USER_METHOD_NAME,
+                credentials);
     }
 
-    public boolean logInAndGetToken(Credentials credentials) {
+    public boolean logInAndGetToken(Credentials credentials) throws Exception {
 
-        try {
-            SoapPrimitive tokenResult = (SoapPrimitive) callMethodWithParametersAndGetSoapResponse(
-                    Configuration.LOGIN_AND_GET_TOKEN_METHOD_NAME,
-                    credentials);
+        SoapPrimitive tokenResult = (SoapPrimitive) callMethodWithParametersAndGetSoapResponse(
+                Configuration.LOGIN_AND_GET_TOKEN_METHOD_NAME,
+                credentials);
 
-            String token = tokenResult.getValue().toString();
-            sharedToken.set(token);
+        String token = tokenResult.getValue().toString();
+        sharedToken.set(token);
 
-            System.out.println("--> Token is: " + token);
-            return true;
-        }
-        catch (Exception e) {
-            System.out.println(e.getMessage());
-            return false;
-        }
+        System.out.println("--> Token is: " + token);
+        return true;
     }
 
-    public boolean logOut() {
+    public boolean logOut() throws Exception {
 
-        try {
-            callMethodWithParametersAndGetSoapResponse("logOut", null);
-            System.out.println("--> User has been logged out.");
-            return true;
-        }
-        catch (Exception e) {
-            System.out.println(e.getMessage());
-            return false;
-        }
+        callMethodWithParametersAndGetSoapResponse("logOut", null);
+        System.out.println("--> User has been logged out.");
+        return true;
     }
 }
