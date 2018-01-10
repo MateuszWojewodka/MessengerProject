@@ -2,12 +2,13 @@ package Client.Modules;
 
 import Client.Annotations.TokenAuthenticated;
 import Client.Database.DatabaseHandler;
+import Client.ServiceHandlersWithKSoap.CommunicationHandler;
 import Contract.Communication;
 import Contract.DTO.Message;
 
 import java.util.*;
 
-public class CommunicationModule extends ServiceBaseHandler<Communication> {
+public class CommunicationModule {
 
     //volatile means that cache memory is updating with main memory with every call
     private static volatile CommunicationModule instance = null;
@@ -28,8 +29,9 @@ public class CommunicationModule extends ServiceBaseHandler<Communication> {
     private Thread messageSender;
     private Timer timerToUpdateMessages;
 
-    private CommunicationModule() throws Exception {
-        super(Communication.class);
+    private CommunicationHandler communicationHandler = new CommunicationHandler();
+
+    private CommunicationModule() {
 
         messagesToSend = new ArrayList<>();
         messageSender = new MessageSenderThread();
@@ -48,10 +50,9 @@ public class CommunicationModule extends ServiceBaseHandler<Communication> {
         }
     }
 
-    @TokenAuthenticated
     public void markMessagesAsRead(String friendName, int[] messagesId) throws Exception {
 
-        serviceObject.markConversationMessagesAsRead(friendName, messagesId);
+        communicationHandler.markConversationMessagesAsRead(friendName, messagesId);
     }
 
     public void sendMessageToFriend(String userName, String friendName, String message) {
@@ -63,11 +64,10 @@ public class CommunicationModule extends ServiceBaseHandler<Communication> {
         }
     }
 
-    @TokenAuthenticated
     private void sendMessageToServer(String userName, String friendName, String message) {
 
         try {
-            serviceObject.sendMessageToFriend(friendName, message);
+            communicationHandler.sendMessageToFriend(friendName, message);
             System.out.println("-> Message has been sent.");
 
         } catch (Exception e) {
@@ -75,14 +75,13 @@ public class CommunicationModule extends ServiceBaseHandler<Communication> {
         }
     }
 
-    @TokenAuthenticated
     private void putToLocalDatabaseLatestMessagesFromConversationToSpecifiedMessage(
             String friendName,
             int specifiedMessageId) throws Exception {
 
         try {
             Message[] messages =
-                    serviceObject.getConversationMessagesFromLatestToSpecified(
+                    communicationHandler.getConversationMessagesFromLatestToSpecified(
                             friendName,
                             specifiedMessageId);
             if (messages != null)
@@ -93,14 +92,13 @@ public class CommunicationModule extends ServiceBaseHandler<Communication> {
         }
     }
 
-    @TokenAuthenticated
     private void putToLocalDatabaseLatestMessagesFromConversation(
             String friendName,
             int count) throws Exception {
 
         try {
             Message[] messages =
-                    serviceObject.getConversationMessagesFromLatest(friendName, count);
+                    communicationHandler.getConversationMessagesFromLatest(friendName, count);
             if (messages != null)
                 DatabaseHandler.addMultipleMessagesToConversation(friendName,Arrays.asList(messages));
         } catch (Exception e) {

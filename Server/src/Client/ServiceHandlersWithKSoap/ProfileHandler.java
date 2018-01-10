@@ -10,11 +10,11 @@ import java.util.List;
 
 public class ProfileHandler extends ServiceBaseHandler {
 
-    ProfileHandler() {
+    public ProfileHandler() {
         super(Configuration.PROFILE_MODULE_NAME);
     }
 
-    String[] getFriendsList() throws Exception {
+    public String[] getFriendsList() throws Exception {
 
         SoapObject soapResult = (SoapObject) callMethodWithParametersAndGetSoapResponse(
                 Configuration.GET_FRIEND_LIST_METHOD_NAME,
@@ -23,35 +23,35 @@ public class ProfileHandler extends ServiceBaseHandler {
         return retrieveStringArrayFromSoapObject(soapResult);
     }
 
-    void sendFriendRequest(String friendName) throws Exception {
+    public void sendFriendRequest(String friendName) throws Exception {
 
         callMethodWithParametersAndGetSoapResponse(
                 Configuration.SEND_FRIEND_REQUEST_METHOD_NAME,
                 friendName);
     }
 
-    void removeFriend(String friendName) throws Exception {
+    public void removeFriend(String friendName) throws Exception {
 
         callMethodWithParametersAndGetSoapResponse(
                 Configuration.REMOVE_FRIEND_METHOD_NAME,
                 friendName);
     }
 
-    void acceptFriendRequest(String friendName) throws Exception {
+    public void acceptFriendRequest(String friendName) throws Exception {
 
         callMethodWithParametersAndGetSoapResponse(
                 Configuration.ACCEPT_FRIEND_REQUEST_METHOD_NAME,
                 friendName);
     }
 
-    void rejectFriendRequest(String friendName) throws Exception {
+    public void rejectFriendRequest(String friendName) throws Exception {
 
         callMethodWithParametersAndGetSoapResponse(
                 Configuration.REJECT_FRIEND_REQUEST_METHOD_NAME,
                 friendName);
     }
 
-    Notifications getNotifications() throws Exception {
+    public Notifications getNotifications() throws Exception {
 
         SoapObject soapResult = (SoapObject) callMethodWithParametersAndGetSoapResponse(
                 Configuration.GET_NOTIFICATIONS_METHOD_NAME,

@@ -12,8 +12,8 @@ public class ClienKSOAP {
 
         AuthenticationHandler authentication = new AuthenticationHandler();
 
-        authentication.registerUser(myCredentials);
-
-        authentication.logInAndGetToken(myCredentials);
+//        authentication.registerUser(myCredentials);
+//
+//        authentication.logInAndGetToken(myCredentials);
     }
 }

@@ -32,7 +32,6 @@ public class AuthenticationHandler extends ServiceBaseHandler {
     public boolean logOut() throws Exception {
 
         callMethodWithParametersAndGetSoapResponse("logOut", null);
-        System.out.println("--> User has been logged out.");
         return true;
     }
 }

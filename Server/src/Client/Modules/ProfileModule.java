@@ -2,13 +2,14 @@ package Client.Modules;
 
 import Client.Annotations.TokenAuthenticated;
 import Client.Database.DatabaseHandler;
+import Client.ServiceHandlersWithKSoap.ProfileHandler;
 import Contract.DTO.Notifications;
 import Contract.Profile;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ProfileModule extends ServiceBaseHandler <Profile>{
+public class ProfileModule {
 
     //volatile means that cache memory is updating with main memory with every call
     private static volatile ProfileModule instance = null;
@@ -26,18 +27,17 @@ public class ProfileModule extends ServiceBaseHandler <Profile>{
     }
 
     private Timer timerToUpdateNotifications = new Timer();
+    private ProfileHandler profileHandler = new ProfileHandler();
 
     private ProfileModule() throws Exception {
-        super(Profile.class);
         startNotificationUpdater();
     }
 
-    @TokenAuthenticated
     public String[] getFriendsList() throws Exception {
 
         String[] result = new String[0];
         try {
-            result = serviceObject.getFriendsList();
+            result = profileHandler.getFriendsList();
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
@@ -45,11 +45,10 @@ public class ProfileModule extends ServiceBaseHandler <Profile>{
         return result;
     }
 
-    @TokenAuthenticated
     public void sendFriendRequest(String friendName) throws Exception{
 
         try {
-            serviceObject.sendFriendRequest(friendName);
+            profileHandler.sendFriendRequest(friendName);
             System.out.println("Friend request has been sent to " + friendName);
         }
         catch (Exception e) {
@@ -57,10 +56,9 @@ public class ProfileModule extends ServiceBaseHandler <Profile>{
         }
     }
 
-    @TokenAuthenticated
     public void removeFriend(String friendName) throws Exception {
         try {
-            serviceObject.removeFriend(friendName);
+            profileHandler.removeFriend(friendName);
             System.out.println(friendName + " has been removed from your friendlist.");
         }
         catch (Exception e) {
@@ -68,10 +66,9 @@ public class ProfileModule extends ServiceBaseHandler <Profile>{
         }
     }
 
-    @TokenAuthenticated
     public void acceptFriendRequest(String friendName) throws Exception{
         try {
-            serviceObject.acceptFriendRequest(friendName);
+            profileHandler.acceptFriendRequest(friendName);
             System.out.println(friendName + " friend request has been accepted.");
         }
         catch (Exception e) {
@@ -79,10 +76,9 @@ public class ProfileModule extends ServiceBaseHandler <Profile>{
         }
     }
 
-    @TokenAuthenticated
     public void rejectFriendRequest(String friendName) throws Exception{
         try {
-            serviceObject.rejectFriendRequest(friendName);
+            profileHandler.rejectFriendRequest(friendName);
             System.out.println(friendName + " friend request has been rejected.");
         }
         catch (Exception e) {
@@ -90,12 +86,11 @@ public class ProfileModule extends ServiceBaseHandler <Profile>{
         }
     }
 
-    @TokenAuthenticated
     public Notifications getNotifications() {
 
         Notifications result = new Notifications();
         try {
-            result = serviceObject.getNotifications();
+            result = profileHandler.getNotifications();
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
