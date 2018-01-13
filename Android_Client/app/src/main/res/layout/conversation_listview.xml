@@ -12,7 +12,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_toStartOf="@+id/tvTime"
-        android:text="siema"
+        android:text="@string/tabActiveUsers_text"
         android:textAlignment="viewStart"
         android:textColor="@android:color/background_dark"
         android:textSize="20sp" />
@@ -24,15 +24,5 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:text="Ty: co tam" />
-
-    <TextView
-        android:id="@+id/tvTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/tvLastMessage"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:text="15:35"
-        android:textColor="@android:color/black" />
 
 </RelativeLayout>

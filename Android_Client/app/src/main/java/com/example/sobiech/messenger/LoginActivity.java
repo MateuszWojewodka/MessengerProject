@@ -33,6 +33,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import Modules.AuthenticationModule;
+
 import static android.Manifest.permission.READ_CONTACTS;
 
 public class LoginActivity extends AppCompatActivity{
@@ -42,9 +44,14 @@ public class LoginActivity extends AppCompatActivity{
     private View mProgressView;
     private View mLoginFormView;
 
+    private AuthenticationModule authenticationModule;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        authenticationModule = AuthenticationModule.getInstance();
+
         setContentView(R.layout.activity_login);
 
         mEmailView = findViewById(R.id.email);
@@ -57,12 +64,14 @@ public class LoginActivity extends AppCompatActivity{
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                /**
-                 * LOGIN MECHANISM
-                 */
-                Intent intent = new Intent (LoginActivity.this, MenuActivity.class);
-                startActivityForResult(intent, 0);
-                finish();
+                if (authenticationModule.logUserIn(mEmailView.getText().toString(), mPasswordView.getText().toString())) {
+                    Intent intent = new Intent (LoginActivity.this, MenuActivity.class);
+                    startActivityForResult(intent, 0);
+                    finish();
+                }
+                else {
+                    //TODO TOAST
+                }
             }
         });
     }

@@ -24,13 +24,15 @@ public class AuthenticationModule {
 
     private AuthenticationModule() {}
 
-    public void registerUser(String myUserName, String myPassword) {
+    public boolean registerUser(String myUserName, String myPassword) {
 
         try {
             authenticationHandler.registerUser(new Credentials(myUserName, myPassword));
             System.out.println("-> You has been registered.");
+            return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            return false;
         }
     }
 
