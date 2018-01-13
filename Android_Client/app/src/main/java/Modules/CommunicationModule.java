@@ -36,16 +36,25 @@ public class CommunicationModule {
         timerToUpdateMessages = new Timer();
     }
 
-    private void updateMessagesContainerDatabase(
-            String friendName) throws Exception {
+    public void startMessageUpdater(final String friendName) {
 
-        if (DatabaseHandler.isConversationEmpty(friendName))
-            putToLocalDatabaseLatestMessagesFromConversation(friendName, 10);
-        else {
-            putToLocalDatabaseLatestMessagesFromConversationToSpecifiedMessage(
-                    friendName,
-                    DatabaseHandler.getLastConversationMessageId(friendName));
-        }
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run(){
+                try {
+                    updateMessagesContainerDatabase(friendName);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        };
+
+        timerToUpdateMessages.schedule(timerTask, 0, 300);
+    }
+
+    public void stopAllMessageUpdaterTasks(String friendName) {
+
+        timerToUpdateMessages.cancel();
     }
 
     public void markMessagesAsRead(String friendName, int[] messagesId) throws Exception {
@@ -59,6 +68,36 @@ public class CommunicationModule {
 
             messagesToSend.add(new MessageToSend(message, userName, friendName));
             messagesToSend.notifyAll();
+        }
+    }
+
+    public String getLastMessageContentFromConversation(String userName, String friendName, String message) {
+
+        String resultContent = "";
+
+        try {
+            Message[] messages =
+                    communicationHandler.getConversationMessagesFromLatest(
+                            friendName, 1);
+            if (messages != null)
+                resultContent = messages[0].getMessageContent();
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return resultContent;
+    }
+
+    private void updateMessagesContainerDatabase(
+            String friendName) throws Exception {
+
+        if (DatabaseHandler.isConversationEmpty(friendName))
+            putToLocalDatabaseLatestMessagesFromConversation(friendName, 10);
+        else {
+            putToLocalDatabaseLatestMessagesFromConversationToSpecifiedMessage(
+                    friendName,
+                    DatabaseHandler.getLastConversationMessageId(friendName));
         }
     }
 
@@ -102,27 +141,6 @@ public class CommunicationModule {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-    }
-
-    public void startMessageUpdater(final String friendName) {
-
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run(){
-                try {
-                    updateMessagesContainerDatabase(friendName);
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-        };
-
-        timerToUpdateMessages.schedule(timerTask, 0, 300);
-    }
-
-    public void stopAllMessageUpdaterTasks(String friendName) {
-
-        timerToUpdateMessages.cancel();
     }
 
     private class MessageSenderThread extends Thread {
