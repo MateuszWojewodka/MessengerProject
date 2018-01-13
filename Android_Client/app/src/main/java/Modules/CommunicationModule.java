@@ -12,7 +12,7 @@ public class CommunicationModule {
     private static volatile CommunicationModule instance = null;
 
     //thread safe operation
-    public static CommunicationModule getInstance() throws Exception {
+    public static CommunicationModule getInstance() {
         if (instance == null) {
             synchronized (CommunicationModule.class) {
                 if (instance == null) {

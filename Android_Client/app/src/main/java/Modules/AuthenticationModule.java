@@ -9,7 +9,7 @@ public class AuthenticationModule {
     private static volatile AuthenticationModule instance = null;
 
     //thread safe operation
-    public static AuthenticationModule getInstance() throws Exception {
+    public static AuthenticationModule getInstance() {
         if (instance == null) {
             synchronized (AuthenticationModule.class) {
                 if (instance == null) {

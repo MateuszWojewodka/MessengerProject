@@ -13,7 +13,7 @@ public class ProfileModule {
     private static volatile ProfileModule instance = null;
 
     //thread safe operation
-    public static ProfileModule getInstance() throws Exception {
+    public static ProfileModule getInstance() {
         if (instance == null) {
             synchronized (ProfileModule.class) {
                 if (instance == null) {
@@ -27,7 +27,7 @@ public class ProfileModule {
     private Timer timerToUpdateNotifications = new Timer();
     private ProfileHandler profileHandler = new ProfileHandler();
 
-    private ProfileModule() throws Exception {
+    private ProfileModule() {
         startNotificationUpdater();
     }
 
