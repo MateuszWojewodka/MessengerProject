@@ -6,13 +6,13 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tvUsername"
+        android:id="@+id/tvFriendName"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_toStartOf="@+id/tvTime"
-        android:text="@string/tabActiveUsers_text"
+        android:text="User"
         android:textAlignment="viewStart"
         android:textColor="@android:color/background_dark"
         android:textSize="20sp" />

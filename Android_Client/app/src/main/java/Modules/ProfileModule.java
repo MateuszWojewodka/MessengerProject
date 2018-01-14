@@ -31,7 +31,7 @@ public class ProfileModule {
         startNotificationUpdater();
     }
 
-    public String[] getFriendsList() throws Exception {
+    public String[] getFriendsList() {
 
         String[] result = new String[0];
         try {

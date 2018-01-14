@@ -2,9 +2,10 @@
     <string name="app_name">Messenger</string>
 
     <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
-    <string name="action_sign_in">Sign in or register</string>
+    <string name="editText_textUserName">Nazwa użytkownika</string>
+    <string name="prompt_password">Hasło</string>
+    <string name="button_textSignIn">Zaloguj się</string>
+    <string name="button_textRegister">Zarejestruj się</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
@@ -16,8 +17,8 @@
 
     <string name="title_activity_menu">MenuActivity</string>
     <string name="tabConversation_text">Wiadomości</string>
-    <string name="tabActiveUsers_text">Aktywni</string>
-    <string name="tabGroups_text">Grupy</string>
+    <string name="tabSearchUsers_text">Szukaj znajomych</string>
+    <string name="tabInvitations_text">Zaproszenia</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_one_converstaion">OneConverstaionActivity</string>

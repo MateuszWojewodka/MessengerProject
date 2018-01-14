@@ -71,22 +71,22 @@ public class CommunicationModule {
         }
     }
 
-    public String getLastMessageContentFromConversation(String userName, String friendName, String message) {
+    public Message getLastMessageContentFromConversation(String friendName) {
 
-        String resultContent = "";
+        Message result = new Message(0,"","","");
 
         try {
             Message[] messages =
                     communicationHandler.getConversationMessagesFromLatest(
                             friendName, 1);
             if (messages != null)
-                resultContent = messages[0].getMessageContent();
+                result = messages[0];
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
-        return resultContent;
+        return result;
     }
 
     private void updateMessagesContainerDatabase(

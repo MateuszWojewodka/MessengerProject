@@ -29,6 +29,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,12 +40,15 @@ import static android.Manifest.permission.READ_CONTACTS;
 
 public class LoginActivity extends AppCompatActivity{
 
-    private AutoCompleteTextView mEmailView;
+    private static final String MESSAGE_LOGIN_ERROR = "Niepoprawny login lub hasło";
+    private static final String MESSAGE_REGISTRATION_SUCESSFULLY = "Pomyślnie zarejestrowano";
+    private static final String MESSAGE_REGISTRATION_ERROR = "Nie udało się zarejestrować";
+
+    private EditText mUserNameView;
     private EditText mPasswordView;
-    private View mProgressView;
-    private View mLoginFormView;
 
     private AuthenticationModule authenticationModule;
+    public static String userName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,23 +58,37 @@ public class LoginActivity extends AppCompatActivity{
 
         setContentView(R.layout.activity_login);
 
-        mEmailView = findViewById(R.id.email);
-        mPasswordView = findViewById(R.id.password);
-        Button mEmailSignInButton = findViewById(R.id.email_sign_in_button);
+        mUserNameView = findViewById(R.id.etUserName);
+        mPasswordView = findViewById(R.id.etPassword);
+        Button btSignIn = findViewById(R.id.btSignIn);
+        Button btRegister = findViewById(R.id.btRegister);
 
-        mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
-
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+        btSignIn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (authenticationModule.logUserIn(mEmailView.getText().toString(), mPasswordView.getText().toString())) {
+                if (authenticationModule.logUserIn(mUserNameView.getText().toString(), mPasswordView.getText().toString())) {
+                    userName = mUserNameView.getText().toString();
                     Intent intent = new Intent (LoginActivity.this, MenuActivity.class);
                     startActivityForResult(intent, 0);
                     finish();
                 }
                 else {
-                    //TODO TOAST
+                    Intent intent = new Intent (LoginActivity.this, MenuActivity.class);
+                    startActivityForResult(intent, 0);
+                    finish();
+                    Toast.makeText(getApplicationContext(),MESSAGE_LOGIN_ERROR,Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        btRegister.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (authenticationModule.registerUser(mUserNameView.getText().toString(), mPasswordView.getText().toString())) {
+                    Toast.makeText(getApplicationContext(),MESSAGE_REGISTRATION_SUCESSFULLY,Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(),MESSAGE_REGISTRATION_ERROR,Toast.LENGTH_SHORT).show();
                 }
             }
         });

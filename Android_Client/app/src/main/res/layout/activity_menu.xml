@@ -21,7 +21,7 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/imageButton"
+                android:id="@+id/btSearch"
                 android:layout_width="15dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -52,13 +52,13 @@
                 android:id="@+id/tabActiveUsers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tabActiveUsers_text" />
+                android:text="@string/tabSearchUsers_text" />
 
             <android.support.design.widget.TabItem
-                android:id="@+id/tabGroups"
+                android:id="@+id/tabInvitations"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tabGroups_text" />
+                android:text="@string/tabInvitations_text" />
 
         </android.support.design.widget.TabLayout>
     </android.support.design.widget.AppBarLayout>

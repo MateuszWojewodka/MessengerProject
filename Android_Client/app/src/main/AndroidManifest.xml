@@ -28,8 +28,8 @@
             android:label="@string/title_activity_menu"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".OneConverstaionActivity"
-            android:label="@string/title_activity_one_converstaion"></activity>
+            android:name=".OneConversationActivity"
+            android:label="@string/title_activity_one_converstaion" />
     </application>
 
 </manifest>

@@ -1,5 +1,7 @@
 package com.example.sobiech.messenger;
 
+import android.content.Intent;
+import android.media.Image;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 
@@ -10,6 +12,9 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -30,6 +35,15 @@ public class MenuActivity extends AppCompatActivity {
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+
+        ImageButton btSearch = findViewById(R.id.btSearch);
+        btSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent (getApplicationContext(), OneConversationActivity.class);
+                startActivityForResult(intent,0);
+            }
+        });
     }
 
 
@@ -62,11 +76,11 @@ public class MenuActivity extends AppCompatActivity {
                     FragmentConversiations fragmentConversiations = new FragmentConversiations();
                     return fragmentConversiations;
                 case 1:
-                    FragmentActiveUsers fragmentActiveUsers = new FragmentActiveUsers();
-                    return fragmentActiveUsers;
+                    FragmentSearchUsers fragmentSearchUsers = new FragmentSearchUsers();
+                    return fragmentSearchUsers;
                 case 2:
-                    FragmentGroup fragmentGroup = new FragmentGroup();
-                    return fragmentGroup;
+                    FragmentInvitations fragmentInvitations = new FragmentInvitations();
+                    return fragmentInvitations;
                 default:
                     return null;
             }

@@ -11,13 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class AdapterConversations extends ArrayAdapter<ConversationListObj>{
+public class AdapterConversations extends ArrayAdapter<DTO.Message>{
 
-    List<ConversationListObj> conversiationsObj = new ArrayList<>();
+    List<DTO.Message> conversiationsObj = new ArrayList<>();
     Context context;
     int resource;
 
-    public AdapterConversations(Context context, int resource, List<ConversationListObj> conversationsObj) {
+    public AdapterConversations(Context context, int resource, List<DTO.Message> conversationsObj) {
         super(context, resource, conversationsObj);
         this.context = context;
         this.resource = resource;
@@ -27,18 +27,19 @@ public class AdapterConversations extends ArrayAdapter<ConversationListObj>{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        ConversationListObj conversation = conversiationsObj.get(position);
+        DTO.Message conversation = conversiationsObj.get(position);
 
         if (convertView == null)
             convertView = LayoutInflater.from(context).inflate(R.layout.conversation_listview, parent, false);
 
-        TextView tvUsername = convertView.findViewById(R.id.tvUsername);
+        TextView tvFriendName = convertView.findViewById(R.id.tvFriendName);
         TextView tvLastMessage = convertView.findViewById(R.id.tvLastMessage);
-        TextView tvTime = convertView.findViewById(R.id.tvTime);
 
-        tvUsername.setText(conversation.getUsername());
-        tvLastMessage.setText(conversation.getLastMessageSender() + ": " + conversation.getLastMessageContent());
-        tvTime.setText(conversation.getLastMessageTime());
+        if (conversation.getSender().equals(LoginActivity.userName))
+            tvFriendName.setText(conversation.getReceiver());
+        else
+            tvFriendName.setText(conversation.getSender());
+        tvLastMessage.setText(conversation.getSender() + ": " + conversation.getMessageContent());
 
         return convertView;
     }
