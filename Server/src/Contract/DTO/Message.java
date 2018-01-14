@@ -20,6 +20,8 @@ public class Message implements KvmSerializable {
     private String receiver;
     @XmlElement
     private boolean readByReceiver;
+    @XmlElement
+    private long messageTime;
 
     public Message() {}
 
@@ -33,6 +35,7 @@ public class Message implements KvmSerializable {
         this.sender = sender;
         this.receiver = receiver;
         readByReceiver = false;
+        this.messageTime = System.currentTimeMillis();
     }
 
     public int getMessageId() {
@@ -53,6 +56,10 @@ public class Message implements KvmSerializable {
 
     public boolean isReadByReceiver() {return readByReceiver;}
 
+    public long getMessageTime() {
+        return messageTime;
+    }
+
     public void markAsRead() {readByReceiver = true;}
 
     @Override
@@ -70,6 +77,8 @@ public class Message implements KvmSerializable {
                 return receiver;
             case 4:
                 return readByReceiver;
+            case 5:
+                return messageTime;
         }
 
         return null;
@@ -77,7 +86,7 @@ public class Message implements KvmSerializable {
 
     @Override
     public int getPropertyCount() {
-        return 5;
+        return 6;
     }
 
     @Override
@@ -99,6 +108,8 @@ public class Message implements KvmSerializable {
             case 4:
                 readByReceiver = Boolean.getBoolean(value.toString());
                 break;
+            case 5:
+                messageTime = Long.parseLong(value.toString());
             default: break;
         }
     }
@@ -128,6 +139,9 @@ public class Message implements KvmSerializable {
                 propertyInfo.type = PropertyInfo.BOOLEAN_CLASS;
                 propertyInfo.name = "readByReceiver";
                 break;
+            case 5:
+                propertyInfo.type = PropertyInfo.LONG_CLASS;
+                propertyInfo.name = "messageTime";
             default: break;
         }
     }
