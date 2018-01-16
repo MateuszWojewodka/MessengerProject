@@ -18,4 +18,7 @@ public interface Authentication {
 
     @WebMethod
     void logOut();
+
+    @WebMethod
+    String[] getAllRegisteredUsers() throws Exception;
 }

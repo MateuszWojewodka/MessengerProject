@@ -44,6 +44,13 @@ public class AuthenticationImpl  extends ServiceBaseImpl implements Authenticati
         DatabaseHandler.removeUserFromLoggedUsers(token);
     }
 
+    @Override
+    public String[] getAllRegisteredUsers() throws Exception{
+
+        throwExceptionIfCurrentUserIsNotLoggedOn();
+        return DatabaseHandler.getAllRegisteredUsers();
+    }
+
     private String generateTokenForUser(){
 
         String token;
