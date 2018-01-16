@@ -6,6 +6,7 @@ import Server.Database.DatabaseHandler;
 
 import javax.jws.WebService;
 import java.util.Random;
+import java.util.Set;
 
 @WebService(endpointInterface = "Contract.Authentication")
 public class AuthenticationImpl  extends ServiceBaseImpl implements Authentication {
@@ -48,7 +49,11 @@ public class AuthenticationImpl  extends ServiceBaseImpl implements Authenticati
     public String[] getAllRegisteredUsers() throws Exception{
 
         throwExceptionIfCurrentUserIsNotLoggedOn();
-        return DatabaseHandler.getAllRegisteredUsers();
+
+        Set<String> result = DatabaseHandler.getAllRegisteredUsers();
+        result.remove(getNameOfUser());
+
+        return result.toArray(new String[0]);
     }
 
     private String generateTokenForUser(){

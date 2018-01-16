@@ -5,10 +5,7 @@ import Contract.DTO.Message;
 import Contract.DTO.Notifications;
 
 import javax.xml.crypto.Data;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class DatabaseHandler {
 
@@ -114,9 +111,9 @@ public class DatabaseHandler {
         return null;
     }
 
-    public static String[] getAllRegisteredUsers() {
+    public static Set<String> getAllRegisteredUsers() {
 
-        return Database.INSTANCE.registeredUsers.keySet().toArray(new String[0]);
+        return Database.INSTANCE.registeredUsers.keySet();
     }
 
     public static Notifications getNotifications(String userName) throws Exception {
