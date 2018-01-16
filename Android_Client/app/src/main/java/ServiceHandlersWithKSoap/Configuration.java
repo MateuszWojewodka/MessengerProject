@@ -13,6 +13,7 @@ class Configuration {
     static final String REGISTER_USER_METHOD_NAME = "registerUser";
     static final String LOGIN_AND_GET_TOKEN_METHOD_NAME = "logInAndGetToken";
     static final String LOGOUT_METHOD_NAME = "logOut";
+    static final String GET_ALL_REGISTERED_USERS_METHOD_NAME = "getAllRegisteredUsers";
 
     static final String SEND_MESSAGE_TO_FRIEND_METHOD_NAME = "sendMessageToFriend";
     static final String GET_CONVERSATION_MESSAGES_FROM_LATEST_METHOD_NAME = "getConversationMessagesFromLatest";

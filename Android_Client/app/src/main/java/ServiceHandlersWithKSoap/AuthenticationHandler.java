@@ -1,6 +1,8 @@
 package ServiceHandlersWithKSoap;
 
 import DTO.Credentials;
+
+import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
 
 public class AuthenticationHandler extends ServiceBaseHandler {
@@ -31,7 +33,27 @@ public class AuthenticationHandler extends ServiceBaseHandler {
 
     public boolean logOut() throws Exception {
 
-        callMethodWithParametersAndGetSoapResponse("logOut", null);
+        callMethodWithParametersAndGetSoapResponse(Configuration.LOGOUT_METHOD_NAME, null);
         return true;
+    }
+
+    public String[] getAllRegisteredUsers() throws Exception {
+
+        SoapObject registeredUsersResult = (SoapObject) callMethodWithParametersAndGetSoapResponse(
+                Configuration.GET_ALL_REGISTERED_USERS_METHOD_NAME, null);
+
+        return retrieveStringArrayFromSoapObject(registeredUsersResult);
+    }
+
+    private String[] retrieveStringArrayFromSoapObject(SoapObject soapObject) {
+
+        String[] result = new String[soapObject.getPropertyCount()];
+
+        for (int i = 0; i < soapObject.getPropertyCount(); i++) {
+
+            result[i] = soapObject.getProperty(i).toString();
+        }
+
+        return result;
     }
 }
