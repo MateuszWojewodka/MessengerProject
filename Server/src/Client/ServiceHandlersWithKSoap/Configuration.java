@@ -3,7 +3,7 @@ package Client.ServiceHandlersWithKSoap;
 class Configuration {
 
     static final String NAMESPACE = "http://Contract/";
-    static final String MAIN_REQUEST_URL = "http://localhost:8888/";
+    static final String MAIN_REQUEST_URL = "http://192.168.0.12:8888/";
     static final String SOAP_ACTION = null;
 
     static final String AUTHENTICATION_MODULE_NAME = "authentication";

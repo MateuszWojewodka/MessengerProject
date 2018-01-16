@@ -86,15 +86,32 @@ public class LoginActivity extends AppCompatActivity{
         btRegister.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO REGISTER
-                if (authenticationModule.registerUser(mUserNameView.getText().toString(), mPasswordView.getText().toString())) {
-                    Toast.makeText(getApplicationContext(),MESSAGE_REGISTRATION_SUCESSFULLY,Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Toast.makeText(getApplicationContext(),MESSAGE_REGISTRATION_ERROR,Toast.LENGTH_SHORT).show();
-                }
+                tryRegisterUser(mUserNameView.getText().toString(), mPasswordView.getText().toString());
             }
         });
+    }
+
+    private void tryRegisterUser(String userName, String password) {
+
+        class RegisterUserAsyncTask extends AsyncTask<String, Integer, Boolean> {
+
+            @Override
+            protected Boolean doInBackground(String... strings) {
+                return authenticationModule.registerUser(strings[0], strings[1]);
+            }
+
+            @Override
+            protected void onPostExecute(Boolean aBoolean) {
+                super.onPostExecute(aBoolean);
+
+                if (aBoolean)
+                    Toast.makeText(getApplicationContext(),MESSAGE_REGISTRATION_SUCESSFULLY,Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(getApplicationContext(),MESSAGE_REGISTRATION_ERROR,Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        new RegisterUserAsyncTask().execute(userName, password);
     }
 }
 
