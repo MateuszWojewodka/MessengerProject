@@ -40,6 +40,7 @@ public class FragmentConversiations extends Fragment{
         communicationModule = CommunicationModule.getInstance();
         profileModule = ProfileModule.getInstance();
 
+        //TODO GET LIST CONVERSATIONS
         String [] friendList = profileModule.getFriendsList();
         for (String friend : friendList) {
             listConversations.add(communicationModule.getLastMessageContentFromConversation(friend));
@@ -48,6 +49,7 @@ public class FragmentConversiations extends Fragment{
         AdapterConversations adapter = new AdapterConversations(getActivity(), R.layout.conversation_listview, listConversations);
         listView.setAdapter(adapter);
 
+        //TODO OPEN SCREEN WITH CORRECT CONVERSATION
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -58,5 +60,4 @@ public class FragmentConversiations extends Fragment{
 
         return rootView;
     }
-
 }

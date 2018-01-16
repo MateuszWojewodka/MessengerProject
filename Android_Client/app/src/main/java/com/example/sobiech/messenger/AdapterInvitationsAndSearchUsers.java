@@ -42,9 +42,9 @@ public class AdapterInvitationsAndSearchUsers extends ArrayAdapter <String> {
         String oneUser = users.get(position);
 
         if (convertView == null)
-            convertView = LayoutInflater.from(context).inflate(R.layout.conversation_listview, parent, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.invitation_and_search_users_listview, parent, false);
 
-        TextView tvUserName = convertView.findViewById(R.id.tvUserName);
+        TextView tvUserName = convertView.findViewById(R.id.tvUName);
         ImageButton btAccept = convertView.findViewById(R.id.btAccept);
 
         tvUserName.setText(oneUser);
@@ -53,10 +53,10 @@ public class AdapterInvitationsAndSearchUsers extends ArrayAdapter <String> {
             @Override
             public void onClick(View view) {
                 if (type == Type.INVITATION) {
-
+                    //TODO ACCEPT INVITATION
                 }
                 if (type == Type.SEARCH_USERS) {
-
+                    //TODO SEND INVITATION
                 }
             }
         });

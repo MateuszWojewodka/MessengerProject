@@ -21,12 +21,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/ibSend"
+        android:layout_toStartOf="@+id/btSend"
         android:ems="10"
         android:inputType="textPersonName" />
 
     <ImageButton
-        android:id="@+id/ibSend"
+        android:id="@+id/btSend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

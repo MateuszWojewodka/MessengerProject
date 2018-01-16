@@ -66,6 +66,7 @@ public class LoginActivity extends AppCompatActivity{
         btSignIn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                //TODO LOGIN
                 if (authenticationModule.logUserIn(mUserNameView.getText().toString(), mPasswordView.getText().toString())) {
                     userName = mUserNameView.getText().toString();
                     Intent intent = new Intent (LoginActivity.this, MenuActivity.class);
@@ -73,10 +74,11 @@ public class LoginActivity extends AppCompatActivity{
                     finish();
                 }
                 else {
+                    //tymczasowo
                     Intent intent = new Intent (LoginActivity.this, MenuActivity.class);
                     startActivityForResult(intent, 0);
-                    finish();
                     Toast.makeText(getApplicationContext(),MESSAGE_LOGIN_ERROR,Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }
         });
@@ -84,6 +86,7 @@ public class LoginActivity extends AppCompatActivity{
         btRegister.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                //TODO REGISTER
                 if (authenticationModule.registerUser(mUserNameView.getText().toString(), mPasswordView.getText().toString())) {
                     Toast.makeText(getApplicationContext(),MESSAGE_REGISTRATION_SUCESSFULLY,Toast.LENGTH_SHORT).show();
                 }
