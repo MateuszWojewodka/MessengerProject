@@ -20,7 +20,6 @@ public class MenuActivity extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
-    public static ImageButton btSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +36,7 @@ public class MenuActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
-        btSearch = findViewById(R.id.btSearch);
+        ImageButton btSearch = findViewById(R.id.btSearch);
         btSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

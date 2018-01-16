@@ -35,7 +35,7 @@ public class AdapterConversations extends ArrayAdapter<DTO.Message>{
         TextView tvFriendName = convertView.findViewById(R.id.tvFriendName);
         TextView tvLastMessage = convertView.findViewById(R.id.tvLastMessage);
 
-        if (conversation.getSender().equals(LoginActivity.userName))
+        if (conversation.getSender().equals(LoginRegisterActivity.userName))
             tvFriendName.setText(conversation.getReceiver());
         else
             tvFriendName.setText(conversation.getSender());
