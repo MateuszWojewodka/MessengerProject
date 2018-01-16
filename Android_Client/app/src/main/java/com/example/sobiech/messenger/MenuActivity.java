@@ -52,9 +52,28 @@ public class MenuActivity extends AppCompatActivity {
                 //TODO LOGOUT
             }
         });
+
+        getSupportFragmentManager().addOnBackStackChangedListener(getListener());
     }
 
+    private FragmentManager.OnBackStackChangedListener getListener()
+    {
+        FragmentManager.OnBackStackChangedListener result = new FragmentManager.OnBackStackChangedListener()
+        {
+            public void onBackStackChanged()
+            {
+                FragmentManager manager = getSupportFragmentManager();
 
+                if (manager != null)
+                {
+                    FragmentSearchUsers currFrag = (FragmentSearchUsers) manager.findFragmentById(R.id.tabActiveUsers);
+                    currFrag.onFragmentResume();
+                }
+            }
+        };
+
+        return result;
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_menu, menu);

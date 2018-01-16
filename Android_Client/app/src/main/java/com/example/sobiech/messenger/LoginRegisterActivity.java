@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import Modules.AuthenticationModule;
+import Modules.ProfileModule;
 
 public class LoginRegisterActivity extends AppCompatActivity{
 
@@ -23,14 +24,14 @@ public class LoginRegisterActivity extends AppCompatActivity{
     private EditText mUserNameView;
     private EditText mPasswordView;
 
-    private AuthenticationModule authenticationModule;
+    private AuthenticationModule authenticationModule = AuthenticationModule.getInstance();
+    private ProfileModule profileModule = ProfileModule.getInstance();
+
     public static String userName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        authenticationModule = AuthenticationModule.getInstance();
 
         setContentView(R.layout.activity_login);
 

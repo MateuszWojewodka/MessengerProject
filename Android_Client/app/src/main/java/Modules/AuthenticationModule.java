@@ -50,7 +50,7 @@ public class AuthenticationModule {
         }
     }
 
-    public boolean logUserOut() throws Exception{
+    public boolean logUserOut() {
 
         try {
             authenticationHandler.logOut();
@@ -62,7 +62,7 @@ public class AuthenticationModule {
         }
     }
 
-    public String[] getAllRegisteredUsers() throws Exception {
+    public String[] getAllRegisteredUsers()  {
 
         try {
             return authenticationHandler.getAllRegisteredUsers();

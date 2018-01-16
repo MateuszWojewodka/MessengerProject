@@ -69,9 +69,9 @@ public class ProfileHandler extends ServiceBaseHandler {
             PropertyInfo pi = new PropertyInfo();
             soapObject.getPropertyInfo(i, pi);
 
-            if (pi.getName() == "friendRequestsSenders")
+            if (pi.getName().equals("friendRequestsSenders"))
                 result.friendRequestsSenders.add(soapObject.getProperty(i).toString());
-            else if(pi.getName() == "newMessagesSenders")
+            else if(pi.getName().equals("newMessagesSenders"))
                 result.newMessagesSenders.add(soapObject.getProperty(i).toString());
         }
 

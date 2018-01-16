@@ -28,13 +28,20 @@ public class ClientMain {
         System.out.println(USERNAME);
 
         authentication.registerUser(USERNAME, PASSWORD);
+
+        authentication.registerUser("Mariusz", PASSWORD);
+        authentication.registerUser("Roman", PASSWORD);
+        authentication.registerUser("Jozef", PASSWORD);
+
         //enterWaiter.nextLine();
 
         authentication.logUserIn(USERNAME, PASSWORD);
-        enterWaiter.nextLine();
 
-        profile.sendFriendRequest(FRIENDNAME);
-        enterWaiter.nextLine();
+        profile.sendFriendRequest("Mariusz");
+//        enterWaiter.nextLine();
+//
+//        profile.sendFriendRequest(FRIENDNAME);
+//        enterWaiter.nextLine();
 
 //        communication.startMessageUpdater(FRIENDNAME);
 //        enterWaiter.nextLine();
@@ -45,10 +52,10 @@ public class ClientMain {
 
         //communication.markMessagesAsRead(FRIENDNAME, new int[]{lastMessage.getMessageId()});
 
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-
-            communication.sendMessageToFriend(USERNAME, FRIENDNAME, scanner.nextLine());
-        }
+//        Scanner scanner = new Scanner(System.in);
+//        while (true) {
+//
+//            communication.sendMessageToFriend(USERNAME, FRIENDNAME, scanner.nextLine());
+//        }
     }
 }

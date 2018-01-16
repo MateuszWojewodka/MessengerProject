@@ -1,5 +1,6 @@
 package com.example.sobiech.messenger;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,26 +11,57 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import Database.DatabaseHandler;
+import Modules.AuthenticationModule;
+import Modules.ProfileModule;
 
 /**
  * Created by WOJTEK on 2017-12-28.
  */
 
 public class FragmentInvitations extends Fragment {
+
+    ProfileModule profileModule = ProfileModule.getInstance();
+
+    List<String> allUsers = new ArrayList<>();
+    AdapterInvitationsAndSearchUsers  adapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_invitations, container, false);
 
-        ListView lvSearchUsers = rootView.findViewById(R.id.lvInvitations);
-        List<String> allUsers = new ArrayList<>();
-        //TODO GET INVITATIONS
-        allUsers.add(new String ("Karol Krawczyk"));
-        AdapterInvitationsAndSearchUsers  adapter = new AdapterInvitationsAndSearchUsers(rootView.getContext(), R.layout.invitation_and_search_users_listview, allUsers);
+        ListView lvInvitations = rootView.findViewById(R.id.lvInvitations);
+        adapter = new AdapterInvitationsAndSearchUsers(rootView.getContext(), R.layout.invitation_and_search_users_listview, allUsers);
         adapter.setType(AdapterInvitationsAndSearchUsers.Type.INVITATION);
-        lvSearchUsers.setAdapter(adapter);
+        lvInvitations.setAdapter(adapter);
+
+        trySearchInvitations();
 
         return rootView;
+    }
+
+    private void trySearchInvitations() {
+
+        class LogUserInAsyncTask extends AsyncTask<Void, Integer, String[]> {
+
+            @Override
+            protected String[] doInBackground(Void... voids) {
+                return DatabaseHandler.getNotifications().friendRequestsSenders.toArray(new String[0]);
+            }
+
+            @Override
+            protected void onPostExecute(String[] strings) {
+                super.onPostExecute(strings);
+                allUsers.clear();
+                allUsers.addAll(new ArrayList<String>(Arrays.asList(strings)));
+                adapter.notifyDataSetChanged();
+            }
+        }
+
+        new LogUserInAsyncTask().execute();
     }
 }
