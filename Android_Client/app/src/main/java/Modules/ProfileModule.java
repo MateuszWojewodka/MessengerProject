@@ -43,7 +43,7 @@ public class ProfileModule {
         return result;
     }
 
-    public void sendFriendRequest(String friendName) throws Exception{
+    public void sendFriendRequest(String friendName) {
 
         try {
             profileHandler.sendFriendRequest(friendName);
@@ -64,7 +64,7 @@ public class ProfileModule {
         }
     }
 
-    public void acceptFriendRequest(String friendName) throws Exception{
+    public void acceptFriendRequest(String friendName) {
         try {
             profileHandler.acceptFriendRequest(friendName);
             System.out.println(friendName + " friend request has been accepted.");
