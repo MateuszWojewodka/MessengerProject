@@ -66,20 +66,7 @@ public class LoginActivity extends AppCompatActivity{
         btSignIn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO LOGIN
-                if (authenticationModule.logUserIn(mUserNameView.getText().toString(), mPasswordView.getText().toString())) {
-                    userName = mUserNameView.getText().toString();
-                    Intent intent = new Intent (LoginActivity.this, MenuActivity.class);
-                    startActivityForResult(intent, 0);
-                    finish();
-                }
-                else {
-                    //tymczasowo
-                    Intent intent = new Intent (LoginActivity.this, MenuActivity.class);
-                    startActivityForResult(intent, 0);
-                    Toast.makeText(getApplicationContext(),MESSAGE_LOGIN_ERROR,Toast.LENGTH_SHORT).show();
-                    finish();
-                }
+                tryLogUserIn(mUserNameView.getText().toString(), mPasswordView.getText().toString());
             }
         });
 
@@ -112,6 +99,32 @@ public class LoginActivity extends AppCompatActivity{
         }
 
         new RegisterUserAsyncTask().execute(userName, password);
+    }
+
+    private void tryLogUserIn(String userName, String password) {
+
+        class LogUserInAsyncTask extends AsyncTask<String, Integer, Boolean> {
+
+            @Override
+            protected Boolean doInBackground(String... strings) {
+                return authenticationModule.logUserIn(strings[0], strings[1]);
+            }
+
+            @Override
+            protected void onPostExecute(Boolean aBoolean) {
+                super.onPostExecute(aBoolean);
+
+                if (aBoolean){
+                    Intent intent = new Intent (LoginActivity.this, MenuActivity.class);
+                    startActivityForResult(intent, 0);
+                    finish();
+                }
+                else
+                    Toast.makeText(getApplicationContext(),MESSAGE_LOGIN_ERROR,Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        new LogUserInAsyncTask().execute(userName, password);
     }
 }
 
