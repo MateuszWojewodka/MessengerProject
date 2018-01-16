@@ -2,6 +2,7 @@ package com.example.sobiech.messenger;
 
 import android.content.Intent;
 import android.media.Image;
+import android.os.AsyncTask;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 
@@ -16,10 +17,14 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import Modules.AuthenticationModule;
+
 public class MenuActivity extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
+
+    private AuthenticationModule authenticationModule = AuthenticationModule.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +54,7 @@ public class MenuActivity extends AppCompatActivity {
         btLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO LOGOUT
+                tryLogOut();
             }
         });
 
@@ -117,5 +122,28 @@ public class MenuActivity extends AppCompatActivity {
         public int getCount() {
             return 3;
         }
+    }
+
+    private void tryLogOut () {
+
+        class LogOutAsyncTask extends AsyncTask<Void, Integer, Boolean> {
+
+            @Override
+            protected Boolean doInBackground(Void... voids) {
+                return authenticationModule.logUserOut();
+            }
+
+            @Override
+            protected void onPostExecute(Boolean aBoolean) {
+                super.onPostExecute(aBoolean);
+                if (aBoolean) {
+                    Intent intent = new Intent (MenuActivity.this, LoginRegisterActivity.class);
+                    startActivityForResult(intent, 0);
+                    finish();
+                }
+        }
+        }
+
+        new LogOutAsyncTask().execute();
     }
 }
