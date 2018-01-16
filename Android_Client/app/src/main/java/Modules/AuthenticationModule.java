@@ -49,4 +49,27 @@ public class AuthenticationModule {
             return false;
         }
     }
+
+    public boolean logUserOut() throws Exception{
+
+        try {
+            authenticationHandler.logOut();
+            return true;
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public String[] getAllRegisteredUsers() throws Exception {
+
+        try {
+            return authenticationHandler.getAllRegisteredUsers();
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 }
