@@ -5,6 +5,7 @@ import Contract.DTO.Credentials;
 import Server.Database.DatabaseHandler;
 
 import javax.jws.WebService;
+import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
@@ -50,7 +51,8 @@ public class AuthenticationImpl  extends ServiceBaseImpl implements Authenticati
 
         throwExceptionIfCurrentUserIsNotLoggedOn();
 
-        Set<String> result = DatabaseHandler.getAllRegisteredUsers();
+        Set<String> result = new HashSet<>();
+        result.addAll(DatabaseHandler.getAllRegisteredUsers());
         result.remove(getNameOfUser());
 
         return result.toArray(new String[0]);
