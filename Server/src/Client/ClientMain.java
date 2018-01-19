@@ -38,7 +38,7 @@ public class ClientMain {
         authentication.logUserIn(USERNAME, PASSWORD);
 
         profile.sendFriendRequest("Mariusz");
-//        enterWaiter.nextLine();
+        enterWaiter.nextLine();
 //
 //        profile.sendFriendRequest(FRIENDNAME);
 //        enterWaiter.nextLine();
@@ -52,10 +52,10 @@ public class ClientMain {
 
         //communication.markMessagesAsRead(FRIENDNAME, new int[]{lastMessage.getMessageId()});
 
-//        Scanner scanner = new Scanner(System.in);
-//        while (true) {
-//
-//            communication.sendMessageToFriend(USERNAME, FRIENDNAME, scanner.nextLine());
-//        }
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+
+            communication.sendMessageToFriend(USERNAME, "Mariusz", scanner.nextLine());
+        }
     }
 }

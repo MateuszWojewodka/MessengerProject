@@ -17,6 +17,9 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import Modules.AuthenticationModule;
 
 public class MenuActivity extends AppCompatActivity {
@@ -25,6 +28,11 @@ public class MenuActivity extends AppCompatActivity {
     private ViewPager mViewPager;
 
     private AuthenticationModule authenticationModule = AuthenticationModule.getInstance();
+
+//    Timer timer = new Timer();
+//    FragmentConversiations fragmentConversiations;
+//    FragmentSearchUsers fragmentSearchUsers;
+//    FragmentInvitations fragmentInvitations;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,28 +65,24 @@ public class MenuActivity extends AppCompatActivity {
                 tryLogOut();
             }
         });
-
-        getSupportFragmentManager().addOnBackStackChangedListener(getListener());
     }
 
-    private FragmentManager.OnBackStackChangedListener getListener()
-    {
-        FragmentManager.OnBackStackChangedListener result = new FragmentManager.OnBackStackChangedListener()
-        {
-            public void onBackStackChanged()
-            {
-                FragmentManager manager = getSupportFragmentManager();
+//    public void startViewUpdater () {
+//
+//        TimerTask timerTask = new TimerTask() {
+//            @Override
+//            public void run(){
+//                try {
+//                    updateMessagesContainerDatabase(friendName);
+//                } catch (Exception e) {
+//                    System.out.println(e.getMessage());
+//                }
+//            }
+//        };
+//
+//        timerToUpdateMessages.schedule(timerTask, 0, 300);
+//    }
 
-                if (manager != null)
-                {
-                    FragmentSearchUsers currFrag = (FragmentSearchUsers) manager.findFragmentById(R.id.tabActiveUsers);
-                    currFrag.onFragmentResume();
-                }
-            }
-        };
-
-        return result;
-    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_menu, menu);

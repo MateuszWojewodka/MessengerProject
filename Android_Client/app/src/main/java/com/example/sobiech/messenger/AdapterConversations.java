@@ -10,14 +10,16 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import Helpers.UserAndMessage;
 
-public class AdapterConversations extends ArrayAdapter<DTO.Message>{
 
-    List<DTO.Message> conversiationsObj = new ArrayList<>();
+public class AdapterConversations extends ArrayAdapter<UserAndMessage>{
+
+    List<UserAndMessage> conversiationsObj = new ArrayList<>();
     Context context;
     int resource;
 
-    public AdapterConversations(Context context, int resource, List<DTO.Message> conversationsObj) {
+    public AdapterConversations(Context context, int resource, List<UserAndMessage> conversationsObj) {
         super(context, resource, conversationsObj);
         this.context = context;
         this.resource = resource;
@@ -27,7 +29,7 @@ public class AdapterConversations extends ArrayAdapter<DTO.Message>{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        DTO.Message conversation = conversiationsObj.get(position);
+        UserAndMessage conversation = conversiationsObj.get(position);
 
         if (convertView == null)
             convertView = LayoutInflater.from(context).inflate(R.layout.conversation_listview, parent, false);
@@ -35,11 +37,8 @@ public class AdapterConversations extends ArrayAdapter<DTO.Message>{
         TextView tvFriendName = convertView.findViewById(R.id.tvFriendName);
         TextView tvLastMessage = convertView.findViewById(R.id.tvLastMessage);
 
-        if (conversation.getSender().equals(LoginRegisterActivity.userName))
-            tvFriendName.setText(conversation.getReceiver());
-        else
-            tvFriendName.setText(conversation.getSender());
-        tvLastMessage.setText(conversation.getSender() + ": " + conversation.getMessageContent());
+        tvFriendName.setText(conversation.user);
+        tvLastMessage.setText(conversation.message.getSender() + ": " + conversation.message.getMessageContent());
 
         return convertView;
     }

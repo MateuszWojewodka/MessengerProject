@@ -58,6 +58,9 @@ public class AdapterInvitationsAndSearchUsers extends ArrayAdapter <String> {
 
         tvUserName.setText(oneUser);
 
+        if (oneUser)
+        btAccept.setEnabled(false);
+
         btAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

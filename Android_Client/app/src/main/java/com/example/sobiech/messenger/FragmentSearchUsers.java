@@ -43,10 +43,6 @@ public class FragmentSearchUsers extends Fragment {
         return rootView;
     }
 
-    public void onFragmentResume() {
-        trySearchAllUsers();
-    }
-
     private void trySearchAllUsers() {
 
         class LogUserInAsyncTask extends AsyncTask<Void, Integer, String[]> {
@@ -61,6 +57,7 @@ public class FragmentSearchUsers extends Fragment {
                 super.onPostExecute(strings);
                 allUsers.clear();
                 allUsers.addAll(new ArrayList<String>(Arrays.asList(strings)));
+
                 adapter.notifyDataSetChanged();
             }
         }
