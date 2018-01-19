@@ -27,7 +27,7 @@ public class LoginRegisterActivity extends AppCompatActivity{
     private AuthenticationModule authenticationModule = AuthenticationModule.getInstance();
     private ProfileModule profileModule = ProfileModule.getInstance();
 
-    public static String userName = "";
+    public static String myUserName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +78,7 @@ public class LoginRegisterActivity extends AppCompatActivity{
         new RegisterUserAsyncTask().execute(userName, password);
     }
 
-    private void tryLogUserIn(String userName, String password) {
+    private void tryLogUserIn(final String userName, String password) {
 
         class LogUserInAsyncTask extends AsyncTask<String, Integer, Boolean> {
 
@@ -92,6 +92,7 @@ public class LoginRegisterActivity extends AppCompatActivity{
                 super.onPostExecute(aBoolean);
 
                 if (aBoolean){
+                    myUserName = userName;
                     Intent intent = new Intent (LoginRegisterActivity.this, MenuActivity.class);
                     startActivityForResult(intent, 0);
                     finish();

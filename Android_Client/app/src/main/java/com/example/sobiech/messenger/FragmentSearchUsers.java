@@ -15,7 +15,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import Helpers.UserAndFriendFlag;
 import Modules.AuthenticationModule;
+import Modules.ProfileModule;
 
 /**
  * Created by WOJTEK on 2017-12-28.
@@ -24,7 +26,8 @@ import Modules.AuthenticationModule;
 public class FragmentSearchUsers extends Fragment {
 
     private AuthenticationModule authenticationModule = AuthenticationModule.getInstance();
-    private List<String> allUsers = new ArrayList<>();
+    private ProfileModule profileModule = ProfileModule.getInstance();
+    private List<UserAndFriendFlag> allUsers = new ArrayList<>();
     private AdapterInvitationsAndSearchUsers  adapter;
 
     @Override
@@ -45,19 +48,32 @@ public class FragmentSearchUsers extends Fragment {
 
     private void trySearchAllUsers() {
 
-        class LogUserInAsyncTask extends AsyncTask<Void, Integer, String[]> {
+        class LogUserInAsyncTask extends AsyncTask<Void, Integer, UserAndFriendFlag[]> {
 
             @Override
-            protected String[] doInBackground(Void... voids) {
-                return authenticationModule.getAllRegisteredUsers();
+            protected UserAndFriendFlag[] doInBackground(Void... voids) {
+                String[] registeredUsers = authenticationModule.getAllRegisteredUsers();
+                String[] friendsList = profileModule.getFriendsList();
+                UserAndFriendFlag[] result = new UserAndFriendFlag[registeredUsers.length];
+
+                for (int i = 0 ; i < registeredUsers.length ; i++) {
+                    for (int j = 0 ; j < friendsList.length ; j++) {
+                        if (registeredUsers[i].equals(friendsList[j])) {
+                            result[i] = new UserAndFriendFlag(registeredUsers[i], true);
+                            break;
+                        }
+                    }
+                    result[i] = new UserAndFriendFlag(registeredUsers[i], false);
+                }
+
+                return result;
             }
 
             @Override
-            protected void onPostExecute(String[] strings) {
-                super.onPostExecute(strings);
+            protected void onPostExecute(UserAndFriendFlag[] userAndFriendFlags) {
+                super.onPostExecute(userAndFriendFlags);
                 allUsers.clear();
-                allUsers.addAll(new ArrayList<String>(Arrays.asList(strings)));
-
+                allUsers.addAll(new ArrayList<>(Arrays.asList(userAndFriendFlags)));
                 adapter.notifyDataSetChanged();
             }
         }

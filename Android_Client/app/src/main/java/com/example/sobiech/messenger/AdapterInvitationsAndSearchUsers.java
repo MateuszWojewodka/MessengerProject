@@ -15,13 +15,14 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import Helpers.UserAndFriendFlag;
 import Modules.ProfileModule;
 
 /**
  * Created by WOJTEK on 2018-01-14.
  */
 
-public class AdapterInvitationsAndSearchUsers extends ArrayAdapter <String> {
+public class AdapterInvitationsAndSearchUsers extends ArrayAdapter <UserAndFriendFlag> {
 
     private static final String MESSAGE_ACCEPT_INVITATION_SUCCESFULLY = "Zaakceptowane zaproszenie";
     private static final String MESSAGE_SEND_INVITATION = "Wysłano zaproszenie";
@@ -33,12 +34,12 @@ public class AdapterInvitationsAndSearchUsers extends ArrayAdapter <String> {
         SEARCH_USERS;
     }
 
-    List<String> users = new ArrayList<>();
+    List<UserAndFriendFlag> users = new ArrayList<>();
     Context context;
     int resource;
     private Type type;
 
-    public AdapterInvitationsAndSearchUsers(@NonNull Context context, int resource, @NonNull List<String> users) {
+    public AdapterInvitationsAndSearchUsers(@NonNull Context context, int resource, @NonNull List<UserAndFriendFlag> users) {
         super(context, resource, users);
         this.context = context;
         this.resource = resource;
@@ -48,7 +49,7 @@ public class AdapterInvitationsAndSearchUsers extends ArrayAdapter <String> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        final String oneUser = users.get(position);
+        final UserAndFriendFlag oneUser = users.get(position);
 
         if (convertView == null)
             convertView = LayoutInflater.from(context).inflate(R.layout.invitation_and_search_users_listview, parent, false);
@@ -56,19 +57,19 @@ public class AdapterInvitationsAndSearchUsers extends ArrayAdapter <String> {
         TextView tvUserName = convertView.findViewById(R.id.tvUName);
         ImageButton btAccept = convertView.findViewById(R.id.btAccept);
 
-        tvUserName.setText(oneUser);
+        tvUserName.setText(oneUser.userName);
 
-        if (oneUser)
-        btAccept.setEnabled(false);
+        if (oneUser.isFriend && type == Type.SEARCH_USERS)
+            btAccept.setEnabled(false);
 
         btAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (type == Type.INVITATION) {
-                    tryAcceptInvitation(oneUser);
+                    tryAcceptInvitation(oneUser.userName);
                 }
                 if (type == Type.SEARCH_USERS) {
-                    trySendInvitation(oneUser);
+                    trySendInvitation(oneUser.userName);
                 }
             }
         });

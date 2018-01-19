@@ -30,6 +30,7 @@ import Modules.ProfileModule;
 
 public class FragmentConversiations extends Fragment{
 
+    public static String selectedUserName = null;
     private CommunicationModule communicationModule;
     private ProfileModule profileModule;
 
@@ -52,10 +53,10 @@ public class FragmentConversiations extends Fragment{
 
         tryGetListConverstaions();
 
-        //TODO OPEN SCREEN WITH CORRECT CONVERSATION
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedUserName = listConversations.get(i).user;
                 Intent intent = new Intent(rootView.getContext(), OneConversationActivity.class);
                 startActivityForResult(intent,0);
             }
@@ -63,6 +64,7 @@ public class FragmentConversiations extends Fragment{
 
         return rootView;
     }
+
 
     private void tryGetListConverstaions() {
 

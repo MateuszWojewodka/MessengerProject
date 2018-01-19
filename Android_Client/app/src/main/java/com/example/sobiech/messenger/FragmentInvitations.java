@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import Database.DatabaseHandler;
+import Helpers.UserAndFriendFlag;
 import Modules.AuthenticationModule;
 import Modules.ProfileModule;
 
@@ -26,7 +27,7 @@ public class FragmentInvitations extends Fragment {
 
     ProfileModule profileModule = ProfileModule.getInstance();
 
-    List<String> allUsers = new ArrayList<>();
+    List<UserAndFriendFlag> allUsers = new ArrayList<>();
     AdapterInvitationsAndSearchUsers  adapter;
 
     @Override
@@ -46,18 +47,22 @@ public class FragmentInvitations extends Fragment {
 
     private void trySearchInvitations() {
 
-        class LogUserInAsyncTask extends AsyncTask<Void, Integer, String[]> {
+        class LogUserInAsyncTask extends AsyncTask<Void, Integer, UserAndFriendFlag[]> {
 
             @Override
-            protected String[] doInBackground(Void... voids) {
-                return DatabaseHandler.getNotifications().friendRequestsSenders.toArray(new String[0]);
+            protected UserAndFriendFlag[] doInBackground(Void... voids) {
+                String[] friendRequestSenders = DatabaseHandler.getNotifications().friendRequestsSenders.toArray(new String[0]);
+                UserAndFriendFlag[] userAndFriendFlag = new UserAndFriendFlag[friendRequestSenders.length];
+                for (int i = 0 ; i < friendRequestSenders.length ; i++)
+                    userAndFriendFlag[i] = new UserAndFriendFlag(friendRequestSenders[i], false);
+                return userAndFriendFlag;
             }
 
             @Override
-            protected void onPostExecute(String[] strings) {
-                super.onPostExecute(strings);
+            protected void onPostExecute(UserAndFriendFlag[] userAndFriendFlags) {
+                super.onPostExecute(userAndFriendFlags);
                 allUsers.clear();
-                allUsers.addAll(new ArrayList<String>(Arrays.asList(strings)));
+                allUsers.addAll(new ArrayList<>(Arrays.asList(userAndFriendFlags)));
                 adapter.notifyDataSetChanged();
             }
         }
