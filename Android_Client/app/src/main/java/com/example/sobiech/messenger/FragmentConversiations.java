@@ -37,13 +37,14 @@ public class FragmentConversiations extends Fragment{
     String []friendsList = null;
     List <UserAndMessage> listConversations = new ArrayList<>();
     AdapterConversations adapter;
+    ListView listView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_conversations, container, false);
 
-        ListView listView = rootView.findViewById(R.id.lvConversations);
+        listView = rootView.findViewById(R.id.lvConversations);
 
         communicationModule = CommunicationModule.getInstance();
         profileModule = ProfileModule.getInstance();
@@ -51,6 +52,7 @@ public class FragmentConversiations extends Fragment{
         adapter = new AdapterConversations(getActivity(), R.layout.conversation_listview, listConversations);
         listView.setAdapter(adapter);
 
+        startUpdateConversations();
         tryGetListConverstaions();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -72,7 +74,6 @@ public class FragmentConversiations extends Fragment{
 
             @Override
             protected UserAndMessage[] doInBackground(Void... voids) {
-                listConversations.clear();
                 friendsList = profileModule.getFriendsList();
                 UserAndMessage[] result = new UserAndMessage[friendsList.length];
                 for (int i = 0 ; i < friendsList.length ; i++) {
@@ -88,10 +89,22 @@ public class FragmentConversiations extends Fragment{
                 super.onPostExecute(messages);
                 listConversations.clear();
                 listConversations.addAll(new ArrayList<>(Arrays.asList(messages)));
-                adapter.notifyDataSetChanged();
             }
         }
 
         new GetListConversationsAsyncTask().execute();
+    }
+
+    private void startUpdateConversations () {
+        Runnable runnable = new Runnable() {
+
+            public void run() {
+                tryGetListConverstaions();
+                adapter.notifyDataSetChanged();
+                listView.postDelayed(this, 300);
+            }
+        };
+
+        runnable.run();
     }
 }
