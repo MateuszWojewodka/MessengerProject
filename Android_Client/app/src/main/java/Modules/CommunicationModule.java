@@ -93,7 +93,7 @@ public class CommunicationModule {
             String friendName) throws Exception {
 
         if (DatabaseHandler.isConversationEmpty(friendName))
-            putToLocalDatabaseLatestMessagesFromConversation(friendName, 10);
+            putToLocalDatabaseLatestMessagesFromConversation(friendName, 1000);
         else {
             putToLocalDatabaseLatestMessagesFromConversationToSpecifiedMessage(
                     friendName,
