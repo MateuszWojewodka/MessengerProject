@@ -23,6 +23,7 @@ public class OneConversationActivity extends AppCompatActivity {
     private List <DTO.Message> messages;
     private List<String> senderAndMessage = new ArrayList<>();
     private ArrayAdapter<String> adapter;
+    private Runnable runnable = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,17 +38,33 @@ public class OneConversationActivity extends AppCompatActivity {
         senderAndMessage.clear();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, senderAndMessage);
         lvMessages.setAdapter(adapter);
-        startUpdateConversation();
         setBtSendOnClickListener();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startUpdateConversation();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopUpdateConversation();
     }
 
     private void trySendMessage(String userName, String friendName, String message) {
 
         class SendMessageAsyncTask extends AsyncTask<String, Integer, Void> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
 
             @Override
             protected Void doInBackground(String... strings) {
-                communicationModule.sendMessageToFriend(strings[0], strings[1], strings[2]);
+                if (strings[2].trim().length() > 0)
+                    communicationModule.sendMessageToFriend(strings[0], strings[1], strings[2]);
                 return null;
             }
 
@@ -62,7 +79,7 @@ public class OneConversationActivity extends AppCompatActivity {
     }
 
     private void startUpdateConversation () {
-        runOnUiThread(new Runnable() {
+        runOnUiThread(runnable = new Runnable() {
             @Override
             public void run() {
                 senderAndMessage.clear();
@@ -77,6 +94,10 @@ public class OneConversationActivity extends AppCompatActivity {
                 lvMessages.postDelayed(this, 300);
             }
         });
+    }
+
+    private void stopUpdateConversation () {
+        lvMessages.removeCallbacks(runnable);
     }
 
     private void waitForDownloadFirstData (int time) {

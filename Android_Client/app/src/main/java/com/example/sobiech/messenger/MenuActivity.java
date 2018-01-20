@@ -49,15 +49,6 @@ public class MenuActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
-        ImageButton btSearch = findViewById(R.id.btSearch);
-        btSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent (getApplicationContext(), OneConversationActivity.class);
-                startActivityForResult(intent,0);
-            }
-        });
-
         ImageButton btLogout = findViewById(R.id.btLogout);
         btLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,22 +57,6 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
     }
-
-//    public void startViewUpdater () {
-//
-//        TimerTask timerTask = new TimerTask() {
-//            @Override
-//            public void run(){
-//                try {
-//                    updateMessagesContainerDatabase(friendName);
-//                } catch (Exception e) {
-//                    System.out.println(e.getMessage());
-//                }
-//            }
-//        };
-//
-//        timerToUpdateMessages.schedule(timerTask, 0, 300);
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -150,4 +125,6 @@ public class MenuActivity extends AppCompatActivity {
 
         new LogOutAsyncTask().execute();
     }
+
+
 }

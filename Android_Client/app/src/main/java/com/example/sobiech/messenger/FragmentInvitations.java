@@ -25,9 +25,10 @@ import Modules.ProfileModule;
 
 public class FragmentInvitations extends Fragment {
 
-    List<UserAndFriendFlag> allUsers = new ArrayList<>();
-    AdapterInvitationsAndSearchUsers  adapter;
-    ListView lvInvitations;
+    private List<UserAndFriendFlag> allUsers = new ArrayList<>();
+    private AdapterInvitationsAndSearchUsers  adapter;
+    private ListView lvInvitations;
+    private Runnable runnable = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,17 +45,35 @@ public class FragmentInvitations extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        startUpdateInvitations();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        lvInvitations.removeCallbacks(runnable);
+    }
+
     private void trySearchInvitations() {
 
         class SearchInvitationsAsyncTask extends AsyncTask<Void, Integer, UserAndFriendFlag[]> {
 
             @Override
             protected UserAndFriendFlag[] doInBackground(Void... voids) {
-                String[] friendRequestSenders = DatabaseHandler.getNotifications().friendRequestsSenders.toArray(new String[0]);
-                UserAndFriendFlag[] userAndFriendFlag = new UserAndFriendFlag[friendRequestSenders.length];
-                for (int i = 0 ; i < friendRequestSenders.length ; i++)
-                    userAndFriendFlag[i] = new UserAndFriendFlag(friendRequestSenders[i], false);
-                return userAndFriendFlag;
+                try {
+                    String[] friendRequestSenders = DatabaseHandler.getNotifications().friendRequestsSenders.toArray(new String[0]);
+                    UserAndFriendFlag[] userAndFriendFlag = new UserAndFriendFlag[friendRequestSenders.length];
+                    for (int i = 0 ; i < friendRequestSenders.length ; i++)
+                        userAndFriendFlag[i] = new UserAndFriendFlag(friendRequestSenders[i], false);
+                    return userAndFriendFlag;
+                }
+                catch (Exception e) {
+                    this.cancel(true);
+                    return null;
+                }
             }
 
             @Override
@@ -70,7 +89,7 @@ public class FragmentInvitations extends Fragment {
     }
 
     private void startUpdateInvitations () {
-        getActivity().runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(runnable = new Runnable() {
             @Override
             public void run() {
                 trySearchInvitations();

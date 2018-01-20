@@ -39,6 +39,7 @@ public class FragmentConversiations extends Fragment{
     List <UserAndMessage> listConversations = new ArrayList<>();
     AdapterConversations adapter;
     ListView listView;
+    private Runnable runnable = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,13 +54,22 @@ public class FragmentConversiations extends Fragment{
         adapter = new AdapterConversations(getActivity(), R.layout.conversation_listview, listConversations);
         listView.setAdapter(adapter);
 
-        startUpdateConversations();
-
         setListViewOnClickListener(rootView.getContext());
 
         return rootView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        startUpdateConversations();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        listView.removeCallbacks(runnable);
+    }
 
     private void tryGetListConverstaions() {
 
@@ -67,14 +77,20 @@ public class FragmentConversiations extends Fragment{
 
             @Override
             protected UserAndMessage[] doInBackground(Void... voids) {
-                friendsList = profileModule.getFriendsList();
-                UserAndMessage[] result = new UserAndMessage[friendsList.length];
-                for (int i = 0 ; i < friendsList.length ; i++) {
-                    DTO.Message message = communicationModule.getLastMessageContentFromConversation(friendsList[i]);
-                    String user = friendsList[i];
-                    result[i] = new UserAndMessage(user, message);
+                try {
+                    friendsList = profileModule.getFriendsList();
+                    UserAndMessage[] result = new UserAndMessage[friendsList.length];
+                    for (int i = 0; i < friendsList.length; i++) {
+                        DTO.Message message = communicationModule.getLastMessageContentFromConversation(friendsList[i]);
+                        String user = friendsList[i];
+                        result[i] = new UserAndMessage(user, message);
+                    }
+                    return result;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    this.cancel(true);
+                    return null;
                 }
-                return result;
             }
 
             @Override
@@ -90,7 +106,7 @@ public class FragmentConversiations extends Fragment{
     }
 
     private void startUpdateConversations () {
-        getActivity().runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(runnable = new Runnable() {
             @Override
             public void run() {
                 tryGetListConverstaions();
