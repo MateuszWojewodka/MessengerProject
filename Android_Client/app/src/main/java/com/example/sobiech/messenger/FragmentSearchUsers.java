@@ -29,26 +29,27 @@ public class FragmentSearchUsers extends Fragment {
     private ProfileModule profileModule = ProfileModule.getInstance();
     private List<UserAndFriendFlag> allUsers = new ArrayList<>();
     private AdapterInvitationsAndSearchUsers  adapter;
+    private ListView lvSearchUsers;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_search_users, container, false);
 
-        ListView lvSearchUsers = rootView.findViewById(R.id.lvSearchUsers);
+        lvSearchUsers = rootView.findViewById(R.id.lvSearchUsers);
 
         adapter = new AdapterInvitationsAndSearchUsers(getActivity(), R.layout.invitation_and_search_users_listview, allUsers);
         adapter.setType(AdapterInvitationsAndSearchUsers.Type.SEARCH_USERS);
         lvSearchUsers.setAdapter(adapter);
 
-        trySearchAllUsers();
+        startSearchAllUsers();
 
         return rootView;
     }
 
     private void trySearchAllUsers() {
 
-        class LogUserInAsyncTask extends AsyncTask<Void, Integer, UserAndFriendFlag[]> {
+        class SearchAllUsersAsyncTask extends AsyncTask<Void, Integer, UserAndFriendFlag[]> {
 
             @Override
             protected UserAndFriendFlag[] doInBackground(Void... voids) {
@@ -57,13 +58,13 @@ public class FragmentSearchUsers extends Fragment {
                 UserAndFriendFlag[] result = new UserAndFriendFlag[registeredUsers.length];
 
                 for (int i = 0 ; i < registeredUsers.length ; i++) {
+                    result[i] = new UserAndFriendFlag(registeredUsers[i], false);
                     for (int j = 0 ; j < friendsList.length ; j++) {
                         if (registeredUsers[i].equals(friendsList[j])) {
                             result[i] = new UserAndFriendFlag(registeredUsers[i], true);
                             break;
                         }
                     }
-                    result[i] = new UserAndFriendFlag(registeredUsers[i], false);
                 }
 
                 return result;
@@ -78,6 +79,16 @@ public class FragmentSearchUsers extends Fragment {
             }
         }
 
-        new LogUserInAsyncTask().execute();
+        new SearchAllUsersAsyncTask().execute();
+    }
+
+    private void startSearchAllUsers () {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                trySearchAllUsers();
+                lvSearchUsers.postDelayed(this,300);
+            }
+        });
     }
 }

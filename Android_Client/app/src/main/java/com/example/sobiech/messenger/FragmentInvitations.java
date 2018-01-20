@@ -25,29 +25,28 @@ import Modules.ProfileModule;
 
 public class FragmentInvitations extends Fragment {
 
-    ProfileModule profileModule = ProfileModule.getInstance();
-
     List<UserAndFriendFlag> allUsers = new ArrayList<>();
     AdapterInvitationsAndSearchUsers  adapter;
+    ListView lvInvitations;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_invitations, container, false);
 
-        ListView lvInvitations = rootView.findViewById(R.id.lvInvitations);
+        lvInvitations = rootView.findViewById(R.id.lvInvitations);
         adapter = new AdapterInvitationsAndSearchUsers(rootView.getContext(), R.layout.invitation_and_search_users_listview, allUsers);
         adapter.setType(AdapterInvitationsAndSearchUsers.Type.INVITATION);
         lvInvitations.setAdapter(adapter);
 
-        trySearchInvitations();
+        startUpdateInvitations();
 
         return rootView;
     }
 
     private void trySearchInvitations() {
 
-        class LogUserInAsyncTask extends AsyncTask<Void, Integer, UserAndFriendFlag[]> {
+        class SearchInvitationsAsyncTask extends AsyncTask<Void, Integer, UserAndFriendFlag[]> {
 
             @Override
             protected UserAndFriendFlag[] doInBackground(Void... voids) {
@@ -67,6 +66,16 @@ public class FragmentInvitations extends Fragment {
             }
         }
 
-        new LogUserInAsyncTask().execute();
+        new SearchInvitationsAsyncTask().execute();
+    }
+
+    private void startUpdateInvitations () {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                trySearchInvitations();
+                lvInvitations.postDelayed(this, 500);
+            }
+        });
     }
 }

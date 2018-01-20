@@ -62,8 +62,8 @@ public class OneConversationActivity extends AppCompatActivity {
     }
 
     private void startUpdateConversation () {
-        Runnable runnable = new Runnable() {
-
+        runOnUiThread(new Runnable() {
+            @Override
             public void run() {
                 senderAndMessage.clear();
 
@@ -76,9 +76,7 @@ public class OneConversationActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 lvMessages.postDelayed(this, 300);
             }
-        };
-
-        runnable.run();
+        });
     }
 
     private void waitForDownloadFirstData (int time) {

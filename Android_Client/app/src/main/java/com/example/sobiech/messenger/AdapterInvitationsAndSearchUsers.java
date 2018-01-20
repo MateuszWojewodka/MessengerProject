@@ -60,7 +60,7 @@ public class AdapterInvitationsAndSearchUsers extends ArrayAdapter <UserAndFrien
         tvUserName.setText(oneUser.userName);
 
         if (oneUser.isFriend && type == Type.SEARCH_USERS)
-            btAccept.setEnabled(false);
+            btAccept.setVisibility(View.INVISIBLE);
 
         btAccept.setOnClickListener(new View.OnClickListener() {
             @Override

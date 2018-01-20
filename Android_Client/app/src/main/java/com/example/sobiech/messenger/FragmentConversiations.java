@@ -1,6 +1,7 @@
 package com.example.sobiech.messenger;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -53,16 +54,8 @@ public class FragmentConversiations extends Fragment{
         listView.setAdapter(adapter);
 
         startUpdateConversations();
-        tryGetListConverstaions();
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedUserName = listConversations.get(i).user;
-                Intent intent = new Intent(rootView.getContext(), OneConversationActivity.class);
-                startActivityForResult(intent,0);
-            }
-        });
+        setListViewOnClickListener(rootView.getContext());
 
         return rootView;
     }
@@ -89,6 +82,7 @@ public class FragmentConversiations extends Fragment{
                 super.onPostExecute(messages);
                 listConversations.clear();
                 listConversations.addAll(new ArrayList<>(Arrays.asList(messages)));
+                adapter.notifyDataSetChanged();
             }
         }
 
@@ -96,15 +90,23 @@ public class FragmentConversiations extends Fragment{
     }
 
     private void startUpdateConversations () {
-        Runnable runnable = new Runnable() {
-
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
             public void run() {
                 tryGetListConverstaions();
-                adapter.notifyDataSetChanged();
                 listView.postDelayed(this, 300);
             }
-        };
+        });
+    }
 
-        runnable.run();
+    private void setListViewOnClickListener (final Context context) {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedUserName = listConversations.get(i).user;
+                Intent intent = new Intent(context, OneConversationActivity.class);
+                startActivityForResult(intent,0);
+            }
+        });
     }
 }
